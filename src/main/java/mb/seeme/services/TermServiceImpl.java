@@ -32,7 +32,6 @@ public class TermServiceImpl implements TermService {
         return termRepository.save(term);
     }
 
-
     @Override
     public void delete(Term term) {
         termRepository.delete(term);
