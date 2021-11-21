@@ -2,9 +2,8 @@ package mb.seeme.model.terms;
 
 import lombok.*;
 import mb.seeme.model.BaseEntity;
-import mb.seeme.model.services.Service;
+import mb.seeme.model.services.AvailableService;
 import mb.seeme.model.users.Client;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -38,7 +37,7 @@ public class Term extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id")
-    private Service service;
+    private AvailableService service;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")

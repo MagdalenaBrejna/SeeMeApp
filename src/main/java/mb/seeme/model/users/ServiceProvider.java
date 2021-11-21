@@ -1,7 +1,8 @@
 package mb.seeme.model.users;
 
 import lombok.*;
-import mb.seeme.model.services.Service;
+import mb.seeme.model.services.AvailableService;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,6 +43,6 @@ public class ServiceProvider extends Person {
     private Byte[] image;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceProvider")
-    private Set<Service> services = new HashSet<>();
+    private Set<AvailableService> services = new HashSet<>();
 
 }

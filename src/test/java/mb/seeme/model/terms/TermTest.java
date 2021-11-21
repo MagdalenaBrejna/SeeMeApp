@@ -1,6 +1,6 @@
 package mb.seeme.model.terms;
 
-import mb.seeme.model.services.Service;
+import mb.seeme.model.services.AvailableService;
 import mb.seeme.model.users.Client;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,7 +60,7 @@ class TermTest {
     @Test
     void getService() throws Exception {
         //given
-        Service service = Service.builder().id(2L).build();
+        AvailableService service = AvailableService.builder().id(2L).build();
         //when
         term.setService(service);
         //then

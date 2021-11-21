@@ -1,6 +1,6 @@
 package mb.seeme.model.users;
 
-import mb.seeme.model.services.Service;
+import mb.seeme.model.services.AvailableService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -121,8 +121,8 @@ class ServiceProviderTest {
     @Test
     void getServices() throws Exception {
         //given
-        Set<Service> services = new HashSet<>();
-        Service service = Service.builder().id(1L).build();
+        Set<AvailableService> services = new HashSet<>();
+        AvailableService service = AvailableService.builder().id(1L).build();
         services.add(service);
         //when
         provider.setServices(services);

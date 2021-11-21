@@ -15,10 +15,10 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "services")
-public class Service extends BaseEntity {
+public class AvailableService extends BaseEntity {
 
     @Builder
-    public Service(Long id, String serviceName) {
+    public AvailableService(Long id, String serviceName) {
         super(id);
         this.serviceName = serviceName;
     }

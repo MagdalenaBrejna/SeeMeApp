@@ -8,13 +8,13 @@ import java.util.HashSet;
 import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ServiceTest {
+class AvailableServiceTest {
 
-    Service service;
+    AvailableService service;
 
     @BeforeEach
     void setUp() {
-        service = new Service();
+        service = new AvailableService();
     }
 
     @Test
