@@ -2,6 +2,7 @@ package mb.seeme.services;
 
 import mb.seeme.model.terms.Term;
 import mb.seeme.repositories.TermRepository;
+import mb.seeme.services.terms.TermServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

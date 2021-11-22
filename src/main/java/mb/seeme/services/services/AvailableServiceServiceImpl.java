@@ -1,4 +1,4 @@
-package mb.seeme.services;
+package mb.seeme.services.services;
 
 import mb.seeme.model.services.AvailableService;
 import mb.seeme.repositories.AvailableServiceRepository;

@@ -2,6 +2,7 @@ package mb.seeme.services;
 
 import mb.seeme.model.services.AvailableService;
 import mb.seeme.repositories.AvailableServiceRepository;
+import mb.seeme.services.services.AvailableServiceServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

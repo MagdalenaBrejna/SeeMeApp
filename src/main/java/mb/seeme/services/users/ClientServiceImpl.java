@@ -1,7 +1,8 @@
-package mb.seeme.services;
+package mb.seeme.services.users;
 
 import mb.seeme.model.users.Client;
 import mb.seeme.repositories.ClientRepository;
+import mb.seeme.services.users.ClientService;
 import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Set;

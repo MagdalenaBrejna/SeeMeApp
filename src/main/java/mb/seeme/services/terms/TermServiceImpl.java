@@ -1,4 +1,4 @@
-package mb.seeme.services;
+package mb.seeme.services.terms;
 
 import mb.seeme.model.terms.Term;
 import mb.seeme.repositories.TermRepository;

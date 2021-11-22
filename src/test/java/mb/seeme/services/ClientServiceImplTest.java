@@ -2,6 +2,7 @@ package mb.seeme.services;
 
 import mb.seeme.model.users.Client;
 import mb.seeme.repositories.ClientRepository;
+import mb.seeme.services.users.ClientServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
