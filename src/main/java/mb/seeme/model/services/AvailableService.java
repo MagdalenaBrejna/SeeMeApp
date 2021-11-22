@@ -11,16 +11,15 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "services")
 public class AvailableService extends BaseEntity {
 
     @Builder
-    public AvailableService(Long id, String serviceName) {
+    public AvailableService(Long id, String serviceName, ServiceProvider serviceProvider) {
         super(id);
         this.serviceName = serviceName;
+        this.serviceProvider = serviceProvider;
     }
 
     @Column(name = "service_name")

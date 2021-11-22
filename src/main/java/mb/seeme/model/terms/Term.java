@@ -11,18 +11,17 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "terms")
 public class Term extends BaseEntity {
 
     @Builder
-    public Term(Long id, LocalDate date, LocalTime time, String termDescription) {
+    public Term(Long id, LocalDate date, LocalTime time, String termDescription, AvailableService service) {
         super(id);
         this.date = date;
         this.time = time;
         this.termDescription = termDescription;
+        this.service = service;
     }
 
     @Column(name = "date")
