@@ -2,11 +2,9 @@ package mb.seeme.services.terms;
 
 import mb.seeme.model.terms.Term;
 import mb.seeme.repositories.TermRepository;
-import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Set;
 
-@Service
 public class TermServiceImpl implements TermService {
 
     private final TermRepository termRepository;

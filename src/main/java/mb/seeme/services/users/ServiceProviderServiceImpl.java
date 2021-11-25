@@ -4,8 +4,6 @@ import mb.seeme.model.terms.Term;
 import mb.seeme.model.users.ServiceProvider;
 import mb.seeme.repositories.ServiceProviderRepository;
 import mb.seeme.repositories.TermRepository;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Service
 public class ServiceProviderServiceImpl implements ServiceProviderService {
 
     private final ServiceProviderRepository providerRepository;
@@ -92,6 +89,4 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
                     .collect(Collectors.toList());
         return providers;
     }
-
-
 }
