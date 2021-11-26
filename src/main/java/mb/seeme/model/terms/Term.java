@@ -16,12 +16,13 @@ import java.time.LocalTime;
 public class Term extends BaseEntity {
 
     @Builder
-    public Term(Long id, LocalDate date, LocalTime time, String termDescription, AvailableService service) {
+    public Term(Long id, LocalDate date, LocalTime time, String termDescription, AvailableService service, Client client) {
         super(id);
         this.date = date;
         this.time = time;
         this.termDescription = termDescription;
         this.service = service;
+        this.client = client;
     }
 
     @Column(name = "date")

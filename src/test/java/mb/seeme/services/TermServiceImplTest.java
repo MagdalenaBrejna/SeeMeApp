@@ -1,6 +1,8 @@
 package mb.seeme.services;
 
+import mb.seeme.model.services.AvailableService;
 import mb.seeme.model.terms.Term;
+import mb.seeme.model.users.Client;
 import mb.seeme.repositories.TermRepository;
 import mb.seeme.services.terms.TermServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,9 +11,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+
+import java.time.LocalDate;
+import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -92,5 +95,63 @@ class TermServiceImplTest {
         service.deleteById(2l);
         //then
         verify(termRepository).deleteById(anyLong());
+    }
+
+    @Test
+    void findAllFutureByClientId() {
+        //given
+        Client clientA = Client.builder().id(1l).build();
+
+        AvailableService service1 = AvailableService.builder().id(2l).build();
+        AvailableService service2 = AvailableService.builder().id(3l).build();
+        AvailableService service3 = AvailableService.builder().id(4l).build();
+
+        Term term1 = Term.builder().id(2l).date(LocalDate.parse("2022-11-30")).service(service1).client(clientA).build();
+        Term term2 = Term.builder().id(3l).date(LocalDate.parse("2021-11-20")).service(service2).client(clientA).build();
+        Term term3 = Term.builder().id(4l).date(LocalDate.parse("2022-11-27")).service(service3).client(clientA).build();
+
+        List<Term> termList = new ArrayList<>();
+        termList.add(term1);
+        termList.add(term2);
+        termList.add(term3);
+
+        //when
+        when(termRepository.findAllByClientId(anyLong())).thenReturn(termList);
+        List<Term> terms = service.findAllFutureByClientId(clientA.getId());
+
+        //then
+        assertNotNull(termList);
+        assertEquals(2, terms.size());
+        assertEquals(term3, terms.get(0));
+        assertEquals(term1, terms.get(1));
+    }
+
+    @Test
+    void findAllPastByClientId() {
+        //given
+        Client clientA = Client.builder().id(1l).build();
+
+        AvailableService service1 = AvailableService.builder().id(1l).build();
+        AvailableService service2 = AvailableService.builder().id(2l).build();
+        AvailableService service3 = AvailableService.builder().id(3l).build();
+
+        Term term1 = Term.builder().id(2l).date(LocalDate.parse("2021-11-19")).service(service1).client(clientA).build();
+        Term term2 = Term.builder().id(3l).date(LocalDate.parse("2022-02-21")).service(service2).client(clientA).build();
+        Term term3 = Term.builder().id(4l).date(LocalDate.parse("2021-11-20")).service(service3).client(clientA).build();
+
+        List<Term> termList = new ArrayList<>();
+        termList.add(term1);
+        termList.add(term2);
+        termList.add(term3);
+
+        //when
+        when(termRepository.findAllByClientId(anyLong())).thenReturn(termList);
+        List<Term> terms = service.findAllPastByClientId(clientA.getId());
+
+        //then
+        assertNotNull(termList);
+        assertEquals(2, terms.size());
+        assertEquals(term1, terms.get(0));
+        assertEquals(term3, terms.get(1));
     }
 }
