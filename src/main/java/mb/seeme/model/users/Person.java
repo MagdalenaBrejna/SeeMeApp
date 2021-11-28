@@ -17,13 +17,13 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class Person extends BaseEntity {
 
-    public Person(Long id, String name, String telephone, String email, String password, AppUserRole appUserRole) {
+    public Person(Long id, String name, String telephone, String email, String password, UserRole userRole) {
         super(id);
         this.name = name;
         this.telephone = telephone;
         this.email = email;
         this.password = password;
-        this.appUserRole = appUserRole;
+        this.userRole = userRole;
     }
 
     @Column(name = "name")
@@ -40,7 +40,7 @@ public class Person extends BaseEntity {
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private AppUserRole appUserRole;
+    private UserRole userRole;
 
     @Column(name = "locked")
     private Boolean locked = false;

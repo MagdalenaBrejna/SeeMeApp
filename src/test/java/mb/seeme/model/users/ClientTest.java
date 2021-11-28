@@ -69,11 +69,11 @@ class ClientTest {
     @Test
     void getAppUserRole() throws Exception {
         //given
-        AppUserRole role = AppUserRole.USER;
+        UserRole role = UserRole.USER;
         //when
-        client.setAppUserRole(role);
+        client.setUserRole(role);
         //then
-        assertEquals(client.getAppUserRole(), role);
+        assertEquals(client.getUserRole(), role);
     }
 
     @Test

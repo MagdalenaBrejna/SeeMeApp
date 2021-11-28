@@ -1,5 +1,5 @@
 package mb.seeme.model.users;
 
-public enum AppUserRole {
+public enum UserRole {
     USER, PROVIDER
 }

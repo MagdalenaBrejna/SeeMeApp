@@ -16,20 +16,20 @@ import java.time.LocalTime;
 public class Term extends BaseEntity {
 
     @Builder
-    public Term(Long id, LocalDate date, LocalTime time, String termDescription, AvailableService service, Client client) {
+    public Term(Long id, LocalDate termDate, LocalTime termTime, String termDescription, AvailableService service, Client client) {
         super(id);
-        this.date = date;
-        this.time = time;
+        this.termDate = termDate;
+        this.termTime = termTime;
         this.termDescription = termDescription;
         this.service = service;
         this.client = client;
     }
 
-    @Column(name = "date")
-    private LocalDate date;
+    @Column(name = "term_date")
+    private LocalDate termDate;
 
-    @Column(name = "time")
-    private LocalTime time;
+    @Column(name = "term_time")
+    private LocalTime termTime;
 
     @Lob
     @Column(name = "term_description")
@@ -44,5 +44,5 @@ public class Term extends BaseEntity {
     private Client client;
 
     @Enumerated(value = EnumType.STRING)
-    private Status status;
+    private Status termRealizedStatus;
 }

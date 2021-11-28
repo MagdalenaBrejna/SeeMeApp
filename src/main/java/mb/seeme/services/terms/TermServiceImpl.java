@@ -50,7 +50,7 @@ public class TermServiceImpl implements TermService {
     @Override
     public List<Term> findAllFutureByClientId(Long id) {
         List<Term> terms = findAllByClientId(id).stream()
-                .filter(term -> term.getDate().isAfter(LocalDate.now()) || term.getDate().isEqual(LocalDate.now()))
+                .filter(term -> term.getTermDate().isAfter(LocalDate.now()) || term.getTermDate().isEqual(LocalDate.now()))
                 .collect(Collectors.toList());
         return terms;
     }
@@ -58,14 +58,14 @@ public class TermServiceImpl implements TermService {
     @Override
     public List<Term> findAllPastByClientId(Long id) {
         List<Term> terms = findAllByClientId(id).stream()
-                .filter(term -> term.getDate().isBefore(LocalDate.now()))
+                .filter(term -> term.getTermDate().isBefore(LocalDate.now()))
                 .collect(Collectors.toList());
         return terms;
     }
 
     private List<Term> findAllByClientId(Long id) {
         return termRepository.findAllByClientId(id).stream()
-                .sorted((term1, term2) -> term1.getDate().compareTo(term2.getDate()))
+                .sorted((term1, term2) -> term1.getTermDate().compareTo(term2.getTermDate()))
                 .collect(Collectors.toList());
     }
 
@@ -84,7 +84,7 @@ public class TermServiceImpl implements TermService {
 
     private List<Term> findFreeTermsByProviderIdFromDate(Long id, LocalDate date) {
         return termRepository.findAllFreeByProviderIdFromDate(id, date).stream()
-                .sorted((term1, term2) -> term1.getDate().compareTo(term2.getDate()))
+                .sorted((term1, term2) -> term1.getTermDate().compareTo(term2.getTermDate()))
                 .collect(Collectors.toList());
     }
 
@@ -103,7 +103,7 @@ public class TermServiceImpl implements TermService {
 
     private List<Term> findAppointedTermsByProviderIdFromDate(Long id, LocalDate date) {
         return termRepository.findAllAppointedByProviderIdFromDate(id, date).stream()
-                .sorted((term1, term2) -> term1.getDate().compareTo(term2.getDate()))
+                .sorted((term1, term2) -> term1.getTermDate().compareTo(term2.getTermDate()))
                 .collect(Collectors.toList());
     }
 }

@@ -14,8 +14,8 @@ import java.util.Set;
 public class Client extends Person {
 
     @Builder
-    public Client(Long id, String name, String telephone, String email, String password, AppUserRole appUserRole) {
-        super(id, name, telephone, email, password, appUserRole);
+    public Client(Long id, String name, String telephone, String email, String password, UserRole userRole) {
+        super(id, name, telephone, email, password, userRole);
     }
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")

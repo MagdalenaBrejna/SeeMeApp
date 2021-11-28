@@ -71,11 +71,11 @@ class ServiceProviderTest {
     @Test
     void getAppUserRole() throws Exception {
         //given
-        AppUserRole role = AppUserRole.PROVIDER;
+        UserRole role = UserRole.PROVIDER;
         //when
-        provider.setAppUserRole(role);
+        provider.setUserRole(role);
         //then
-        assertEquals(provider.getAppUserRole(), role);
+        assertEquals(provider.getUserRole(), role);
     }
 
     @Test
@@ -103,9 +103,9 @@ class ServiceProviderTest {
         //given
         String description = "This is a test provider description";
         //when
-        provider.setDescription(description);
+        provider.setProviderDescription(description);
         //then
-        assertEquals(provider.getDescription(), description);
+        assertEquals(provider.getProviderDescription(), description);
     }
 
     @Test
@@ -113,9 +113,9 @@ class ServiceProviderTest {
         //given
         String field = "car mechanic";
         //when
-        provider.setField(field);
+        provider.setProviderField(field);
         //then
-        assertEquals(provider.getField(), field);
+        assertEquals(provider.getProviderField(), field);
     }
 
     @Test

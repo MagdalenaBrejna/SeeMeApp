@@ -107,9 +107,9 @@ class TermServiceImplTest {
         AvailableService service2 = AvailableService.builder().id(3l).build();
         AvailableService service3 = AvailableService.builder().id(4l).build();
 
-        Term term1 = Term.builder().id(2l).date(LocalDate.parse("2022-11-30")).service(service1).client(clientA).build();
-        Term term2 = Term.builder().id(3l).date(LocalDate.parse("2021-11-20")).service(service2).client(clientA).build();
-        Term term3 = Term.builder().id(4l).date(LocalDate.parse("2022-11-27")).service(service3).client(clientA).build();
+        Term term1 = Term.builder().id(2l).termDate(LocalDate.parse("2022-11-30")).service(service1).client(clientA).build();
+        Term term2 = Term.builder().id(3l).termDate(LocalDate.parse("2021-11-20")).service(service2).client(clientA).build();
+        Term term3 = Term.builder().id(4l).termDate(LocalDate.parse("2022-11-27")).service(service3).client(clientA).build();
 
         List<Term> termList = new ArrayList<>();
         termList.add(term1);
@@ -136,9 +136,9 @@ class TermServiceImplTest {
         AvailableService service2 = AvailableService.builder().id(2l).build();
         AvailableService service3 = AvailableService.builder().id(3l).build();
 
-        Term term1 = Term.builder().id(2l).date(LocalDate.parse("2021-11-19")).service(service1).client(clientA).build();
-        Term term2 = Term.builder().id(3l).date(LocalDate.parse("2022-02-21")).service(service2).client(clientA).build();
-        Term term3 = Term.builder().id(4l).date(LocalDate.parse("2021-11-20")).service(service3).client(clientA).build();
+        Term term1 = Term.builder().id(2l).termDate(LocalDate.parse("2021-11-19")).service(service1).client(clientA).build();
+        Term term2 = Term.builder().id(3l).termDate(LocalDate.parse("2022-02-21")).service(service2).client(clientA).build();
+        Term term3 = Term.builder().id(4l).termDate(LocalDate.parse("2021-11-20")).service(service3).client(clientA).build();
 
         List<Term> termList = new ArrayList<>();
         termList.add(term1);
@@ -165,9 +165,9 @@ class TermServiceImplTest {
         AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerA).build();
         AvailableService service3 = AvailableService.builder().id(3l).serviceProvider(providerA).build();
 
-        Term term1 = Term.builder().id(1l).date(LocalDate.parse("2022-11-22")).service(service1).build();
-        Term term2 = Term.builder().id(2l).date(LocalDate.parse("2021-11-28")).service(service2).build();
-        Term term3 = Term.builder().id(3l).date(LocalDate.parse("2021-11-21")).service(service3).build();
+        Term term1 = Term.builder().id(1l).termDate(LocalDate.parse("2022-11-22")).service(service1).build();
+        Term term2 = Term.builder().id(2l).termDate(LocalDate.parse("2021-11-28")).service(service2).build();
+        Term term3 = Term.builder().id(3l).termDate(LocalDate.parse("2021-11-21")).service(service3).build();
 
         List<Term> termList = new ArrayList<>();
         termList.add(term1);
@@ -196,9 +196,9 @@ class TermServiceImplTest {
         AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerA).build();
         AvailableService service3 = AvailableService.builder().id(3l).serviceProvider(providerA).build();
 
-        Term term1 = Term.builder().id(1l).date(LocalDate.parse("2022-11-22")).service(service1).build();
-        Term term2 = Term.builder().id(2l).date(LocalDate.parse("2021-11-28")).service(service2).build();
-        Term term3 = Term.builder().id(3l).date(LocalDate.parse("2021-11-21")).service(service3).build();
+        Term term1 = Term.builder().id(1l).termDate(LocalDate.parse("2022-11-22")).service(service1).build();
+        Term term2 = Term.builder().id(2l).termDate(LocalDate.parse("2021-11-28")).service(service2).build();
+        Term term3 = Term.builder().id(3l).termDate(LocalDate.parse("2021-11-21")).service(service3).build();
 
         List<Term> termList = new ArrayList<>();
         termList.add(term1);
@@ -225,9 +225,9 @@ class TermServiceImplTest {
         AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerA).build();
         AvailableService service3 = AvailableService.builder().id(3l).serviceProvider(providerA).build();
 
-        Term term1 = Term.builder().id(1l).date(LocalDate.parse("2022-11-22")).service(service1).build();
-        Term term2 = Term.builder().id(2l).date(LocalDate.parse("2021-11-28")).service(service2).build();
-        Term term3 = Term.builder().id(3l).date(LocalDate.parse("2021-11-21")).service(service3).build();
+        Term term1 = Term.builder().id(1l).termDate(LocalDate.parse("2022-11-22")).service(service1).build();
+        Term term2 = Term.builder().id(2l).termDate(LocalDate.parse("2021-11-28")).service(service2).build();
+        Term term3 = Term.builder().id(3l).termDate(LocalDate.parse("2021-11-21")).service(service3).build();
 
         List<Term> termList = new ArrayList<>();
         termList.add(term1);
@@ -254,9 +254,9 @@ class TermServiceImplTest {
         AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerA).build();
         AvailableService service3 = AvailableService.builder().id(3l).serviceProvider(providerA).build();
 
-        Term term1 = Term.builder().id(1l).date(LocalDate.parse("2022-11-22")).service(service1).build();
-        Term term2 = Term.builder().id(2l).date(LocalDate.parse("2021-11-28")).service(service2).build();
-        Term term3 = Term.builder().id(3l).date(LocalDate.parse("2021-11-21")).service(service3).build();
+        Term term1 = Term.builder().id(1l).termDate(LocalDate.parse("2022-11-22")).service(service1).build();
+        Term term2 = Term.builder().id(2l).termDate(LocalDate.parse("2021-11-28")).service(service2).build();
+        Term term3 = Term.builder().id(3l).termDate(LocalDate.parse("2021-11-21")).service(service3).build();
 
         List<Term> termList = new ArrayList<>();
         termList.add(term1);

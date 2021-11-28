@@ -32,9 +32,9 @@ class TermTest {
         //given
         LocalDate date = LocalDate.parse("2021-11-21");
         //when
-        term.setDate(date);
+        term.setTermDate(date);
         //then
-        assertEquals(term.getDate(), date);
+        assertEquals(term.getTermDate(), date);
     }
 
     @Test
@@ -42,9 +42,9 @@ class TermTest {
         //given
         LocalTime now = LocalTime.now();
         //when
-        term.setTime(now);
+        term.setTermTime(now);
         //then
-        assertEquals(term.getTime(), now);
+        assertEquals(term.getTermTime(), now);
     }
 
     @Test
@@ -82,8 +82,8 @@ class TermTest {
         //given
         Status status = Status.DONE;
         //when
-        term.setStatus(status);
+        term.setTermRealizedStatus(status);
         //then
-        assertEquals(term.getStatus(), status);
+        assertEquals(term.getTermRealizedStatus(), status);
     }
 }

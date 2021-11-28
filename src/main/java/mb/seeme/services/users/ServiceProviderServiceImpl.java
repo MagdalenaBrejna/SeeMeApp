@@ -54,7 +54,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         termRepository.findAll().forEach(terms::add);
 
         return terms.stream()
-                .sorted((term1, term2) -> term1.getDate().compareTo(term2.getDate()))
+                .sorted((term1, term2) -> term1.getTermDate().compareTo(term2.getTermDate()))
                 .map(term -> term.getService().getServiceProvider())
                 .distinct()
                 .collect(Collectors.toList());
@@ -73,7 +73,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     public List<ServiceProvider> findAllByFieldLikeInTermOrder(String field) {
         List<ServiceProvider> providers = getServiceProvidersInAllTermOrder()
                 .stream()
-                .filter(provider -> provider.getField().equals(field))
+                .filter(provider -> provider.getProviderField().equals(field))
                 .collect(Collectors.toList());
         return providers;
     }
@@ -83,7 +83,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         List<Term> termsFromDate = termRepository.findAllFromDate(date);
         List<ServiceProvider> providers =
                 termsFromDate.stream()
-                    .sorted((term1, term2) -> term1.getDate().compareTo(term2.getDate()))
+                    .sorted((term1, term2) -> term1.getTermDate().compareTo(term2.getTermDate()))
                     .map(term -> term.getService().getServiceProvider())
                     .distinct()
                     .collect(Collectors.toList());
