@@ -3,6 +3,7 @@ package mb.seeme.services;
 import mb.seeme.model.services.AvailableService;
 import mb.seeme.model.terms.Term;
 import mb.seeme.model.users.Client;
+import mb.seeme.model.users.ServiceProvider;
 import mb.seeme.repositories.TermRepository;
 import mb.seeme.services.terms.TermServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -153,5 +154,123 @@ class TermServiceImplTest {
         assertEquals(2, terms.size());
         assertEquals(term1, terms.get(0));
         assertEquals(term3, terms.get(1));
+    }
+
+    @Test
+    public void findAllFutureFreeByProviderId() {
+        //given
+        ServiceProvider providerA = ServiceProvider.builder().id(1l).build();
+
+        AvailableService service1 = AvailableService.builder().id(1l).serviceProvider(providerA).build();
+        AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerA).build();
+        AvailableService service3 = AvailableService.builder().id(3l).serviceProvider(providerA).build();
+
+        Term term1 = Term.builder().id(1l).date(LocalDate.parse("2022-11-22")).service(service1).build();
+        Term term2 = Term.builder().id(2l).date(LocalDate.parse("2021-11-28")).service(service2).build();
+        Term term3 = Term.builder().id(3l).date(LocalDate.parse("2021-11-21")).service(service3).build();
+
+        List<Term> termList = new ArrayList<>();
+        termList.add(term1);
+        termList.add(term2);
+        termList.add(term3);
+
+        //when
+        when(termRepository.findAllFreeByProviderIdFromDate(providerA.getId(), LocalDate.parse(LocalDate.now().toString()))).thenReturn(termList);
+        List<Term> terms = service.findAllFutureFreeByProviderId(providerA.getId());
+
+        //then
+        assertNotNull(termList);
+        assertEquals(3, terms.size());
+        assertEquals(3l, terms.get(0).getId());
+        assertEquals(2l, terms.get(1).getId());
+    }
+
+
+
+    @Test
+    public void findAllFutureFreeByProviderIdFromDate() {
+        //given
+        ServiceProvider providerA = ServiceProvider.builder().id(1l).build();
+
+        AvailableService service1 = AvailableService.builder().id(1l).serviceProvider(providerA).build();
+        AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerA).build();
+        AvailableService service3 = AvailableService.builder().id(3l).serviceProvider(providerA).build();
+
+        Term term1 = Term.builder().id(1l).date(LocalDate.parse("2022-11-22")).service(service1).build();
+        Term term2 = Term.builder().id(2l).date(LocalDate.parse("2021-11-28")).service(service2).build();
+        Term term3 = Term.builder().id(3l).date(LocalDate.parse("2021-11-21")).service(service3).build();
+
+        List<Term> termList = new ArrayList<>();
+        termList.add(term1);
+        termList.add(term2);
+        termList.add(term3);
+
+        //when
+        when(termRepository.findAllFreeByProviderIdFromDate(providerA.getId(), LocalDate.parse("2022-11-21"))).thenReturn(termList);
+        List<Term> terms = service.findAllFutureFreeByProviderIdFromDate(providerA.getId(), LocalDate.parse("2022-11-21"));
+
+        //then
+        assertNotNull(termList);
+        assertEquals(3, terms.size());
+        assertEquals(3l, terms.get(0).getId());
+        assertEquals(2l, terms.get(1).getId());
+    }
+
+    @Test
+    public void findAllFutureAppointedByProviderId() {
+        //given
+        ServiceProvider providerA = ServiceProvider.builder().id(1l).build();
+
+        AvailableService service1 = AvailableService.builder().id(1l).serviceProvider(providerA).build();
+        AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerA).build();
+        AvailableService service3 = AvailableService.builder().id(3l).serviceProvider(providerA).build();
+
+        Term term1 = Term.builder().id(1l).date(LocalDate.parse("2022-11-22")).service(service1).build();
+        Term term2 = Term.builder().id(2l).date(LocalDate.parse("2021-11-28")).service(service2).build();
+        Term term3 = Term.builder().id(3l).date(LocalDate.parse("2021-11-21")).service(service3).build();
+
+        List<Term> termList = new ArrayList<>();
+        termList.add(term1);
+        termList.add(term2);
+        termList.add(term3);
+
+        //when
+        when(termRepository.findAllAppointedByProviderIdFromDate(providerA.getId(), LocalDate.parse(LocalDate.now().toString()))).thenReturn(termList);
+        List<Term> terms = service.findAllFutureAppointedByProviderId(providerA.getId());
+
+        //then
+        assertNotNull(termList);
+        assertEquals(3, terms.size());
+        assertEquals(3l, terms.get(0).getId());
+        assertEquals(2l, terms.get(1).getId());
+    }
+
+    @Test
+    public void findAllFutureAppointedByProviderIdFromDate() {
+        //given
+        ServiceProvider providerA = ServiceProvider.builder().id(1l).build();
+
+        AvailableService service1 = AvailableService.builder().id(1l).serviceProvider(providerA).build();
+        AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerA).build();
+        AvailableService service3 = AvailableService.builder().id(3l).serviceProvider(providerA).build();
+
+        Term term1 = Term.builder().id(1l).date(LocalDate.parse("2022-11-22")).service(service1).build();
+        Term term2 = Term.builder().id(2l).date(LocalDate.parse("2021-11-28")).service(service2).build();
+        Term term3 = Term.builder().id(3l).date(LocalDate.parse("2021-11-21")).service(service3).build();
+
+        List<Term> termList = new ArrayList<>();
+        termList.add(term1);
+        termList.add(term2);
+        termList.add(term3);
+
+        //when
+        when(termRepository.findAllAppointedByProviderIdFromDate(providerA.getId(), LocalDate.parse("2022-11-21"))).thenReturn(termList);
+        List<Term> terms = service.findAllFutureAppointedByProviderIdFromDate(providerA.getId(), LocalDate.parse("2022-11-21"));
+
+        //then
+        assertNotNull(termList);
+        assertEquals(3, terms.size());
+        assertEquals(3l, terms.get(0).getId());
+        assertEquals(2l, terms.get(1).getId());
     }
 }
