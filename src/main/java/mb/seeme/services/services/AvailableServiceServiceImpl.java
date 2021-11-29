@@ -2,6 +2,8 @@ package mb.seeme.services.services;
 
 import mb.seeme.model.services.AvailableService;
 import mb.seeme.repositories.AvailableServiceRepository;
+
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,6 +28,7 @@ public class AvailableServiceServiceImpl implements AvailableServiceService {
     }
 
     @Override
+    @Transactional
     public AvailableService save(AvailableService service) {
         return serviceRepository.save(service);
     }

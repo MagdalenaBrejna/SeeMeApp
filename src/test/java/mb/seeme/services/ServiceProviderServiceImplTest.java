@@ -124,7 +124,7 @@ class ServiceProviderServiceImplTest {
         termList.add(term4);
 
         //when
-        when(termRepository.findAll()).thenReturn(termList);
+        when(termRepository.findAllFromDate(LocalDate.parse(LocalDate.now().toString()))).thenReturn(termList);
         List<ServiceProvider> serviceProviderList = service.findAllByNameLikeInTermOrder("A");
 
         //then
@@ -192,7 +192,7 @@ class ServiceProviderServiceImplTest {
         termList.add(term4);
 
         //when
-        when(termRepository.findAll()).thenReturn(termList);
+        when(termRepository.findAllFromDate(LocalDate.parse(LocalDate.now().toString()))).thenReturn(termList);
         List<ServiceProvider> serviceProviderList = service.findAllByFieldLikeInTermOrder("mechanic");
 
         //then

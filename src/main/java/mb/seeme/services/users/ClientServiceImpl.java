@@ -2,6 +2,8 @@ package mb.seeme.services.users;
 
 import mb.seeme.model.users.Client;
 import mb.seeme.repositories.ClientRepository;
+
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,6 +28,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional
     public Client save(Client client) {
         return clientRepository.save(client);
     }
