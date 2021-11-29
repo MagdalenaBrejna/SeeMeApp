@@ -14,6 +14,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -272,5 +274,133 @@ class TermServiceImplTest {
         assertEquals(3, terms.size());
         assertEquals(3l, terms.get(0).getId());
         assertEquals(2l, terms.get(1).getId());
+    }
+
+    @Test
+    public void findAllPastAppointedByProviderId() {
+        //given
+        ServiceProvider providerA = ServiceProvider.builder().id(1l).build();
+
+        AvailableService service1 = AvailableService.builder().id(1l).serviceProvider(providerA).build();
+        AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerA).build();
+        AvailableService service3 = AvailableService.builder().id(3l).serviceProvider(providerA).build();
+
+        Term term1 = Term.builder().id(1l).termDate(LocalDate.parse("2020-11-22")).service(service1).build();
+        Term term2 = Term.builder().id(2l).termDate(LocalDate.parse("2020-11-28")).service(service2).build();
+        Term term3 = Term.builder().id(3l).termDate(LocalDate.parse("2020-11-21")).service(service3).build();
+
+        List<Term> termList = new ArrayList<>();
+        termList.add(term1);
+        termList.add(term2);
+        termList.add(term3);
+
+        //when
+        when(termRepository.findAllAppointedByProviderIdBeforeDate(providerA.getId(), LocalDate.parse(LocalDate.now().toString()))).thenReturn(termList);
+        List<Term> terms = service.findAllPastAppointedByProviderId(providerA.getId());
+
+        //then
+        assertNotNull(termList);
+        assertEquals(3, terms.size());
+        assertEquals(2l, terms.get(0).getId());
+        assertEquals(1l, terms.get(1).getId());
+    }
+
+    @Test
+    public void findAllPastAppointedByDateAndProviderId() {
+        //given
+        ServiceProvider providerA = ServiceProvider.builder().id(1l).build();
+
+        AvailableService service1 = AvailableService.builder().id(1l).serviceProvider(providerA).build();
+        AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerA).build();
+        AvailableService service3 = AvailableService.builder().id(3l).serviceProvider(providerA).build();
+
+        Term term1 = Term.builder().id(1l).termDate(LocalDate.parse("2020-11-22")).termTime(LocalTime.parse("11:32:22", DateTimeFormatter.ISO_TIME)).service(service1).build();
+        Term term2 = Term.builder().id(2l).termDate(LocalDate.parse("2020-11-22")).termTime(LocalTime.parse("12:32:22", DateTimeFormatter.ISO_TIME)).service(service2).build();
+        Term term3 = Term.builder().id(3l).termDate(LocalDate.parse("2020-11-22")).termTime(LocalTime.parse("10:32:22", DateTimeFormatter.ISO_TIME)).service(service3).build();
+
+        List<Term> termList = new ArrayList<>();
+        termList.add(term1);
+        termList.add(term2);
+        termList.add(term3);
+
+        //when
+        when(termRepository.findAllAppointedByProviderIdAtDate(providerA.getId(), LocalDate.parse("2020-11-22"))).thenReturn(termList);
+        List<Term> terms = service.findAllPastAppointedByDateAndProviderId(providerA.getId(), LocalDate.parse("2020-11-22"));
+
+        //then
+        assertNotNull(termList);
+        assertEquals(3, terms.size());
+        assertEquals(3l, terms.get(0).getId());
+        assertEquals(1l, terms.get(1).getId());
+    }
+
+    @Test
+    public void findAllPastAppointedByProviderIdAndClientId() {
+        //given
+        Client clientA = Client.builder().id(1l).build();
+
+        ServiceProvider providerA = ServiceProvider.builder().id(1l).build();
+        ServiceProvider providerB = ServiceProvider.builder().id(2l).build();
+
+        AvailableService service1 = AvailableService.builder().id(1l).serviceProvider(providerA).build();
+        AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerB).build();
+        AvailableService service3 = AvailableService.builder().id(3l).serviceProvider(providerA).build();
+        AvailableService service4 = AvailableService.builder().id(4l).serviceProvider(providerA).build();
+
+        Term term1 = Term.builder().id(1l).termDate(LocalDate.parse("2021-11-18")).service(service1).client(clientA).build();
+        Term term2 = Term.builder().id(2l).termDate(LocalDate.parse("2021-11-19")).service(service2).client(clientA).build();
+        Term term3 = Term.builder().id(3l).termDate(LocalDate.parse("2021-11-20")).service(service3).client(clientA).build();
+        Term term4 = Term.builder().id(4l).termDate(LocalDate.parse("2021-11-19")).service(service4).client(clientA).build();
+
+        List<Term> termList = new ArrayList<>();
+        termList.add(term1);
+        termList.add(term2);
+        termList.add(term3);
+        termList.add(term4);
+
+        //when
+        when(termRepository.findAllByClientId(anyLong())).thenReturn(termList);
+        List<Term> terms = service.findAllPastAppointedByProviderIdAndClientId(providerA.getId(), clientA.getId());
+
+        //then
+        assertNotNull(termList);
+        assertEquals(3, terms.size());
+        assertEquals(term3, terms.get(0));
+        assertEquals(term1, terms.get(2));
+    }
+
+    @Test
+    public void findAllPastAppointedByDateAndProviderIdAndClientId() {
+        //given
+        Client clientA = Client.builder().id(1l).build();
+
+        ServiceProvider providerA = ServiceProvider.builder().id(1l).build();
+        ServiceProvider providerB = ServiceProvider.builder().id(2l).build();
+
+        AvailableService service1 = AvailableService.builder().id(1l).serviceProvider(providerA).build();
+        AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerB).build();
+        AvailableService service3 = AvailableService.builder().id(3l).serviceProvider(providerA).build();
+        AvailableService service4 = AvailableService.builder().id(4l).serviceProvider(providerA).build();
+
+        Term term1 = Term.builder().id(1l).termDate(LocalDate.parse("2021-11-19")).termTime(LocalTime.parse("12:32:22", DateTimeFormatter.ISO_TIME)).service(service1).client(clientA).build();
+        Term term2 = Term.builder().id(2l).termDate(LocalDate.parse("2021-11-19")).termTime(LocalTime.parse("13:32:22", DateTimeFormatter.ISO_TIME)).service(service2).client(clientA).build();
+        Term term3 = Term.builder().id(3l).termDate(LocalDate.parse("2021-11-20")).termTime(LocalTime.parse("14:32:22", DateTimeFormatter.ISO_TIME)).service(service3).client(clientA).build();
+        Term term4 = Term.builder().id(4l).termDate(LocalDate.parse("2021-11-19")).termTime(LocalTime.parse("09:32:22", DateTimeFormatter.ISO_TIME)).service(service4).client(clientA).build();
+
+        List<Term> termList = new ArrayList<>();
+        termList.add(term1);
+        termList.add(term2);
+        termList.add(term3);
+        termList.add(term4);
+
+        //when
+        when(termRepository.findAllByClientId(anyLong())).thenReturn(termList);
+        List<Term> terms = service.findAllPastAppointedByDateAndProviderIdAndClientId(providerA.getId(), clientA.getId(), LocalDate.parse("2021-11-19"));
+
+        //then
+        assertNotNull(termList);
+        assertEquals(2, terms.size());
+        assertEquals(term4, terms.get(0));
+        assertEquals(term1, terms.get(1));
     }
 }

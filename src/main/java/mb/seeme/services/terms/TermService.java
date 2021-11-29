@@ -8,16 +8,25 @@ import java.util.List;
 
 public interface TermService extends BaseService<Term, Long> {
 
-    List<Term> findAllFutureByClientId(Long id);
+    List<Term> findAllFutureByClientId(Long clientId);
 
-    List<Term> findAllPastByClientId(Long id);
+    List<Term> findAllPastByClientId(Long clientId);
 
 
-    List<Term> findAllFutureFreeByProviderId(Long id);
+    List<Term> findAllFutureFreeByProviderId(Long providerId);
 
-    List<Term> findAllFutureFreeByProviderIdFromDate(Long id, LocalDate date);
+    List<Term> findAllFutureFreeByProviderIdFromDate(Long providerId, LocalDate selectedDate);
 
-    List<Term> findAllFutureAppointedByProviderId(Long id);
+    List<Term> findAllFutureAppointedByProviderId(Long providerId);
 
-    List<Term> findAllFutureAppointedByProviderIdFromDate(Long id, LocalDate date);
+    List<Term> findAllFutureAppointedByProviderIdFromDate(Long providerId, LocalDate selectedDate);
+
+
+    List<Term> findAllPastAppointedByProviderId(Long providerId);
+
+    List<Term> findAllPastAppointedByDateAndProviderId(Long providerId, LocalDate selectedDate);
+
+    List<Term> findAllPastAppointedByProviderIdAndClientId(Long providerId, Long clientId);
+
+    List<Term> findAllPastAppointedByDateAndProviderIdAndClientId(Long providerId, Long clientId, LocalDate selectedDate);
 }
