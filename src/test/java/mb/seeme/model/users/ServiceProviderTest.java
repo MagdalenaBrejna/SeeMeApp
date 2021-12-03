@@ -2,8 +2,8 @@ package mb.seeme.model.users;
 
 import mb.seeme.model.services.AvailableService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +18,7 @@ class ServiceProviderTest {
         provider = new ServiceProvider();
     }
 
+    @DisplayName("Test setting provider id")
     @Test
     void getId() throws Exception {
         //given
@@ -28,6 +29,7 @@ class ServiceProviderTest {
         assertEquals(idValue, provider.getId());
     }
 
+    @DisplayName("Test setting provider name")
     @Test
     void getName() throws Exception {
         //given
@@ -38,6 +40,7 @@ class ServiceProviderTest {
         assertEquals(provider.getName(), name);
     }
 
+    @DisplayName("Test setting provider telephone number")
     @Test
     void getTelephone() throws Exception {
         //given
@@ -48,6 +51,7 @@ class ServiceProviderTest {
         assertEquals(provider.getTelephone(), telNumber);
     }
 
+    @DisplayName("Test setting provider mail")
     @Test
     void getEmail() throws Exception {
         //given
@@ -58,6 +62,7 @@ class ServiceProviderTest {
         assertEquals(provider.getEmail(), email);
     }
 
+    @DisplayName("Test setting provider password")
     @Test
     void getPassword() throws Exception {
         //given
@@ -68,8 +73,9 @@ class ServiceProviderTest {
         assertEquals(provider.getPassword(), password);
     }
 
+    @DisplayName("Test setting provider role")
     @Test
-    void getAppUserRole() throws Exception {
+    void getUserRole() throws Exception {
         //given
         UserRole role = UserRole.PROVIDER;
         //when
@@ -78,6 +84,7 @@ class ServiceProviderTest {
         assertEquals(provider.getUserRole(), role);
     }
 
+    @DisplayName("Test setting provider address")
     @Test
     void getAddress() throws Exception {
         //given
@@ -88,6 +95,7 @@ class ServiceProviderTest {
         assertEquals(provider.getAddress(), address);
     }
 
+    @DisplayName("Test setting provider city")
     @Test
     void getCity() throws Exception {
         //given
@@ -98,6 +106,7 @@ class ServiceProviderTest {
         assertEquals(provider.getCity(), city);
     }
 
+    @DisplayName("Test setting provider description")
     @Test
     void getDescription() throws Exception {
         //given
@@ -108,6 +117,7 @@ class ServiceProviderTest {
         assertEquals(provider.getProviderDescription(), description);
     }
 
+    @DisplayName("Test setting provider field")
     @Test
     void getField() throws Exception {
         //given
@@ -118,6 +128,7 @@ class ServiceProviderTest {
         assertEquals(provider.getProviderField(), field);
     }
 
+    @DisplayName("Test setting services set")
     @Test
     void getServices() throws Exception {
         //given

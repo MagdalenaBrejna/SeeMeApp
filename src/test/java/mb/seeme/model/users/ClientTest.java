@@ -2,10 +2,12 @@ package mb.seeme.model.users;
 
 import mb.seeme.model.terms.Term;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Set;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class ClientTest {
 
@@ -16,6 +18,7 @@ class ClientTest {
         client = new Client();
     }
 
+    @DisplayName("Test setting client id")
     @Test
     void getId() throws Exception {
         //given
@@ -26,6 +29,7 @@ class ClientTest {
         assertEquals(idValue, client.getId());
     }
 
+    @DisplayName("Test setting client name")
     @Test
     void getName() throws Exception {
         //given
@@ -36,6 +40,7 @@ class ClientTest {
         assertEquals(client.getName(), name);
     }
 
+    @DisplayName("Test setting client telephone number")
     @Test
     void getTelephone() throws Exception {
         //given
@@ -46,6 +51,7 @@ class ClientTest {
         assertEquals(client.getTelephone(), telNumber);
     }
 
+    @DisplayName("Test setting client email")
     @Test
     void getEmail() throws Exception {
         //given
@@ -56,6 +62,7 @@ class ClientTest {
         assertEquals(client.getEmail(), email);
     }
 
+    @DisplayName("Test setting client password")
     @Test
     void getPassword() throws Exception {
         //given
@@ -66,8 +73,9 @@ class ClientTest {
         assertEquals(client.getPassword(), password);
     }
 
+    @DisplayName("Test setting client role")
     @Test
-    void getAppUserRole() throws Exception {
+    void getUserRole() throws Exception {
         //given
         UserRole role = UserRole.USER;
         //when
@@ -76,6 +84,7 @@ class ClientTest {
         assertEquals(client.getUserRole(), role);
     }
 
+    @DisplayName("Test setting terms set")
     @Test
     void getTerms() throws Exception {
         //given

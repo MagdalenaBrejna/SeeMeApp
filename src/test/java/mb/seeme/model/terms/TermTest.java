@@ -3,11 +3,15 @@ package mb.seeme.model.terms;
 import mb.seeme.model.services.AvailableService;
 import mb.seeme.model.users.Client;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.time.format.DateTimeFormatter;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+@DisplayName("Test term entity")
 class TermTest {
 
     Term term;
@@ -17,6 +21,7 @@ class TermTest {
         term = new Term();
     }
 
+    @DisplayName("Test setting term id")
     @Test
     void getId() throws Exception {
         //given
@@ -27,8 +32,9 @@ class TermTest {
         assertEquals(idValue, term.getId());
     }
 
+    @DisplayName("Test setting term date")
     @Test
-    void getDate() throws Exception {
+    void getTermDate() throws Exception {
         //given
         LocalDate date = LocalDate.parse("2021-11-21");
         //when
@@ -37,8 +43,20 @@ class TermTest {
         assertEquals(term.getTermDate(), date);
     }
 
+    @DisplayName("Test getting error while setting wrong term date")
     @Test
-    void getTime() throws Exception {
+    void getWrongTermDateThrowsException() throws Exception {
+        //given + when
+        Exception wrongDateException = assertThrows(java.time.format.DateTimeParseException.class, () -> {
+            term.setTermDate(LocalDate.parse("2021-11-41"));
+        }, "Wrong date range");
+        //then
+        assertTrue(wrongDateException.getMessage().contains("Invalid value for DayOfMonth"));
+    }
+
+    @DisplayName("Test setting term time")
+    @Test
+    void getTermTime() throws Exception {
         //given
         LocalTime now = LocalTime.now();
         //when
@@ -47,6 +65,18 @@ class TermTest {
         assertEquals(term.getTermTime(), now);
     }
 
+    @DisplayName("Test getting error while setting wrong term time")
+    @Test
+    void getWrongTermTimeThrowsException() throws Exception {
+        //given + when
+        Exception wrongTimeException = assertThrows(java.time.format.DateTimeParseException.class, () -> {
+            term.setTermTime(LocalTime.parse("25:32:22", DateTimeFormatter.ISO_TIME));
+        }, "Wrong time range");
+        //then
+        assertTrue(wrongTimeException.getMessage().contains("Invalid value for HourOfDay"));
+    }
+
+    @DisplayName("Test setting term description")
     @Test
     void getTermDescription() throws Exception {
         //given
@@ -57,6 +87,7 @@ class TermTest {
         assertEquals(term.getTermDescription(), description);
     }
 
+    @DisplayName("Test setting term service")
     @Test
     void getService() throws Exception {
         //given
@@ -67,6 +98,7 @@ class TermTest {
         assertEquals(term.getService().getId(), service.getId());
     }
 
+    @DisplayName("Test setting term client")
     @Test
     void getClient() throws Exception {
         //given
@@ -77,6 +109,18 @@ class TermTest {
         assertEquals(term.getClient().getName(), client.getName());
     }
 
+    @DisplayName("Test getting error while getting name of null client")
+    @Test
+    void getEmptyClientThrowsException() throws Exception {
+        //given + when
+        Exception emptyClientException = assertThrows(NullPointerException.class, () -> {
+            term.getClient().getName();
+        }, "Client is null");
+        //then
+        assertEquals(NullPointerException.class, emptyClientException.getClass());
+    }
+
+    @DisplayName("Test setting term status")
     @Test
     void getStatus() throws Exception {
         //given

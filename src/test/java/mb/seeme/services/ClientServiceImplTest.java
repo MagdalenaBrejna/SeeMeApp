@@ -4,6 +4,7 @@ import mb.seeme.model.users.Client;
 import mb.seeme.repositories.ClientRepository;
 import mb.seeme.services.users.ClientServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,8 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ClientServiceImplTest {
@@ -35,62 +35,79 @@ class ClientServiceImplTest {
         client = Client.builder().id(2l).build();
     }
 
+    @DisplayName("Test getting all clients")
     @Test
     void findAll() {
         //given
         Set<Client> testClientSet = new HashSet<>();
         testClientSet.add(Client.builder().id(1l).build());
         testClientSet.add(Client.builder().id(2l).build());
+
         //when
         when(clientRepository.findAll()).thenReturn(testClientSet);
         Set<Client> clientSet = service.findAll();
+
         //then
+        verify(clientRepository).findAll();
+        verify(clientRepository, never()).findById(anyLong());
         assertNotNull(clientSet);
         assertEquals(2, clientSet.size());
     }
 
+    @DisplayName("Test getting client by id")
     @Test
     void findById() {
         //when
         when(clientRepository.findById(anyLong())).thenReturn(Optional.of(client));
         Client testClient = service.findById(2l);
+
         //then
+        verify(clientRepository).findById(anyLong());
+        verify(clientRepository, never()).findAll();
         assertNotNull(testClient);
     }
 
+    @DisplayName("Test getting client by id which doesn't exist")
     @Test
     void findByIdNotFound() {
         //when
         when(clientRepository.findById(anyLong())).thenReturn(Optional.empty());
         Client testClient = service.findById(2l);
+
         //then
+        verify(clientRepository).findById(anyLong());
+        verify(clientRepository, never()).findAll();
         assertNull(testClient);
     }
 
+    @DisplayName("Test saving client")
     @Test
     void save() {
-        //given
-        Client clientToSave = Client.builder().id(1l).build();
         //when
-        when(clientRepository.save(any())).thenReturn(clientToSave);
-        Client savedClient = service.save(clientToSave);
+        when(clientRepository.save(any())).thenReturn(client);
+        Client savedClient = service.save(client);
+
         //then
         assertNotNull(savedClient);
         verify(clientRepository).save(any());
     }
 
+    @DisplayName("Test deleting client")
     @Test
     void delete() {
         //when
         service.delete(client);
+
         //then
         verify(clientRepository).delete(any());
     }
 
+    @DisplayName("Test deleting client by id")
     @Test
     void deleteById() {
         //when
         service.deleteById(2l);
+
         //then
         verify(clientRepository).deleteById(anyLong());
     }

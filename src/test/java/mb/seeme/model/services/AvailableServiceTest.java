@@ -3,10 +3,12 @@ package mb.seeme.model.services;
 import mb.seeme.model.terms.Term;
 import mb.seeme.model.users.ServiceProvider;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class AvailableServiceTest {
 
@@ -17,6 +19,7 @@ class AvailableServiceTest {
         service = new AvailableService();
     }
 
+    @DisplayName("Test setting service id")
     @Test
     void getId() throws Exception {
         //given
@@ -27,6 +30,7 @@ class AvailableServiceTest {
         assertEquals(idValue, service.getId());
     }
 
+    @DisplayName("Test setting service name")
     @Test
     void getServiceName() throws Exception {
         //given
@@ -37,6 +41,7 @@ class AvailableServiceTest {
         assertEquals(serviceName, service.getServiceName());
     }
 
+    @DisplayName("Test setting term set")
     @Test
     void getTerms() throws Exception {
         //given
@@ -49,6 +54,7 @@ class AvailableServiceTest {
         assertEquals(service.getTerms().size(), 1);
     }
 
+    @DisplayName("Test setting service provider")
     @Test
     void getServiceProvider() throws Exception {
         //given
@@ -57,5 +63,16 @@ class AvailableServiceTest {
         service.setServiceProvider(provider);
         //then
         assertEquals(service.getServiceProvider(), provider);
+    }
+
+    @DisplayName("Test getting error while getting name of null service provider")
+    @Test
+    void getEmptyServiceProviderThrowsException() throws Exception {
+        //given + when
+        Exception emptyProviderException = assertThrows(NullPointerException.class, () -> {
+            service.getServiceProvider().getName();
+        }, "Provider is null");
+        //then
+        assertEquals(NullPointerException.class, emptyProviderException.getClass());
     }
 }
