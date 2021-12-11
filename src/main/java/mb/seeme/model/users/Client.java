@@ -20,4 +20,8 @@ public class Client extends Person {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private Set<Term> terms = new HashSet<>();
+
+    public String toString(){
+        return getName();
+    }
 }

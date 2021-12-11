@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'archive')}">
+<head>
+    <meta charset="UTF-8"/>
+    <title>archive</title>
+</head>
+<body>
+    <table id="archive_terms" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 100px;" th:text="#{date}">Date</th>
+            <th style="width: 100px;" th:text="#{time}">Time</th>
+            <th style="width: 100px;" th:text="#{client}">Client</th>
+            <th style="width: 80px;" th:text="#{details}">Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="archive_terms" type="mb.seeme.model.terms.Term"*/-->
+        <tr th:each="term : ${selections}">
+            <td th:text="${term.termDate}"/>
+            <td th:text="${term.termTime}"/>
+            <td th:text="${term.client}"/>
+            <td><a href="#">more</a></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>
