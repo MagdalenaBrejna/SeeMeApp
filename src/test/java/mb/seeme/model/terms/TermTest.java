@@ -124,7 +124,7 @@ class TermTest {
     @Test
     void getStatus() throws Exception {
         //given
-        Status status = Status.DONE;
+        Status status = Status.FULL;
         //when
         term.setTermRealizedStatus(status);
         //then

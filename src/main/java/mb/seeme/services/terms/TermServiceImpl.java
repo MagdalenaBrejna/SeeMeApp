@@ -69,6 +69,10 @@ public class TermServiceImpl implements TermService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Term> findAllFutureByProviderId(Long providerId) {
+        return termRepository.findAllFutureByProviderId(providerId, LocalDate.now());
+    }
 
     @Override
     public List<Term> findAllFutureFreeByProviderId(Long providerId) {

@@ -13,6 +13,8 @@ public interface TermService extends BaseService<Term, Long> {
     List<Term> findAllPastByClientId(Long clientId);
 
 
+    List<Term> findAllFutureByProviderId(Long providerId);
+
     List<Term> findAllFutureFreeByProviderId(Long providerId);
 
     List<Term> findAllFutureFreeByProviderIdFromDate(Long providerId, LocalDate selectedDate);

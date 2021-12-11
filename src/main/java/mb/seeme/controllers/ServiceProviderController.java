@@ -33,4 +33,13 @@ public class ServiceProviderController {
 
         return "providers/archive";
     }
+
+    @GetMapping({"providers/calendar/{id}", "providers/calendar/{id}.html"})
+    public String getProviderCalendar(Model model, @PathVariable Long id) {
+        List<Term> results = termService.findAllFutureByProviderId(id);
+        if (!results.isEmpty())
+            model.addAttribute("selections", results);
+
+        return "providers/calendar";
+    }
 }
