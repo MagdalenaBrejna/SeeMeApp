@@ -47,7 +47,7 @@ class TermServiceImplTest {
     @BeforeAll
     static void setTestEnvironment(){
         //given
-        Client clientA = Client.builder().id(1l).build();
+        Client clientA = Client.builder().id(1l).name("clientA").build();
 
         ServiceProvider providerA = ServiceProvider.builder().id(1l).build();
         ServiceProvider providerB = ServiceProvider.builder().id(2l).build();
@@ -164,23 +164,23 @@ class TermServiceImplTest {
     @Test
     void findAllFutureByClientId() {
         //when
-        when(termRepository.findAllByClientId(anyLong())).thenReturn(termListAll);
-        List<Term> terms = service.findAllFutureByClientId(anyLong());
+        when(termRepository.findAllByClientName(anyString())).thenReturn(termListAll);
+        List<Term> terms = service.findAllFutureByClientName(anyString());
 
         //then
         assertNotNull(termListAll);
         assertEquals(2, terms.size());
         assertTrue(terms.get(0).getId() == 6l);
         assertTrue(terms.get(1).getId() == 5l);
-        verify(termRepository).findAllByClientId(anyLong());
+        verify(termRepository).findAllByClientName(anyString());
     }
 
     @DisplayName("Test finding all past terms of a specified client")
     @Test
     void findAllPastByClientId() {
         //when
-        when(termRepository.findAllByClientId(anyLong())).thenReturn(termListAll);
-        List<Term> terms = service.findAllPastByClientId(anyLong());
+        when(termRepository.findAllByClientName(anyString())).thenReturn(termListAll);
+        List<Term> terms = service.findAllPastByClientName(anyString());
 
         //then
         assertNotNull(termListAll);
@@ -188,8 +188,10 @@ class TermServiceImplTest {
         assertTrue(terms.get(0).getId() == 1l);
         assertTrue(terms.get(3).getId() == 3l);
         assertFalse(terms.get(3).getId() == 6l);
-        verify(termRepository).findAllByClientId(anyLong());
+        verify(termRepository).findAllByClientName(anyString());
     }
+
+
 
     @DisplayName("Test finding all future free terms of a specified provider")
     @Test
@@ -285,29 +287,29 @@ class TermServiceImplTest {
     @Test
     public void findAllPastAppointedByProviderIdAndClientId() {
         //when
-        when(termRepository.findAllByClientId(anyLong())).thenReturn(termListAll);
-        List<Term> terms = service.findAllPastAppointedByProviderIdAndClientId(1l, 1l);
+        when(termRepository.findAllByClientName(anyString())).thenReturn(termListAll);
+        List<Term> terms = service.findAllPastAppointedByProviderIdAndClientName(1l, "clientA");
 
         //then
         assertNotNull(termListAll);
         assertEquals(3, terms.size());
         assertTrue(terms.get(0).getId() == 3l);
         assertTrue(terms.get(1).getId() == 1l);
-        verify(termRepository).findAllByClientId(anyLong());
+        verify(termRepository).findAllByClientName(anyString());
     }
 
     @DisplayName("Test finding all past appointed terms of a specified provider and specified client at a specified date")
     @Test
     public void findAllPastAppointedByDateAndProviderIdAndClientId() {
         //when
-        when(termRepository.findAllByClientId(anyLong())).thenReturn(termListAll);
-        List<Term> terms = service.findAllPastAppointedByDateAndProviderIdAndClientId(1l, 1l, LocalDate.parse("2021-11-19"));
+        when(termRepository.findAllByClientName(anyString())).thenReturn(termListAll);
+        List<Term> terms = service.findAllPastAppointedByDateAndProviderIdAndClientName(1l, "clientA", LocalDate.parse("2021-11-19"));
 
         //then
         assertNotNull(termListAll);
         assertEquals(2, terms.size());
         assertTrue(terms.get(0).getId() == 4l);
         assertTrue(terms.get(1).getId() == 1l);
-        verify(termRepository).findAllByClientId(anyLong());
+        verify(termRepository).findAllByClientName(anyString());
     }
 }

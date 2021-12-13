@@ -48,30 +48,30 @@ public class TermServiceImpl implements TermService {
 
 
     @Override
-    public List<Term> findAllFutureByClientId(Long clientId) {
-        List<Term> terms = findAllByClientId(clientId).stream()
+    public List<Term> findAllFutureByClientName(String clientName) {
+        List<Term> terms = findAllByClientName(clientName).stream()
                 .filter(term -> term.getTermDate().isAfter(LocalDate.now()) || term.getTermDate().isEqual(LocalDate.now()))
                 .collect(Collectors.toList());
         return terms;
     }
 
     @Override
-    public List<Term> findAllPastByClientId(Long clientId) {
-        List<Term> terms = findAllByClientId(clientId).stream()
+    public List<Term> findAllPastByClientName(String clientName) {
+        List<Term> terms = findAllByClientName(clientName).stream()
                 .filter(term -> term.getTermDate().isBefore(LocalDate.now()))
                 .collect(Collectors.toList());
         return terms;
     }
 
-    private List<Term> findAllByClientId(Long clientId) {
-        return termRepository.findAllByClientId(clientId).stream()
+    private List<Term> findAllByClientName(String clientName) {
+        return termRepository.findAllByClientName(clientName).stream()
                 .sorted((term1, term2) -> term1.getTermDate().compareTo(term2.getTermDate()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Term> findAllFutureByProviderId(Long providerId) {
-        return termRepository.findAllFutureByProviderId(providerId, LocalDate.now());
+        return termRepository.findAllByProviderIdFromDate(providerId, LocalDate.now());
     }
 
     @Override
@@ -133,8 +133,8 @@ public class TermServiceImpl implements TermService {
     }
 
     @Override
-    public List<Term> findAllPastAppointedByProviderIdAndClientId(Long providerId, Long clientId) {
-        List<Term> terms = findAllPastByClientId(clientId)
+    public List<Term> findAllPastAppointedByProviderIdAndClientName(Long providerId, String clientName) {
+        List<Term> terms = findAllPastByClientName(clientName)
                 .stream()
                 .filter(term -> term.getService().getServiceProvider().getId() == providerId)
                 .sorted((term1, term2) -> term2.getTermDate().compareTo(term1.getTermDate()))
@@ -143,8 +143,8 @@ public class TermServiceImpl implements TermService {
     }
 
     @Override
-    public List<Term> findAllPastAppointedByDateAndProviderIdAndClientId(Long providerId, Long clientId, LocalDate selectedDate) {
-        List<Term> terms = findAllPastByClientId(clientId)
+    public List<Term> findAllPastAppointedByDateAndProviderIdAndClientName(Long providerId, String clientName, LocalDate selectedDate) {
+        List<Term> terms = findAllPastByClientName(clientName)
                 .stream()
                 .filter(term -> (term.getTermDate().equals(selectedDate) && term.getService().getServiceProvider().getId() == providerId))
                 .sorted((term1, term2) -> term1.getTermTime().compareTo(term2.getTermTime()))

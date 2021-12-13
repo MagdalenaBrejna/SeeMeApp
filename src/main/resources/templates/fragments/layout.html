@@ -19,9 +19,16 @@
 
     <link rel="stylesheet" th:href="@{/resources/css/petclinic.css}"/>
 
+    <script type="text/javascript">
+        function addProviderId() {
+            document.forms['clientQuery']['providerId'].value =  localStorage.getItem("providerId");
+            console.log("cos");
+        }
+    </script>
+
   </head>
 
-<body>
+<body onload="addProviderId();">
 
   <nav class="navbar navbar-default" role="navigation">
       <div class="container">

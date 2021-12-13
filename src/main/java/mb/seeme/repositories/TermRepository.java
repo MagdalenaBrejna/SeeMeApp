@@ -13,12 +13,15 @@ public interface TermRepository extends CrudRepository<Term, Long> {
     List<Term> findAllFromDate(LocalDate selectedDate);
 
 
-    @Query(nativeQuery = true, value = "select * from terms where client_id = clientId")
+    @Query(nativeQuery = true, value = "select * from terms WHERE terms.client_id = ?1")
     List<Term> findAllByClientId(Long clientId);
+
+    @Query(nativeQuery = true, value = "select * from terms INNER JOIN clients ON terms.client_id = clients.id WHERE clients.name LIKE ?1")
+    List<Term> findAllByClientName(String clientName);
 
 
     @Query(nativeQuery = true, value = "SELECT * FROM terms INNER JOIN services ON terms.service_id = services.id INNER JOIN providers ON services.service_provider_id = providers.id WHERE (services.service_provider_id=?1 AND terms.term_date >= ?2) ORDER BY terms.term_date")
-    List<Term> findAllFutureByProviderId(Long providerId, LocalDate selectedDate);
+    List<Term> findAllByProviderIdFromDate(Long providerId, LocalDate selectedDate);
 
 
     @Query(nativeQuery = true, value = "select * from terms where (service_provier_id = providerId and client_id = NULL and term_date >= selectedDate)")

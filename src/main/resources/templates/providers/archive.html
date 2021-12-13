@@ -3,8 +3,29 @@
 <head>
     <meta charset="UTF-8"/>
     <title>archive</title>
+
 </head>
-<body>
+<body >
+    <!--/*@thymesVar id="client" type="mb.seeme.model.users.Client"*/-->
+    <form name="clientQuery" th:object="${client}" th:action="@{/providers/archive}" method="get"
+          class="form-horizontal" id="search-client-form">
+        <input hidden id="providerId" name="providerId"/>
+
+        <div class="form-group">
+            <div class="control-group" id="lastNameGroup">
+                <div class="col-sm-4">
+                    <input class="form-control" th:field="*{name}" size="30" maxlength="30" placeholder="Client Name"/>
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-default" >
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <br>
     <table id="archive_terms" class="table table-striped">
         <thead>
         <tr>
@@ -24,5 +45,6 @@
         </tr>
         </tbody>
     </table>
+
 </body>
 </html>

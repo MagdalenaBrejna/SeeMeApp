@@ -1,12 +1,16 @@
 package mb.seeme.controllers;
 
 import mb.seeme.model.terms.Term;
+import mb.seeme.model.users.Client;
 import mb.seeme.services.terms.TermService;
 import mb.seeme.services.users.ServiceProviderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 
 @Controller
@@ -25,15 +29,6 @@ public class ServiceProviderController {
         return "providers/account";
     }
 
-    @GetMapping({"providers/archive/{id}", "providers/archive/{id}.html"})
-    public String getProviderArchive(Model model, @PathVariable Long id) {
-        List<Term> results = termService.findAllPastAppointedByProviderId(id);
-        if (!results.isEmpty())
-            model.addAttribute("selections", results);
-
-        return "providers/archive";
-    }
-
     @GetMapping({"providers/calendar/{id}", "providers/calendar/{id}.html"})
     public String getProviderCalendar(Model model, @PathVariable Long id) {
         List<Term> results = termService.findAllFutureByProviderId(id);
@@ -41,5 +36,19 @@ public class ServiceProviderController {
             model.addAttribute("selections", results);
 
         return "providers/calendar";
+    }
+
+    @GetMapping({"providers/archive", "providers/archive.html"})
+    public String processFindForm(Client client, BindingResult result, Model model, @RequestParam("providerId") Long id){
+        if (client.getName() == null)
+            client.setName("");
+        List<Term> results = termService.findAllPastAppointedByProviderIdAndClientName(id, "%" + client.getName() + "%");
+
+        if (results.isEmpty())
+            result.rejectValue("name", "notFound", "not found");
+        else
+            model.addAttribute("selections", results);
+
+        return "providers/archive";
     }
 }

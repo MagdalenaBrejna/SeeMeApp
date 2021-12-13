@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface TermService extends BaseService<Term, Long> {
 
-    List<Term> findAllFutureByClientId(Long clientId);
+    List<Term> findAllFutureByClientName(String clientName);
 
-    List<Term> findAllPastByClientId(Long clientId);
+    List<Term> findAllPastByClientName(String clientName);
 
 
     List<Term> findAllFutureByProviderId(Long providerId);
@@ -28,7 +28,7 @@ public interface TermService extends BaseService<Term, Long> {
 
     List<Term> findAllPastAppointedByDateAndProviderId(Long providerId, LocalDate selectedDate);
 
-    List<Term> findAllPastAppointedByProviderIdAndClientId(Long providerId, Long clientId);
+    List<Term> findAllPastAppointedByProviderIdAndClientName(Long providerId, String clientName);
 
-    List<Term> findAllPastAppointedByDateAndProviderIdAndClientId(Long providerId, Long clientId, LocalDate selectedDate);
+    List<Term> findAllPastAppointedByDateAndProviderIdAndClientName(Long providerId, String clientName, LocalDate selectedDate);
 }
