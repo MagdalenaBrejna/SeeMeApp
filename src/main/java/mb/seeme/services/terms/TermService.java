@@ -30,5 +30,5 @@ public interface TermService extends BaseService<Term, Long> {
 
     List<Term> findAllPastAppointedByProviderIdAndClientName(Long providerId, String clientName);
 
-    List<Term> findAllPastAppointedByDateAndProviderIdAndClientName(Long providerId, String clientName, LocalDate selectedDate);
+    List<Term> findAllPastAppointedBeforeDateAndProviderIdAndClientName(Long providerId, String clientName, LocalDate selectedDate);
 }

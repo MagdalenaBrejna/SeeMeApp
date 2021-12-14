@@ -303,7 +303,7 @@ class TermServiceImplTest {
     public void findAllPastAppointedByDateAndProviderIdAndClientId() {
         //when
         when(termRepository.findAllByClientName(anyString())).thenReturn(termListAll);
-        List<Term> terms = service.findAllPastAppointedByDateAndProviderIdAndClientName(1l, "clientA", LocalDate.parse("2021-11-19"));
+        List<Term> terms = service.findAllPastAppointedBeforeDateAndProviderIdAndClientName(1l, "clientA", LocalDate.parse("2021-11-19"));
 
         //then
         assertNotNull(termListAll);

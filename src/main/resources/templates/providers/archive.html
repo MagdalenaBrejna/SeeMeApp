@@ -7,14 +7,16 @@
 </head>
 <body >
     <!--/*@thymesVar id="client" type="mb.seeme.model.users.Client"*/-->
-    <form name="clientQuery" th:object="${client}" th:action="@{/providers/archive}" method="get"
-          class="form-horizontal" id="search-client-form">
+    <!--/*@thymesVar id="term" type="mb.seeme.model.terms.Term"*/-->
+    <form name="clientQuery"  th:action="@{/providers/archive}" method="get" class="form-horizontal" id="search-client-form">
         <input hidden id="providerId" name="providerId"/>
-
         <div class="form-group">
-            <div class="control-group" id="lastNameGroup">
-                <div class="col-sm-4">
+            <div class="control-group" id="nameGroup">
+                <div th:object="${client}" class="col-sm-4">
                     <input class="form-control" th:field="*{name}" size="30" maxlength="30" placeholder="Client Name"/>
+                </div>
+                <div class="col-sm-4">
+                    <input class="form-control" type="date" th:name="termDate" size="30" maxlength="30" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
                 </div>
                 <div class="col-sm-2">
                     <button type="submit" class="btn btn-default" >
@@ -36,7 +38,6 @@
         </tr>
         </thead>
         <tbody>
-        <!--/*@thymesVar id="archive_terms" type="mb.seeme.model.terms.Term"*/-->
         <tr th:each="term : ${selections}">
             <td th:text="${term.termDate}"/>
             <td th:text="${term.termTime}"/>

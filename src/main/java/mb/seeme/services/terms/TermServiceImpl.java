@@ -143,10 +143,10 @@ public class TermServiceImpl implements TermService {
     }
 
     @Override
-    public List<Term> findAllPastAppointedByDateAndProviderIdAndClientName(Long providerId, String clientName, LocalDate selectedDate) {
+    public List<Term> findAllPastAppointedBeforeDateAndProviderIdAndClientName(Long providerId, String clientName, LocalDate selectedDate) {
         List<Term> terms = findAllPastByClientName(clientName)
                 .stream()
-                .filter(term -> (term.getTermDate().equals(selectedDate) && term.getService().getServiceProvider().getId() == providerId))
+                .filter(term -> (term.getTermDate().isBefore(selectedDate) && term.getService().getServiceProvider().getId() == providerId))
                 .sorted((term1, term2) -> term1.getTermTime().compareTo(term2.getTermTime()))
                 .collect(Collectors.toList());
         return terms;
