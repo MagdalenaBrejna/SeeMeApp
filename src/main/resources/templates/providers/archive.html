@@ -9,7 +9,6 @@
     <!--/*@thymesVar id="client" type="mb.seeme.model.users.Client"*/-->
     <!--/*@thymesVar id="term" type="mb.seeme.model.terms.Term"*/-->
     <form name="clientQuery"  th:action="@{/providers/archive}" method="get" class="form-horizontal" id="search-client-form">
-        <input hidden id="providerId" name="providerId"/>
         <div class="form-group">
             <div class="control-group" id="nameGroup">
                 <div th:object="${client}" class="col-sm-4">

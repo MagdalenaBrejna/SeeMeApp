@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -39,14 +39,14 @@ public class ServiceProviderController {
     }
 
     @GetMapping({"providers/archive", "providers/archive.html"})
-    public String processFindForm(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate termDate, Client client, @RequestParam("providerId") Long id, Model model){
+    public String processFindForm(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate termDate, Client client, Model model){
         if(termDate == null)
             termDate = LocalDate.now();
         if (client.getName() == null)
             client.setName("");
 
-        List<Term> results = termService.findAllPastAppointedBeforeDateAndProviderIdAndClientName(id, "%" + client.getName() + "%", termDate);
-        model.addAttribute("selections", results);
+        //List<Term> results = termService.findAllPastAppointedBeforeDateAndProviderIdAndClientName(id, "%" + client.getName() + "%", termDate);
+        //model.addAttribute("selections", results);
 
         return "providers/archive";
     }

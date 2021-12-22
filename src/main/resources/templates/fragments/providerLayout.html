@@ -19,15 +19,9 @@
 
     <link rel="stylesheet" th:href="@{/resources/css/petclinic.css}"/>
 
-    <script type="text/javascript">
-        function addProviderId() {
-            document.forms['clientQuery']['providerId'].value =  localStorage.getItem("providerId");
-        }
-    </script>
-
   </head>
 
-<body onload="addProviderId();">
+<body>
 
   <nav class="navbar navbar-default" role="navigation">
       <div class="container">
@@ -55,7 +49,7 @@
                       <span>Calendar</span>
                   </li>
   
-                  <li th:replace="::menuItem ('/providers/archive/{id}','archive','archive','folder-open',' Archive')">
+                  <li th:replace="::menuItem ('/providers/archive','archive','archive','folder-open',' Archive')">
                       <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
                       <span>Archive</span>
                   </li>
