@@ -1,6 +1,8 @@
 package mb.seeme.bootstrap;
 
 import lombok.extern.slf4j.Slf4j;
+import mb.seeme.auth.ApplicationUser;
+import mb.seeme.auth.ApplicationUserRepository;
 import mb.seeme.model.services.AvailableService;
 import mb.seeme.model.terms.Status;
 import mb.seeme.model.terms.Term;
@@ -12,6 +14,8 @@ import mb.seeme.repositories.ServiceProviderRepository;
 import mb.seeme.repositories.TermRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,12 +33,16 @@ public class TermBootstrap implements ApplicationListener<ContextRefreshedEvent>
     private final ServiceProviderRepository providerRepository;
     private final AvailableServiceRepository availableServiceRepository;
     private final ClientRepository clientRepository;
+    private final ApplicationUserRepository applicationUserRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public TermBootstrap(TermRepository termRepository, ServiceProviderRepository providerRepository, AvailableServiceRepository availableServiceRepository, ClientRepository clientRepository) {
+    public TermBootstrap(TermRepository termRepository, ServiceProviderRepository providerRepository, AvailableServiceRepository availableServiceRepository, ClientRepository clientRepository, ApplicationUserRepository applicationUserRepository, PasswordEncoder passwordEncoder) {
         this.termRepository = termRepository;
         this.providerRepository = providerRepository;
         this.availableServiceRepository = availableServiceRepository;
         this.clientRepository = clientRepository;
+        this.applicationUserRepository = applicationUserRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -45,6 +53,11 @@ public class TermBootstrap implements ApplicationListener<ContextRefreshedEvent>
 
     @Transactional
     public List<Term> getTerms(){
+        ApplicationUser user = ApplicationUser.builder().id(1l).username("anna").password(passwordEncoder.encode("password")).role(new SimpleGrantedAuthority("ROLE_CLIENT")).build();
+        ApplicationUser user2 = ApplicationUser.builder().id(2l).username("lidia").password(passwordEncoder.encode("password")).role(new SimpleGrantedAuthority("ROLE_PROVIDER")).build();
+        applicationUserRepository.save(user);
+        applicationUserRepository.save(user2);
+
         Client clientA = Client.builder().id(1l).name("clientA").build();
         Client clientB = Client.builder().id(2l).name("clientB").build();
         clientRepository.save(clientA);
