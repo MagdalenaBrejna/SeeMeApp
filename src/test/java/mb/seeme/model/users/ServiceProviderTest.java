@@ -4,9 +4,12 @@ import mb.seeme.model.services.AvailableService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import java.util.HashSet;
 import java.util.Set;
 
+import static mb.seeme.security.ApplicationUserRole.PROVIDER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ServiceProviderTest {
@@ -77,7 +80,7 @@ class ServiceProviderTest {
     @Test
     void getUserRole() throws Exception {
         //given
-        UserRole role = UserRole.PROVIDER;
+        SimpleGrantedAuthority role = PROVIDER.getUserRole();
         //when
         provider.setUserRole(role);
         //then

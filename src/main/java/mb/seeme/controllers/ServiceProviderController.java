@@ -4,12 +4,12 @@ import mb.seeme.model.terms.Term;
 import mb.seeme.model.users.Client;
 import mb.seeme.services.terms.TermService;
 import mb.seeme.services.users.ServiceProviderService;
+import mb.seeme.services.users.UserAuthenticationService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.security.RolesAllowed;
 import java.time.LocalDate;
@@ -20,10 +20,12 @@ import java.util.List;
 public class ServiceProviderController {
 
     private final ServiceProviderService providerService;
+    private final UserAuthenticationService userAuthenticationService;
     private final TermService termService;
 
-    public ServiceProviderController (ServiceProviderService providerService, TermService termService) {
+    public ServiceProviderController (ServiceProviderService providerService, UserAuthenticationService userAuthenticationService, TermService termService) {
         this.providerService = providerService;
+        this.userAuthenticationService = userAuthenticationService;
         this.termService = termService;
     }
 
@@ -34,9 +36,10 @@ public class ServiceProviderController {
     }
 
     @RolesAllowed("PROVIDER")
-    @GetMapping({"providers/calendar/{id}", "providers/calendar/{id}.html"})
-    public String getProviderCalendar(Model model, @PathVariable Long id) {
-        List<Term> results = termService.findAllFutureByProviderId(id);
+    @GetMapping({"providers/calendar", "providers/calendar.html"})
+    public String getProviderCalendar(Model model) {
+        Long providerId = userAuthenticationService.getAuthenticatedProviderId();
+        List<Term> results = termService.findAllFutureByProviderId(providerId);
         if (!results.isEmpty())
             model.addAttribute("selections", results);
 
@@ -51,8 +54,9 @@ public class ServiceProviderController {
         if (client.getName() == null)
             client.setName("");
 
-        //List<Term> results = termService.findAllPastAppointedBeforeDateAndProviderIdAndClientName(id, "%" + client.getName() + "%", termDate);
-        //model.addAttribute("selections", results);
+        Long providerId = userAuthenticationService.getAuthenticatedProviderId();
+        List<Term> results = termService.findAllPastAppointedBeforeDateAndProviderIdAndClientName(providerId, "%" + client.getName() + "%", termDate);
+        model.addAttribute("selections", results);
 
         return "providers/archive";
     }

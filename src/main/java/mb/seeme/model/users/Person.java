@@ -5,19 +5,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mb.seeme.model.BaseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-public class Person extends BaseEntity {
+public class Person extends BaseEntity implements UserDetails {
 
-    public Person(Long id, String name, String telephone, String email, String password, UserRole userRole) {
+    public Person(Long id, String name, String telephone, String email, String password, SimpleGrantedAuthority userRole) {
         super(id);
         this.name = name;
         this.telephone = telephone;
@@ -38,13 +42,49 @@ public class Person extends BaseEntity {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "role")
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
-
     @Column(name = "locked")
-    private Boolean locked = false;
+    private boolean locked;
 
-    @Column(name = "enabled")
-    private Boolean enabled = false;
+    @Column(name = "role")
+    private SimpleGrantedAuthority userRole;
+
+
+    @Override
+    public Collection<SimpleGrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> list = new ArrayList<SimpleGrantedAuthority>(0);
+        list.add(userRole);
+        return list;
+    }
+
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !isLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

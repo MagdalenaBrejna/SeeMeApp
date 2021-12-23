@@ -2,7 +2,7 @@ package mb.seeme.model.users;
 
 import lombok.*;
 import mb.seeme.model.services.AvailableService;
-
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +15,7 @@ import java.util.Set;
 public class ServiceProvider extends Person {
 
     @Builder
-    public ServiceProvider(Long id, String name, String telephone, String email, String password, UserRole userRole, String address, String city, String providerDescription, String providerField) {
+    public ServiceProvider(Long id, String name, String telephone, String email, String password, SimpleGrantedAuthority userRole, String address, String city, String providerDescription, String providerField) {
         super(id, name, telephone, email, password, userRole);
         this.address = address;
         this.city = city;

@@ -1,8 +1,6 @@
 package mb.seeme.bootstrap;
 
 import lombok.extern.slf4j.Slf4j;
-import mb.seeme.auth.ApplicationUser;
-import mb.seeme.auth.ApplicationUserRepository;
 import mb.seeme.model.services.AvailableService;
 import mb.seeme.model.terms.Status;
 import mb.seeme.model.terms.Term;
@@ -14,16 +12,17 @@ import mb.seeme.repositories.ServiceProviderRepository;
 import mb.seeme.repositories.TermRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import static mb.seeme.security.ApplicationUserRole.CLIENT;
+import static mb.seeme.security.ApplicationUserRole.PROVIDER;
 
 @Slf4j
 @Component
@@ -33,15 +32,13 @@ public class TermBootstrap implements ApplicationListener<ContextRefreshedEvent>
     private final ServiceProviderRepository providerRepository;
     private final AvailableServiceRepository availableServiceRepository;
     private final ClientRepository clientRepository;
-    private final ApplicationUserRepository applicationUserRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public TermBootstrap(TermRepository termRepository, ServiceProviderRepository providerRepository, AvailableServiceRepository availableServiceRepository, ClientRepository clientRepository, ApplicationUserRepository applicationUserRepository, PasswordEncoder passwordEncoder) {
+    public TermBootstrap(TermRepository termRepository, ServiceProviderRepository providerRepository, AvailableServiceRepository availableServiceRepository, ClientRepository clientRepository, PasswordEncoder passwordEncoder) {
         this.termRepository = termRepository;
         this.providerRepository = providerRepository;
         this.availableServiceRepository = availableServiceRepository;
         this.clientRepository = clientRepository;
-        this.applicationUserRepository = applicationUserRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -53,18 +50,13 @@ public class TermBootstrap implements ApplicationListener<ContextRefreshedEvent>
 
     @Transactional
     public List<Term> getTerms(){
-        ApplicationUser user = ApplicationUser.builder().id(1l).username("anna").password(passwordEncoder.encode("password")).role(new SimpleGrantedAuthority("ROLE_CLIENT")).build();
-        ApplicationUser user2 = ApplicationUser.builder().id(2l).username("lidia").password(passwordEncoder.encode("password")).role(new SimpleGrantedAuthority("ROLE_PROVIDER")).build();
-        applicationUserRepository.save(user);
-        applicationUserRepository.save(user2);
-
-        Client clientA = Client.builder().id(1l).name("clientA").build();
-        Client clientB = Client.builder().id(2l).name("clientB").build();
+        Client clientA = Client.builder().id(1l).name("clientA").email("AC").password(passwordEncoder.encode("passAC")).userRole(CLIENT.getUserRole()).build();
+        Client clientB = Client.builder().id(2l).name("clientB").email("BC").password(passwordEncoder.encode("passBC")).userRole(CLIENT.getUserRole()).build();
         clientRepository.save(clientA);
         clientRepository.save(clientB);
 
-        ServiceProvider providerA = ServiceProvider.builder().id(1l).build();
-        ServiceProvider providerB = ServiceProvider.builder().id(2l).build();
+        ServiceProvider providerA = ServiceProvider.builder().id(1l).email("AP").password(passwordEncoder.encode("passAP")).userRole(PROVIDER.getUserRole()).build();
+        ServiceProvider providerB = ServiceProvider.builder().id(2l).email("BP").password(passwordEncoder.encode("passBP")).userRole(PROVIDER.getUserRole()).build();
         providerRepository.save(providerA);
         providerRepository.save(providerB);
 

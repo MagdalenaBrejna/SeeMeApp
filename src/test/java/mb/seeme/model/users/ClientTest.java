@@ -4,10 +4,13 @@ import mb.seeme.model.terms.Term;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static mb.seeme.security.ApplicationUserRole.CLIENT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ClientTest {
 
@@ -77,7 +80,7 @@ class ClientTest {
     @Test
     void getUserRole() throws Exception {
         //given
-        UserRole role = UserRole.USER;
+        SimpleGrantedAuthority role = CLIENT.getUserRole();
         //when
         client.setUserRole(role);
         //then
