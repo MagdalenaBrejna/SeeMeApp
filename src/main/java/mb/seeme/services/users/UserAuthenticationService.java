@@ -1,5 +1,6 @@
 package mb.seeme.services.users;
 
+import mb.seeme.model.users.Client;
 import mb.seeme.model.users.Person;
 import mb.seeme.model.users.ServiceProvider;
 import mb.seeme.repositories.ClientRepository;
@@ -32,5 +33,11 @@ public class UserAuthenticationService implements UserDetailsService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ServiceProvider provider = providerRepository.selectProviderByUsername(authentication.getName());
         return provider.getId();
+    }
+
+    public Long getAuthenticatedClientId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Client client = clientRepository.selectClientByUsername(authentication.getName());
+        return client.getId();
     }
 }

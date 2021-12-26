@@ -12,6 +12,10 @@ public interface TermService extends BaseService<Term, Long> {
 
     List<Term> findAllPastByClientName(String clientName);
 
+    List<Term> findAllFutureByClientId(Long clientId);
+
+    List<Term> findAllPastByClientId(Long clientId);
+
 
     List<Term> findAllFutureByProviderId(Long providerId);
 

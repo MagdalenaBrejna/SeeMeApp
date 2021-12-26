@@ -31,4 +31,5 @@ public class AvailableService extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_provider_id")
     private ServiceProvider serviceProvider;
+
 }

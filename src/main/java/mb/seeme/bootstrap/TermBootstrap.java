@@ -55,13 +55,13 @@ public class TermBootstrap implements ApplicationListener<ContextRefreshedEvent>
         clientRepository.save(clientA);
         clientRepository.save(clientB);
 
-        ServiceProvider providerA = ServiceProvider.builder().id(1l).email("AP").password(passwordEncoder.encode("passAP")).userRole(PROVIDER.getUserRole()).build();
-        ServiceProvider providerB = ServiceProvider.builder().id(2l).email("BP").password(passwordEncoder.encode("passBP")).userRole(PROVIDER.getUserRole()).build();
+        ServiceProvider providerA = ServiceProvider.builder().id(1l).name("providerA").email("AP").password(passwordEncoder.encode("passAP")).userRole(PROVIDER.getUserRole()).build();
+        ServiceProvider providerB = ServiceProvider.builder().id(2l).name("providerB").email("BP").password(passwordEncoder.encode("passBP")).userRole(PROVIDER.getUserRole()).build();
         providerRepository.save(providerA);
         providerRepository.save(providerB);
 
-        AvailableService service1 = AvailableService.builder().id(1l).serviceProvider(providerA).build();
-        AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerB).build();
+        AvailableService service1 = AvailableService.builder().id(1l).serviceProvider(providerA).serviceName("service1").build();
+        AvailableService service2 = AvailableService.builder().id(2l).serviceProvider(providerB).serviceName("service2").build();
         availableServiceRepository.save(service1);
         availableServiceRepository.save(service2);
 
