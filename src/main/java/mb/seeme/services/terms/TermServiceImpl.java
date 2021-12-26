@@ -75,6 +75,11 @@ public class TermServiceImpl implements TermService {
     }
 
     @Override
+    public List<Term> findAllFutureByProviderIdFromDate(Long providerId, LocalDate selectedDate){
+        return termRepository.findAllByProviderIdFromDate(providerId, selectedDate);
+    }
+
+    @Override
     public List<Term> findAllFutureFreeByProviderId(Long providerId) {
         return findFreeTermsByProviderIdFromDate(providerId, LocalDate.now());
     }

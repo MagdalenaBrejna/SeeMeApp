@@ -193,35 +193,37 @@ class TermServiceImplTest {
 
 
 
-    @DisplayName("Test finding all future free terms of a specified provider")
-    @Test
-    public void findAllFutureFreeByProviderId() {
-        //when
-        when(termRepository.findAllFreeByProviderIdFromDate(anyLong(), any())).thenReturn(termListFreeSameProvider);
-        List<Term> terms = service.findAllFutureFreeByProviderId(1l);
+        @DisplayName("Test finding all future free terms of a specified provider")
+        @Test
+        public void findAllFutureFreeByProviderId() {
+            //when
+            when(termRepository.findAllFreeByProviderIdFromDate(anyLong(), any())).thenReturn(termListFreeSameProvider);
+            List<Term> terms = service.findAllFutureFreeByProviderId(1l);
 
-        //then
-        assertNotNull(termListFreeSameProvider);
-        assertEquals(2, terms.size());
-        assertTrue(terms.get(0).getId() == 8l);
-        assertTrue(terms.get(1).getId() == 7l);
-        verify(termRepository).findAllFreeByProviderIdFromDate(anyLong(), any());
-    }
+            //then
+            assertNotNull(termListFreeSameProvider);
+            assertEquals(2, terms.size());
+            assertTrue(terms.get(0).getId() == 8l);
+            assertTrue(terms.get(1).getId() == 7l);
+            verify(termRepository).findAllFreeByProviderIdFromDate(anyLong(), any());
+        }
 
-    @DisplayName("Test finding all future free terms of a specified provider and later than specified a date")
-    @Test
-    public void findAllFutureFreeByProviderIdFromDate() {
-        //when
-        when(termRepository.findAllFreeByProviderIdFromDate(anyLong(), any())).thenReturn(termListFreeSameProvider);
-        List<Term> terms = service.findAllFutureFreeByProviderIdFromDate(1l, LocalDate.parse("2022-03-18"));
+        @DisplayName("Test finding all future free terms of a specified provider and later than specified a date")
+        @Test
+        public void findAllFutureFreeByProviderIdFromDate() {
+            //when
+            when(termRepository.findAllFreeByProviderIdFromDate(anyLong(), any())).thenReturn(termListFreeSameProvider);
+            List<Term> terms = service.findAllFutureFreeByProviderIdFromDate(1l, LocalDate.parse("2022-03-18"));
 
-        //then
-        assertNotNull(termListFreeSameProvider);
-        assertEquals(2, terms.size());
-        assertTrue(terms.get(0).getId() == 8l);
-        assertTrue(terms.get(1).getId() == 7l);
-        verify(termRepository).findAllFreeByProviderIdFromDate(anyLong(), any());
-    }
+            //then
+            assertNotNull(termListFreeSameProvider);
+            assertEquals(2, terms.size());
+            assertTrue(terms.get(0).getId() == 8l);
+            assertTrue(terms.get(1).getId() == 7l);
+            verify(termRepository).findAllFreeByProviderIdFromDate(anyLong(), any());
+        }
+
+
 
     @DisplayName("Test finding all future appointed terms of a specified provider")
     @Test
@@ -297,7 +299,7 @@ class TermServiceImplTest {
         assertTrue(terms.get(1).getId() == 1l);
         verify(termRepository).findAllByClientName(anyString());
     }
-
+/*
     @DisplayName("Test finding all past appointed terms of a specified provider and specified client at a specified date")
     @Test
     public void findAllPastAppointedByDateAndProviderIdAndClientId() {
@@ -312,4 +314,6 @@ class TermServiceImplTest {
         assertTrue(terms.get(1).getId() == 1l);
         verify(termRepository).findAllByClientName(anyString());
     }
+
+ */
 }

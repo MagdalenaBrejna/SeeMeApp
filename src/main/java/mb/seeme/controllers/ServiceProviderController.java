@@ -37,9 +37,19 @@ public class ServiceProviderController {
 
     @RolesAllowed("PROVIDER")
     @GetMapping({"providers/calendar", "providers/calendar.html"})
-    public String getProviderCalendar(Model model) {
+    public String getProviderCalendar(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate selectedTermDate, Term term, Model model) {
         Long providerId = userAuthenticationService.getAuthenticatedProviderId();
-        List<Term> results = termService.findAllFutureByProviderId(providerId);
+        if(selectedTermDate == null)
+            selectedTermDate = LocalDate.now();
+
+        List<Term> results;
+        if(term.getTermRealizedStatus() == null)
+            results = termService.findAllFutureByProviderIdFromDate(providerId, selectedTermDate);
+        else if(term.getTermRealizedStatus().name().equals("FREE"))
+            results = termService.findAllFutureFreeByProviderIdFromDate(providerId, selectedTermDate);
+        else
+            results = termService.findAllFutureAppointedByProviderIdFromDate(providerId, selectedTermDate);
+
         if (!results.isEmpty())
             model.addAttribute("selections", results);
 

@@ -15,6 +15,8 @@ public interface TermService extends BaseService<Term, Long> {
 
     List<Term> findAllFutureByProviderId(Long providerId);
 
+    List<Term> findAllFutureByProviderIdFromDate(Long providerId, LocalDate selectedDate);
+
     List<Term> findAllFutureFreeByProviderId(Long providerId);
 
     List<Term> findAllFutureFreeByProviderIdFromDate(Long providerId, LocalDate selectedDate);

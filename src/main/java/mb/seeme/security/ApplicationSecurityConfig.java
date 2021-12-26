@@ -1,15 +1,17 @@
 package mb.seeme.security;
 
-import mb.seeme.services.users.UserAuthenticationService;
 import mb.seeme.jwt.JwtConfig;
 import mb.seeme.jwt.JwtTokenVerifier;
 import mb.seeme.jwt.JwtUsernameAndPasswordAuthenticationFilter;
+import mb.seeme.services.users.UserAuthenticationService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.crypto.SecretKey;
 
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -32,13 +34,22 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
                 .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig),JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "http://www.isdc.ro/wro", "/resources/**", "/resources/css/petclinic.less", "/resources/css/petclinic.css", "static/resources/**","/.*.css", "webjars/**", "/index", "/less/**", "/static/**").permitAll()
                 .and()
                 .formLogin().loginPage("/login")
                 .and()
                 .logout()
                 .logoutUrl("/logout");
     }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/resources/**", "webjars/**", "/static/**", "/css/**", "/js/**", "/images/**","/vendor/**","/fonts/**");
+    }
+
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
