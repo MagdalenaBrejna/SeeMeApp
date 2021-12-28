@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/clientLayout :: layout (~{::body},'provider')}">
+<head>
+    <meta charset="UTF-8">
+    <title>Provider Terms</title>
+</head>
+<body>
+    <!--/*@thymesVar id="term" type="mb.seeme.model.terms.Term"*/-->
+    <!--/*@thymesVar id="service" type="mb.seeme.model.services.AvailableService"*/-->
+    <!--/*@thymesVar id="serviceProvider" type="mb.seeme.model.users.ServiceProvider"*/-->
+    <table id="provider" class="table table-striped" style="width: 600px">
+        <thead>
+        <tr th:each="serviceProvider : ${providerSelections}">
+            <th th:text="${serviceProvider.name}"/>
+            <th th:text="${serviceProvider.address}"/>
+            <th th:text="${serviceProvider.city}"/>
+        </tr>
+        </thead>
+    </table>
+
+    <br>
+    <table id="provider_terms" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 100px;" th:text="#{date}">Date</th>
+            <th style="width: 100px;" th:text="#{time}">Time</th>
+            <th style="width: 80px;" th:text="#{book}">Book</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="term : ${futureSelections}">
+            <td th:text="${term.termDate}"/>
+            <td th:text="${term.termTime}"/>
+            <td><a href="#">umow</a></td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

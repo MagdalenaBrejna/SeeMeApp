@@ -1,13 +1,17 @@
 package mb.seeme.controllers;
 
 import mb.seeme.model.terms.Term;
+import mb.seeme.model.users.ServiceProvider;
 import mb.seeme.services.terms.TermService;
 import mb.seeme.services.users.ClientService;
+import mb.seeme.services.users.ServiceProviderService;
 import mb.seeme.services.users.UserAuthenticationService;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
@@ -17,11 +21,13 @@ public class ClientController {
 
     private final UserAuthenticationService userAuthenticationService;
     private final ClientService clientService;
+    private final ServiceProviderService providerService;
     private final TermService termService;
 
-    public ClientController(UserAuthenticationService userAuthenticationService, ClientService clientService, TermService termService) {
+    public ClientController(UserAuthenticationService userAuthenticationService, ClientService clientService, ServiceProviderService providerService, TermService termService) {
         this.userAuthenticationService = userAuthenticationService;
         this.clientService = clientService;
+        this.providerService = providerService;
         this.termService = termService;
     }
 
@@ -38,9 +44,21 @@ public class ClientController {
 
         List<Term> futureTerms = termService.findAllFutureByClientId(clientId);
         model.addAttribute("futureSelections", futureTerms);
+
         List<Term> pastTerms = termService.findAllPastByClientId(clientId);
         model.addAttribute("pastSelections", pastTerms);
 
         return "clients/terms";
+    }
+
+    @GetMapping({"clients/provider/{id}", "clients/provider/{id}.html"})
+    public String findProviderFreeTerms(@PathVariable("id") Long providerId, Model model){
+        ServiceProvider provider = providerService.findById(providerId);
+        model.addAttribute("providerSelections", provider);
+
+        List<Term> futureTerms = termService.findAllFutureFreeByProviderId(providerId);
+        model.addAttribute("futureSelections", futureTerms);
+
+        return "providers/provider";
     }
 }
