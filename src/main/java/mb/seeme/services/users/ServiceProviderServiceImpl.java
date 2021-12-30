@@ -1,6 +1,7 @@
 package mb.seeme.services.users;
 
 import mb.seeme.model.users.ServiceProvider;
+import mb.seeme.model.users.ServiceProviderTerm;
 import mb.seeme.repositories.ServiceProviderRepository;
 import mb.seeme.repositories.TermRepository;
 
@@ -49,36 +50,22 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         providerRepository.deleteById(id);
     }
 
-    private List<ServiceProvider> getServiceProvidersInAllTermOrder(LocalDate selectedDate) {
-        List<ServiceProvider> providers = termRepository.findAllFromDate(selectedDate)
+    @Override
+    public List<ServiceProviderTerm> findAllByNameAndCityAndFieldFromDateInTermOrder(ServiceProviderTerm selectedProvider, LocalDate selectedDate) {
+        List<ServiceProviderTerm> providersWithTerms = termRepository.findAllByNameAndCityAndFieldFromDate("%" + selectedProvider.getProviderName() + "%", "%" + selectedProvider.getCity() + "%", "%" + selectedProvider.getProviderField() + "%", selectedDate)
                 .stream()
                 .sorted((term1, term2) -> term1.getTermDate().compareTo(term2.getTermDate()))
-                .map(term -> term.getService().getServiceProvider())
+                .map(term -> new ServiceProviderTerm(
+                        term.getService().getServiceProvider().getName(),
+                        term.getService().getServiceProvider().getProviderField(),
+                        term.getService().getServiceProvider().getProviderDescription(),
+                        term.getService().getServiceProvider().getAddress(),
+                        term.getService().getServiceProvider().getCity(),
+                        term.getTermDate(),
+                        term.getTermTime()
+                ))
                 .distinct()
                 .collect(Collectors.toList());
-        return providers;
-    }
-
-    @Override
-    public List<ServiceProvider> findAllByNameLikeInTermOrder(String name) {
-        List<ServiceProvider> providers = getServiceProvidersInAllTermOrder(LocalDate.now())
-                .stream()
-                .filter(provider -> provider.getName().equals(name))
-                .collect(Collectors.toList());
-        return providers;
-    }
-
-    @Override
-    public List<ServiceProvider> findAllByFieldLikeInTermOrder(String field) {
-        List<ServiceProvider> providers = getServiceProvidersInAllTermOrder(LocalDate.now())
-                .stream()
-                .filter(provider -> provider.getProviderField().equals(field))
-                .collect(Collectors.toList());
-        return providers;
-    }
-
-    @Override
-    public List<ServiceProvider> findAllWithTermsFromDateInTermOrder(LocalDate selectedDate) {
-        return getServiceProvidersInAllTermOrder(selectedDate);
+        return providersWithTerms;
     }
 }

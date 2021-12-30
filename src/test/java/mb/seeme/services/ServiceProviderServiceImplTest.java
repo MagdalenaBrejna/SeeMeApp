@@ -140,49 +140,4 @@ class ServiceProviderServiceImplTest {
         //then
         verify(providerRepository).deleteById(anyLong());
     }
-
-    @DisplayName("Test finding all providers who have terms after specified date")
-    @Test
-    void findAllWithTermsFromDate() {
-        //when
-        when(termRepository.findAllFromDate(any())).thenReturn(termList);
-        List<ServiceProvider> serviceProviderList = service.findAllWithTermsFromDateInTermOrder(LocalDate.parse("2021-11-21"));
-
-        //then
-        assertNotNull(termList);
-        assertEquals(3, serviceProviderList.size());
-        assertTrue(serviceProviderList.get(0).getId() == 2l);
-        assertTrue(serviceProviderList.get(2).getId() == 3l);
-        verify(termRepository).findAllFromDate(any());
-    }
-
-    @DisplayName("Test finding providers who have specified name and future terms")
-    @Test
-    void findAllByNameLikeInTermOrder() {
-        //when
-        when(termRepository.findAllFromDate(any())).thenReturn(termList);
-        List<ServiceProvider> serviceProviderList = service.findAllByNameLikeInTermOrder("A");
-
-        //then
-        assertNotNull(termList);
-        assertEquals(2, serviceProviderList.size());
-        assertTrue(serviceProviderList.get(0).getId() == 2l);
-        assertTrue(serviceProviderList.get(1).getId() == 1l);
-        verify(termRepository).findAllFromDate(any());
-    }
-
-    @DisplayName("Test finding providers who have specified field and future terms")
-    @Test
-    void findAllByFieldLike() {
-        //when
-        when(termRepository.findAllFromDate(any())).thenReturn(termList);
-        List<ServiceProvider> serviceProviderList = service.findAllByFieldLikeInTermOrder("mechanic");
-
-        //then
-        assertNotNull(termList);
-        assertEquals(2, serviceProviderList.size());
-        assertTrue(serviceProviderList.get(0).getId() == 1l);
-        assertTrue(serviceProviderList.get(1).getId() == 3l);
-        verify(termRepository).findAllFromDate(any());
-    }
 }

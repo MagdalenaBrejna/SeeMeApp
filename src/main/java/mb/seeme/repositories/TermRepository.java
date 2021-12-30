@@ -9,8 +9,11 @@ import java.util.List;
 
 public interface TermRepository extends CrudRepository<Term, Long> {
 
-    @Query(nativeQuery = true, value = "SELECT * FROM terms WHERE term_date >= selectedDate")
+    @Query(nativeQuery = true, value = "SELECT * FROM terms WHERE term_date >= ?1")
     List<Term> findAllFromDate(LocalDate selectedDate);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM terms INNER JOIN services ON terms.service_id = services.id INNER JOIN providers ON services.service_provider_id = providers.id WHERE (providers.name LIKE ?1 AND providers.city LIKE ?2 AND providers.field LIKE ?3 AND terms.term_date >= ?4)")
+    List<Term> findAllByNameAndCityAndFieldFromDate(String providerName, String providerCity, String providerField, LocalDate selectedDate);
 
 
     @Query(nativeQuery = true, value = "SELECT * FROM terms WHERE terms.client_id = ?1")
