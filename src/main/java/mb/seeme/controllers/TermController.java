@@ -5,7 +5,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import javax.annotation.security.RolesAllowed;
 
 @EnableGlobalMethodSecurity(jsr250Enabled = true)

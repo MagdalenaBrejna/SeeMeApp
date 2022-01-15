@@ -42,7 +42,7 @@ public class ClientController {
 
     @RolesAllowed("CLIENT")
     @GetMapping({"clients/terms", "clients/terms.html"})
-    public String findClientPastTerms(Model model){
+    public String findClientTerms(Model model){
         Long clientId = userAuthenticationService.getAuthenticatedClientId();
 
         List<Term> futureTerms = termService.findAllFutureByClientId(clientId);

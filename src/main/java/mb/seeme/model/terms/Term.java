@@ -48,4 +48,29 @@ public class Term extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private Status termRealizedStatus;
 
+    public int compareToPast(Term otherTerm) {
+        if(this.getTermDate().isBefore(otherTerm.getTermDate()))
+            return 1;
+        else if(this.getTermDate().isAfter(otherTerm.getTermDate()))
+            return -1;
+        else if(this.getTermTime().isBefore(otherTerm.getTermTime()))
+            return 1;
+        else if(this.getTermTime().isAfter(otherTerm.getTermTime()))
+            return -1;
+        else
+            return 0;
+    }
+
+    public int compareToFuture(Term otherTerm) {
+        if(this.getTermDate().isBefore(otherTerm.getTermDate()))
+            return -1;
+        else if(this.getTermDate().isAfter(otherTerm.getTermDate()))
+            return 1;
+        else if(this.getTermTime().isBefore(otherTerm.getTermTime()))
+            return 1;
+        else if(this.getTermTime().isAfter(otherTerm.getTermTime()))
+            return -1;
+        else
+            return 0;
+    }
 }

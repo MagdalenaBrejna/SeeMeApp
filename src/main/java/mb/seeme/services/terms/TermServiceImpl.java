@@ -78,24 +78,20 @@ public class TermServiceImpl implements TermService {
 
     @Override
     public List<Term> findAllFutureByClientId(Long clientId) {
-        List<Term> terms = findAllByClientId(clientId).stream()
-                .filter(term -> term.getTermDate().isAfter(LocalDate.now()) || term.getTermDate().isEqual(LocalDate.now()))
+        List<Term> terms = termRepository.findAllByClientId(clientId).stream()
+                .filter(term -> (term.getTermDate().isAfter(LocalDate.now()) || term.getTermDate().equals(LocalDate.now())))
+                .sorted((term1, term2) -> term1.compareToFuture(term2))
                 .collect(Collectors.toList());
         return terms;
     }
 
     @Override
     public List<Term> findAllPastByClientId(Long clientId) {
-        List<Term> terms = findAllByClientId(clientId).stream()
+        List<Term> terms = termRepository.findAllByClientId(clientId).stream()
                 .filter(term -> term.getTermDate().isBefore(LocalDate.now()))
+                .sorted((term1, term2) -> term1.compareToPast(term2))
                 .collect(Collectors.toList());
         return terms;
-    }
-
-    private List<Term> findAllByClientId(Long clientId) {
-        return termRepository.findAllByClientId(clientId).stream()
-                .sorted((term1, term2) -> term1.getTermDate().compareTo(term2.getTermDate()))
-                .collect(Collectors.toList());
     }
 
     @Override
