@@ -55,8 +55,8 @@ public class TermBootstrap implements ApplicationListener<ContextRefreshedEvent>
         clientRepository.save(clientA);
         clientRepository.save(clientB);
 
-        ServiceProvider providerA = ServiceProvider.builder().id(1l).name("providerA").email("AP").password(passwordEncoder.encode("passAP")).userRole(PROVIDER.getUserRole()).address("ul.Osobowicka 5").city("Wrocław").providerField("mechanik samochodowy").build();
-        ServiceProvider providerB = ServiceProvider.builder().id(2l).name("providerB").email("BP").password(passwordEncoder.encode("passBP")).userRole(PROVIDER.getUserRole()).address("ul.Czekoladowa 1").providerField("fryzjer damski").city("Warszawa").build();
+        ServiceProvider providerA = ServiceProvider.builder().id(1l).name("providerA").email("AP").password(passwordEncoder.encode("passAP")).userRole(PROVIDER.getUserRole()).address("ul.Osobowicka 5").city("Wrocław").providerField("mechanik samochodowy").telephone("333333333").build();
+        ServiceProvider providerB = ServiceProvider.builder().id(2l).name("providerB").email("BP").password(passwordEncoder.encode("passBP")).userRole(PROVIDER.getUserRole()).address("ul.Czekoladowa 1").providerField("fryzjer damski").city("Warszawa").telephone("444444444").build();
         providerRepository.save(providerA);
         providerRepository.save(providerB);
 

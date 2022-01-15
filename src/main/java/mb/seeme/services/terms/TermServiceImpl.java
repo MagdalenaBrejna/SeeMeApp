@@ -46,6 +46,13 @@ public class TermServiceImpl implements TermService {
         termRepository.deleteById(termId);
     }
 
+    @Override
+    @Transactional
+    public void cancelById(Long termId) {
+        Term selectedTerm = findById(termId);
+        if(selectedTerm.getClient() != null)
+            termRepository.makeTermStatusFree(termId);
+    }
 
     @Override
     public List<Term> findAllFutureByClientName(String clientName) {

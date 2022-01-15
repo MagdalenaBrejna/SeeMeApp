@@ -1,6 +1,7 @@
 package mb.seeme.repositories;
 
 import mb.seeme.model.terms.Term;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -8,6 +9,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TermRepository extends CrudRepository<Term, Long> {
+
+    @Modifying
+    @Query(nativeQuery = true, value = "UPDATE terms SET terms.status='FREE', terms.client_id = NULL WHERE terms.id=?1")
+    void makeTermStatusFree(Long termId);
 
     @Query(nativeQuery = true, value = "SELECT * FROM terms WHERE term_date >= ?1")
     List<Term> findAllFromDate(LocalDate selectedDate);

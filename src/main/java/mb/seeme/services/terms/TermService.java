@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface TermService extends BaseService<Term, Long> {
 
+    void cancelById(Long termId);
+
+
     List<Term> findAllFutureByClientName(String clientName);
 
     List<Term> findAllPastByClientName(String clientName);

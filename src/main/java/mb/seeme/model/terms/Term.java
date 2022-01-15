@@ -44,6 +44,8 @@ public class Term extends BaseEntity {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @Column(name = "status")
     @Enumerated(value = EnumType.STRING)
     private Status termRealizedStatus;
+
 }

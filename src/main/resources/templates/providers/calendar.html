@@ -44,7 +44,7 @@
             <tr th:each="term : ${selections}">
                 <td th:text="${term.termDate}"/>
                 <td th:text="${term.termTime}"/>
-                <td th:text="${term.termRealizedStatus}"/>
+                <td th:text="${term.getTermRealizedStatus}"/>
                 <td><a href="#">more</a></td>
             </tr>
             </tbody>
