@@ -15,12 +15,13 @@ import java.util.Set;
 public class ServiceProvider extends Person {
 
     @Builder
-    public ServiceProvider(Long id, String name, String telephone, String email, String password, SimpleGrantedAuthority userRole, String address, String city, String providerDescription, String providerField) {
+    public ServiceProvider(Long id, String name, String telephone, String email, String password, SimpleGrantedAuthority userRole, String address, String city, String providerDescription, String providerField, byte[] providerImage) {
         super(id, name, telephone, email, password, userRole);
         this.address = address;
         this.city = city;
         this.providerDescription = providerDescription;
         this.providerField = providerField;
+        this.providerImage = providerImage;
     }
 
     @Column(name = "address")
@@ -38,7 +39,7 @@ public class ServiceProvider extends Person {
 
     @Lob
     @Column(name = "image")
-    private Byte[] providerImage;
+    private byte[] providerImage;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "serviceProvider")
     private Set<AvailableService> services = new HashSet<>();

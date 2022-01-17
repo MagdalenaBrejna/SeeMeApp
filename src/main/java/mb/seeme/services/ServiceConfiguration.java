@@ -7,6 +7,7 @@ import mb.seeme.repositories.TermRepository;
 import mb.seeme.services.services.AvailableServiceServiceImpl;
 import mb.seeme.services.terms.TermServiceImpl;
 import mb.seeme.services.users.ClientServiceImpl;
+import mb.seeme.services.users.ImageServiceImpl;
 import mb.seeme.services.users.ServiceProviderServiceImpl;
 import mb.seeme.services.users.UserAuthenticationService;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,11 @@ public class ServiceConfiguration {
     @Bean
     UserAuthenticationService userAuthenticationService(final ClientRepository clientRepository, final ServiceProviderRepository providerRepository) {
         return new UserAuthenticationService(clientRepository, providerRepository);
+    }
+
+    @Bean
+    ImageServiceImpl imageServiceImpl(final ServiceProviderRepository providerRepository) {
+        return new ImageServiceImpl(providerRepository);
     }
 
     @Bean
