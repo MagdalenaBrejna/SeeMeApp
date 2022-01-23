@@ -4,6 +4,7 @@ import mb.seeme.model.terms.Term;
 import mb.seeme.model.users.Client;
 import mb.seeme.model.users.ServiceProvider;
 import mb.seeme.services.terms.TermService;
+import mb.seeme.services.users.ImageService;
 import mb.seeme.services.users.ServiceProviderService;
 import mb.seeme.services.users.UserAuthenticationService;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -12,6 +13,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
@@ -27,20 +31,14 @@ public class ServiceProviderController {
     private final ServiceProviderService providerService;
     private final UserAuthenticationService userAuthenticationService;
     private final TermService termService;
+    private final ImageService imageService;
 
-    public ServiceProviderController (ServiceProviderService providerService, UserAuthenticationService userAuthenticationService, TermService termService) {
+    public ServiceProviderController(ServiceProviderService providerService, UserAuthenticationService userAuthenticationService, TermService termService, ImageService imageService) {
         this.providerService = providerService;
         this.userAuthenticationService = userAuthenticationService;
         this.termService = termService;
+        this.imageService = imageService;
     }
-
-   /* @RolesAllowed("PROVIDER")
-    @GetMapping({"providers/account", "providers/account.html"})
-    public String getAccountDetails(){
-        return "providers/account";
-    }
-
-    */
 
     @RolesAllowed("PROVIDER")
     @GetMapping({"providers/calendar", "providers/calendar.html"})
@@ -76,6 +74,16 @@ public class ServiceProviderController {
         model.addAttribute("selections", results);
 
         return "providers/archive";
+    }
+
+    @RolesAllowed("PROVIDER")
+    @PostMapping({"providers/account/image", "providers/account/image.html"})
+    public String addProviderImage(@RequestParam("file") MultipartFile file){
+        Long providerId = userAuthenticationService.getAuthenticatedProviderId();
+        if(!file.isEmpty())
+            imageService.saveProviderImage(providerId, file);
+
+        return "redirect:/providers/account";
     }
 
     @RolesAllowed("PROVIDER")
