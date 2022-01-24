@@ -66,7 +66,7 @@ public class TermBootstrap implements ApplicationListener<ContextRefreshedEvent>
             e.printStackTrace();
         }
 
-        ServiceProvider providerA = ServiceProvider.builder().id(1l).name("providerA").email("AP").password(passwordEncoder.encode("passAP")).userRole(PROVIDER.getUserRole()).address("ul.Osobowicka 5").city("Wrocław").providerField("mechanik samochodowy").telephone("333333333").providerImage(array).build();
+        ServiceProvider providerA = ServiceProvider.builder().id(1l).name("providerA").email("AP").password(passwordEncoder.encode("passAP")).userRole(PROVIDER.getUserRole()).address("ul.Osobowicka 5").city("Wrocław").providerField("mechanik samochodowy").telephone("333333333").providerImage(array).providerDescription("Jestem mechanikiem samochodowym z wieloletnim stazem. Naprawiam auta osobowe.").build();
         ServiceProvider providerB = ServiceProvider.builder().id(2l).name("providerB").email("BP").password(passwordEncoder.encode("passBP")).userRole(PROVIDER.getUserRole()).address("ul.Czekoladowa 1").providerField("fryzjer damski").city("Warszawa").telephone("444444444").build();
         providerRepository.save(providerA);
         providerRepository.save(providerB);

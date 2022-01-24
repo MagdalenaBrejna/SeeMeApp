@@ -100,6 +100,8 @@ public class ServiceProviderController {
 
         String providerImage = new String(encodeBase64ProviderImage, "UTF-8");
         model.addAttribute("providerImage", providerImage);
+        model.addAttribute("provider", provider);
+
         return "providers/account";
     }
 
