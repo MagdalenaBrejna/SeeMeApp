@@ -1,6 +1,7 @@
 package mb.seeme.controllers;
 
 import mb.seeme.model.terms.Term;
+import mb.seeme.model.users.Client;
 import mb.seeme.model.users.ServiceProvider;
 import mb.seeme.model.users.ServiceProviderTerm;
 import mb.seeme.services.terms.TermService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.security.RolesAllowed;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,7 +38,11 @@ public class ClientController {
 
     @RolesAllowed("CLIENT")
     @GetMapping({"clients/account", "clients/account.html"})
-    public String getAccountDetails(){
+    public String getClientAccountDetails(Model model) {
+        Long clientId = userAuthenticationService.getAuthenticatedClientId();
+        Client client = clientService.findById(clientId);
+
+        model.addAttribute("client", client);
         return "clients/account";
     }
 
