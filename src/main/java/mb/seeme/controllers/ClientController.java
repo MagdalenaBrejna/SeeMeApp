@@ -59,6 +59,7 @@ public class ClientController {
         return "clients/terms";
     }
 
+    @RolesAllowed("CLIENT")
     @GetMapping({"clients/provider/{id}", "clients/provider/{id}.html"})
     public String findProviderFreeTerms(@PathVariable("id") Long providerId, Model model){
         ServiceProvider provider = providerService.findById(providerId);
@@ -67,9 +68,10 @@ public class ClientController {
         List<Term> futureTerms = termService.findAllFutureFreeByProviderId(providerId);
         model.addAttribute("futureSelections", futureTerms);
 
-        return "providers/provider";
+        return "clients/provider";
     }
 
+    @RolesAllowed("CLIENT")
     @GetMapping({"clients/find", "clients/find.html"})
     public String findTerms(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate selectedTermDate, ServiceProviderTerm serviceProviderTerm, Model model) {
         Long clientId = userAuthenticationService.getAuthenticatedClientId();

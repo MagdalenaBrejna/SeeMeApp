@@ -56,6 +56,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
                 .stream()
                 .sorted((term1, term2) -> term1.getTermDate().compareTo(term2.getTermDate()))
                 .map(term -> new ServiceProviderTerm(
+                        term.getService().getServiceProvider().getId(),
                         term.getService().getServiceProvider().getName(),
                         term.getService().getServiceProvider().getProviderField(),
                         term.getService().getServiceProvider().getProviderDescription(),

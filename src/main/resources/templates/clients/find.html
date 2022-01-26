@@ -51,7 +51,7 @@
           <td th:text="${serviceProviderTerm.city}"/>
           <td th:text="${serviceProviderTerm.termDate}"/>
           <td th:text="${serviceProviderTerm.termTime}"/>
-          <td><a href="#">more</a></td>
+          <td><a th:href="@{/clients/provider/{id}(id=${serviceProviderTerm.providerId})}"><i class="fa fa-check"></i>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-search"></span></a></td>
         </tr>
       </tbody>
     </table>

@@ -15,6 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class ServiceProviderTerm{
 
+    private Long providerId;
     private String providerName;
     private String providerField;
     private String providerDescription;
