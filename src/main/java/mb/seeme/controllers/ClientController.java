@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.security.RolesAllowed;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 

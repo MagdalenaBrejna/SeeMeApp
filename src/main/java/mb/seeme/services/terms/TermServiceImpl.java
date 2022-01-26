@@ -101,7 +101,9 @@ public class TermServiceImpl implements TermService {
 
     @Override
     public List<Term> findAllFutureByProviderIdFromDate(Long providerId, LocalDate selectedDate){
-        return termRepository.findAllByProviderIdFromDate(providerId, selectedDate);
+        return termRepository.findAllByProviderIdFromDate(providerId, selectedDate).stream()
+                .sorted((term1, term2) -> term1.compareToFuture(term2))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -118,7 +120,7 @@ public class TermServiceImpl implements TermService {
 
     private List<Term> findFreeTermsByProviderIdFromDate(Long providerId, LocalDate selectedDate) {
         return termRepository.findAllFreeByProviderIdFromDate(providerId, selectedDate).stream()
-                .sorted((term1, term2) -> term1.getTermDate().compareTo(term2.getTermDate()))
+                .sorted((term1, term2) -> term1.compareToFuture(term2))
                 .collect(Collectors.toList());
     }
 
@@ -137,7 +139,7 @@ public class TermServiceImpl implements TermService {
 
     private List<Term> findAppointedTermsByProviderIdFromDate(Long providerId, LocalDate selectedDate) {
         return termRepository.findAllAppointedByProviderIdFromDate(providerId, selectedDate).stream()
-                .sorted((term1, term2) -> term1.getTermDate().compareTo(term2.getTermDate()))
+                .sorted((term1, term2) -> term1.compareToFuture(term2))
                 .collect(Collectors.toList());
     }
 
