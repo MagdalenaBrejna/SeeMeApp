@@ -1,8 +1,8 @@
 package mb.seeme.services.terms;
 
 import mb.seeme.model.terms.Term;
+import mb.seeme.model.users.Client;
 import mb.seeme.repositories.TermRepository;
-
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -102,6 +102,11 @@ public class TermServiceImpl implements TermService {
     @Override
     public List<Term> findAllFutureByProviderIdFromDate(Long providerId, LocalDate selectedDate){
         return termRepository.findAllByProviderIdFromDate(providerId, selectedDate).stream()
+                .map(term -> {
+                    if(term.getClient() == null)
+                        term.setClient(Client.builder().name("").telephone("").build());
+                     return term;
+                })
                 .sorted((term1, term2) -> term1.compareToFuture(term2))
                 .collect(Collectors.toList());
     }
@@ -120,6 +125,11 @@ public class TermServiceImpl implements TermService {
 
     private List<Term> findFreeTermsByProviderIdFromDate(Long providerId, LocalDate selectedDate) {
         return termRepository.findAllFreeByProviderIdFromDate(providerId, selectedDate).stream()
+                .map(term -> {
+                    if(term.getClient() == null)
+                        term.setClient(Client.builder().name("").telephone("").build());
+                    return term;
+                })
                 .sorted((term1, term2) -> term1.compareToFuture(term2))
                 .collect(Collectors.toList());
     }
@@ -139,6 +149,11 @@ public class TermServiceImpl implements TermService {
 
     private List<Term> findAppointedTermsByProviderIdFromDate(Long providerId, LocalDate selectedDate) {
         return termRepository.findAllAppointedByProviderIdFromDate(providerId, selectedDate).stream()
+                .map(term -> {
+                    if(term.getClient() == null)
+                        term.setClient(Client.builder().name("").telephone("").build());
+                    return term;
+                })
                 .sorted((term1, term2) -> term1.compareToFuture(term2))
                 .collect(Collectors.toList());
     }

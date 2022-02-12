@@ -23,4 +23,12 @@ public class TermController {
         termService.cancelById(termId);
         return "redirect:/clients/terms";
     }
+
+    @RolesAllowed("PROVIDER")
+    @GetMapping({"delete/{id}", "delete/{id}.html"})
+    public String deleteTerm(@PathVariable("id") Long termId){
+        termService.deleteById(termId);
+        return "redirect:/providers/archive";
+    }
+
 }
