@@ -8,15 +8,14 @@
     <!--/*@thymesVar id="term" type="mb.seeme.model.terms.Term"*/-->
     <!--/*@thymesVar id="service" type="mb.seeme.model.services.AvailableService"*/-->
     <!--/*@thymesVar id="serviceProvider" type="mb.seeme.model.users.ServiceProvider"*/-->
-    <table id="provider" class="table table-striped" style="width: 600px">
-        <thead>
-        <tr th:each="serviceProvider : ${providerSelections}">
-            <th th:text="${serviceProvider.name}"/>
-            <th th:text="${serviceProvider.address}"/>
-            <th th:text="${serviceProvider.city}"/>
-        </tr>
-        </thead>
-    </table>
+
+    <div class="form-group row">
+        <div class="col-sm-12" th:each="serviceProvider : ${providerSelections}">
+            <input size="30" type="text" readonly class="form-control-plaintext" th:placeholder="${serviceProvider.name} + '    ' + ${serviceProvider.address} + '    ' + ${serviceProvider.city}">
+        </div>
+    </div>
+
+
 
     <br>
     <table id="provider_terms" class="table table-striped">
