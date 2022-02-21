@@ -72,6 +72,14 @@ public class ClientController {
     }
 
     @RolesAllowed("CLIENT")
+    @GetMapping({"clients/provider/book/{termId}", "clients/provider/book/{termId}.html"})
+    public String bookTerm(@PathVariable("termId") Long termId, Model model){
+        Long clientId = userAuthenticationService.getAuthenticatedClientId();
+        termService.bookTermByClientId(clientId, termId);
+        return "redirect:/clients/terms";
+    }
+
+    @RolesAllowed("CLIENT")
     @GetMapping({"clients/find", "clients/find.html"})
     public String findTerms(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate selectedTermDate, ServiceProviderTerm serviceProviderTerm, Model model) {
         Long clientId = userAuthenticationService.getAuthenticatedClientId();

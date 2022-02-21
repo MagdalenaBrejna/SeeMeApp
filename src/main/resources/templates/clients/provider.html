@@ -15,8 +15,6 @@
         </div>
     </div>
 
-
-
     <br>
     <table id="provider_terms" class="table table-striped">
         <thead>
@@ -30,7 +28,7 @@
         <tr th:each="term : ${futureSelections}">
             <td th:text="${term.termDate}"/>
             <td th:text="${term.termTime}"/>
-            <td><a href="#">umow</a></td>
+            <td><a th:href="@{/clients/provider/book/{termId}(termId=${term.id})}">umow</a></td>
         </tr>
         </tbody>
     </table>

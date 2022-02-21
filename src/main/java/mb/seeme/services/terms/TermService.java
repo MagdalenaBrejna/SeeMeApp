@@ -9,7 +9,7 @@ import java.util.List;
 public interface TermService extends BaseService<Term, Long> {
 
     void cancelById(Long termId);
-
+    void bookTermByClientId(Long clientId, Long termId);
 
     List<Term> findAllFutureByClientName(String clientName);
 

@@ -37,6 +37,13 @@ public class TermServiceImpl implements TermService {
     }
 
     @Override
+    @Transactional
+    public void bookTermByClientId(Long clientId, Long termId) {
+        termRepository.bookTerm(clientId, termId);
+        termRepository.makeTermStatusFull(termId);
+    }
+
+    @Override
     public void delete(Term term) {
         termRepository.delete(term);
     }
