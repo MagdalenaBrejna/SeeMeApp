@@ -4,6 +4,7 @@ import mb.seeme.repositories.AvailableServiceRepository;
 import mb.seeme.repositories.ClientRepository;
 import mb.seeme.repositories.ServiceProviderRepository;
 import mb.seeme.repositories.TermRepository;
+import mb.seeme.services.services.AvailableServiceService;
 import mb.seeme.services.services.AvailableServiceServiceImpl;
 import mb.seeme.services.terms.TermServiceImpl;
 import mb.seeme.services.users.ClientServiceImpl;
@@ -27,8 +28,8 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    TermServiceImpl termServiceImpl(final TermRepository termRepository) {
-        return new TermServiceImpl(termRepository);
+    TermServiceImpl termServiceImpl(final TermRepository termRepository, final AvailableServiceService availableService) {
+        return new TermServiceImpl(termRepository, availableService);
     }
 
     @Bean

@@ -1,10 +1,18 @@
 package mb.seeme.services.terms;
 
+import mb.seeme.model.services.AvailableService;
+import mb.seeme.model.terms.Status;
 import mb.seeme.model.terms.Term;
 import mb.seeme.model.users.Client;
+import mb.seeme.model.users.ServiceProvider;
 import mb.seeme.repositories.TermRepository;
+import mb.seeme.services.services.AvailableServiceService;
+
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,9 +21,11 @@ import java.util.stream.Collectors;
 public class TermServiceImpl implements TermService {
 
     private final TermRepository termRepository;
+    private final AvailableServiceService availableService;
 
-    public TermServiceImpl(TermRepository termRepository) {
+    public TermServiceImpl(TermRepository termRepository, AvailableServiceService availableService) {
         this.termRepository = termRepository;
+        this.availableService = availableService;
     }
 
     @Override
@@ -204,5 +214,21 @@ public class TermServiceImpl implements TermService {
                 .sorted((term1, term2) -> term1.getTermTime().compareTo(term2.getTermTime()))
                 .collect(Collectors.toList());
         return terms;
+    }
+
+    @Override
+    public void addNewTerms(ServiceProvider provider, LocalDateTime firstTermDateAndTime, int termsNumber, int termDuration){
+        LocalDate firstTermDate = firstTermDateAndTime.atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalTime firstTermTime = firstTermDateAndTime.atZone(ZoneId.systemDefault()).toLocalTime();
+
+        for(int i = 0; i < termsNumber; i++) {
+            AvailableService service = AvailableService.builder().serviceProvider(provider).build();
+            availableService.save(service);
+            save(Term.builder().termDate(firstTermDate).termTime(firstTermTime).service(service).termRealizedStatus(Status.FREE).build());
+
+            if(firstTermTime.getHour() == 23 && firstTermTime.plusMinutes(termDuration).getHour() == 00)
+                firstTermDate = firstTermDate.plusDays(1);
+            firstTermTime = firstTermTime.plusMinutes(termDuration);
+        }
     }
 }

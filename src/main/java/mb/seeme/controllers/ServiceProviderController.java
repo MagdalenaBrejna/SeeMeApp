@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @EnableGlobalMethodSecurity(jsr250Enabled = true)
@@ -103,6 +104,20 @@ public class ServiceProviderController {
         model.addAttribute("provider", provider);
 
         return "providers/account";
+    }
+
+    @RolesAllowed("PROVIDER")
+    @PostMapping({"providers/calendar/newTerm", "providers/calendar/newTerm.html"})
+    public String addNewTerms(@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime termDateTime, String termsNumber, String termDuration, Model model){
+        Long providerId = userAuthenticationService.getAuthenticatedProviderId();
+        ServiceProvider provider = providerService.findById(providerId);
+        int termsToSave = Integer.valueOf(termsNumber);
+        int termsToSaveDuration = Integer.valueOf(termDuration);
+
+        if(termDateTime.isAfter(LocalDateTime.now()) && termsToSave > 0 && termsToSaveDuration > 0)
+            termService.addNewTerms(provider, termDateTime, termsToSave, termsToSaveDuration);
+
+        return "redirect:/providers/calendar";
     }
 
 }

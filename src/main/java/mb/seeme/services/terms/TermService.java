@@ -1,15 +1,21 @@
 package mb.seeme.services.terms;
 
 import mb.seeme.model.terms.Term;
+import mb.seeme.model.users.ServiceProvider;
 import mb.seeme.services.BaseService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TermService extends BaseService<Term, Long> {
 
     void cancelById(Long termId);
+
     void bookTermByClientId(Long clientId, Long termId);
+
+    void addNewTerms(ServiceProvider provider, LocalDateTime firstTermDateAndTime, int termsNumber, int termDuration);
+
 
     List<Term> findAllFutureByClientName(String clientName);
 
