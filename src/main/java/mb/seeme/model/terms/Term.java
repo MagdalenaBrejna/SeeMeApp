@@ -67,9 +67,9 @@ public class Term extends BaseEntity {
         else if(this.getTermDate().isAfter(otherTerm.getTermDate()))
             return 1;
         else if(this.getTermTime().isBefore(otherTerm.getTermTime()))
-            return 1;
-        else if(this.getTermTime().isAfter(otherTerm.getTermTime()))
             return -1;
+        else if(this.getTermTime().isAfter(otherTerm.getTermTime()))
+            return 1;
         else
             return 0;
     }
