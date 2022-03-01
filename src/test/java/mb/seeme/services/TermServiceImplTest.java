@@ -235,8 +235,10 @@ class TermServiceImplTest {
         //then
         assertNotNull(termListSameProvider);
         assertEquals(4, terms.size());
-        assertTrue(terms.get(0).getId() == 1l);
-        assertTrue(terms.get(1).getId() == 4l);
+        System.out.println(terms.get(0).getId());
+        assertTrue(terms.get(0).getId() == 4l);
+        System.out.println(terms.get(1).getId());
+        assertTrue(terms.get(1).getId() == 1l);
         verify(termRepository).findAllAppointedByProviderIdFromDate(anyLong(), any());
     }
 
@@ -250,8 +252,8 @@ class TermServiceImplTest {
         //then
         assertNotNull(termListSameProvider);
         assertEquals(4, terms.size());
-        assertTrue(terms.get(0).getId() == 1l);
-        assertTrue(terms.get(1).getId() == 4l);
+        assertTrue(terms.get(0).getId() == 4l);
+        assertTrue(terms.get(1).getId() == 1l);
         verify(termRepository).findAllAppointedByProviderIdFromDate(anyLong(), any());
     }
 
