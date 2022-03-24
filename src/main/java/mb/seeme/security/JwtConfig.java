@@ -1,7 +1,7 @@
-package mb.seeme.jwt;
+package mb.seeme.security;
 
-import com.google.common.net.HttpHeaders;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -46,3 +46,4 @@ public class JwtConfig {
         return HttpHeaders.AUTHORIZATION;
     }
 }
+

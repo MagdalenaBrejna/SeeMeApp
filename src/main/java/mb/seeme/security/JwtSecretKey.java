@@ -1,4 +1,4 @@
-package mb.seeme.jwt;
+package mb.seeme.security;
 
 import io.jsonwebtoken.security.Keys;
 import org.springframework.context.annotation.Bean;

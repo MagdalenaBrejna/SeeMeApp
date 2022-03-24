@@ -7,11 +7,31 @@
 <body>
 
 <br>
+<script>
+    function getCookie() {
+        let name = "token" + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                console.log(c.substring(name.length, c.length));
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+</script>
 <div class="row">
     <div class="col-md-16">
         <img class="center-block" src="../static/resources/images/services.png" th:src="@{/resources/images/services.png}"/>
+        <button class="btn" id="btn" type="submit" onclick="getCookie()">token</button>
     </div>
 </div>
+
 
 </body>
 </html>

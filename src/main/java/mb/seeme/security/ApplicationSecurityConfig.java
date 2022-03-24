@@ -1,19 +1,23 @@
 package mb.seeme.security;
 
-import mb.seeme.jwt.JwtConfig;
 import mb.seeme.jwt.JwtTokenVerifier;
 import mb.seeme.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import mb.seeme.services.users.UserAuthenticationService;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.crypto.SecretKey;
 
+//@Configuration
+@EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
@@ -21,7 +25,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SecretKey secretKey;
     private final JwtConfig jwtConfig;
 
-    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder, UserAuthenticationService userAuthenticationService, SecretKey secretKey, JwtConfig jwtConfig) {
+    public ApplicationSecurityConfig(UserAuthenticationService userAuthenticationService, PasswordEncoder passwordEncoder, SecretKey secretKey, JwtConfig jwtConfig) {
         this.passwordEncoder = passwordEncoder;
         this.userAuthenticationService = userAuthenticationService;
         this.secretKey = secretKey;
@@ -30,16 +34,43 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
-                .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig),JwtUsernameAndPasswordAuthenticationFilter.class)
-                .authorizeRequests()
-                .antMatchers("/", "http://www.isdc.ro/wro", "/resources/**", "/resources/css/petclinic.less", "/resources/css/petclinic.css", "static/resources/**","/.*.css", "webjars/**", "/index", "/less/**", "/static/**").permitAll()
-                .and()
-                .formLogin().loginPage("/login")
-                .and()
-                .logout()
-                .logoutUrl("/logout");
+
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and().csrf().disable()
+                    .addFilterBefore(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey), UsernamePasswordAuthenticationFilter.class)
+                    .addFilterBefore(new JwtTokenVerifier(secretKey, jwtConfig), BasicAuthenticationFilter.class)
+                //.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+                    //.addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
+                    //.addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
+                    //.addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+                    //.addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
+                    .authorizeRequests()
+                    .antMatchers("/client/**").hasRole("CLIENT")
+                    .antMatchers("/providers/**").hasRole("PROVIDER")
+                    .antMatchers("/fragments/**").hasAnyRole("CLIENT","PROVIDER")
+                    .antMatchers("/home").permitAll()
+                    .and().formLogin().loginPage("/login").permitAll().successHandler(appAuthenticationSuccessHandler())
+                    .and().httpBasic();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler appAuthenticationSuccessHandler(){
+        return new AppAuthenticationSuccessHandler();
+    }
+/*
+    @Override
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.userDetailsService(userAuthenticationService).passwordEncoder(passwordEncoder());
+    }
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
@@ -63,4 +94,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setUserDetailsService(userAuthenticationService);
         return provider;
     }
+
+ */
 }

@@ -9,17 +9,18 @@ import mb.seeme.services.users.ClientService;
 import mb.seeme.services.users.ServiceProviderService;
 import mb.seeme.services.users.UserAuthenticationService;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
 
-@EnableGlobalMethodSecurity(jsr250Enabled = true)
+
 @Controller
 public class ClientController {
 
@@ -35,17 +36,19 @@ public class ClientController {
         this.termService = termService;
     }
 
-    @RolesAllowed("CLIENT")
+
     @GetMapping({"clients/account", "clients/account.html"})
-    public String getClientAccountDetails(Model model) {
+    public String getClientAccountDetails(HttpServletRequest request, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long clientId = userAuthenticationService.getAuthenticatedClientId();
         Client client = clientService.findById(clientId);
 
         model.addAttribute("client", client);
         return "clients/account";
+
     }
 
-    @RolesAllowed("CLIENT")
+
     @GetMapping({"clients/terms", "clients/terms.html"})
     public String findClientTerms(Model model){
         Long clientId = userAuthenticationService.getAuthenticatedClientId();
@@ -59,7 +62,7 @@ public class ClientController {
         return "clients/terms";
     }
 
-    @RolesAllowed("CLIENT")
+
     @GetMapping({"clients/provider/{id}", "clients/provider/{id}.html"})
     public String findProviderFreeTerms(@PathVariable("id") Long providerId, Model model){
         ServiceProvider provider = providerService.findById(providerId);
@@ -71,7 +74,7 @@ public class ClientController {
         return "clients/provider";
     }
 
-    @RolesAllowed("CLIENT")
+
     @GetMapping({"clients/provider/book/{termId}", "clients/provider/book/{termId}.html"})
     public String bookTerm(@PathVariable("termId") Long termId, Model model){
         Long clientId = userAuthenticationService.getAuthenticatedClientId();
@@ -79,7 +82,7 @@ public class ClientController {
         return "redirect:/clients/terms";
     }
 
-    @RolesAllowed("CLIENT")
+
     @GetMapping({"clients/find", "clients/find.html"})
     public String findTerms(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate selectedTermDate, ServiceProviderTerm serviceProviderTerm, Model model) {
         Long clientId = userAuthenticationService.getAuthenticatedClientId();

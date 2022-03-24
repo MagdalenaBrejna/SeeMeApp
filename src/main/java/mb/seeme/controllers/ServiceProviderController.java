@@ -9,7 +9,6 @@ import mb.seeme.services.users.ServiceProviderService;
 import mb.seeme.services.users.UserAuthenticationService;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,7 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@EnableGlobalMethodSecurity(jsr250Enabled = true)
+
 @Controller
 public class ServiceProviderController {
 
@@ -41,7 +39,7 @@ public class ServiceProviderController {
         this.imageService = imageService;
     }
 
-    @RolesAllowed("PROVIDER")
+
     @GetMapping({"providers/calendar", "providers/calendar.html"})
     public String getProviderCalendar(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate selectedTermDate, Term term, Model model) {
         Long providerId = userAuthenticationService.getAuthenticatedProviderId();
@@ -62,7 +60,7 @@ public class ServiceProviderController {
         return "providers/calendar";
     }
 
-    @RolesAllowed("PROVIDER")
+
     @GetMapping({"providers/archive", "providers/archive.html"})
     public String processFindForm(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate termDate, Client client, Model model){
         if(termDate == null)
@@ -77,7 +75,7 @@ public class ServiceProviderController {
         return "providers/archive";
     }
 
-    @RolesAllowed("PROVIDER")
+
     @PostMapping({"providers/account/image", "providers/account/image.html"})
     public String addProviderImage(@RequestParam("file") MultipartFile file){
         Long providerId = userAuthenticationService.getAuthenticatedProviderId();
@@ -87,7 +85,7 @@ public class ServiceProviderController {
         return "redirect:/providers/account";
     }
 
-    @RolesAllowed("PROVIDER")
+
     @GetMapping({"providers/account", "providers/account.html"})
     public String getAccountDetails(Model model) throws IOException {
         Long providerId = userAuthenticationService.getAuthenticatedProviderId();
@@ -106,7 +104,7 @@ public class ServiceProviderController {
         return "providers/account";
     }
 
-    @RolesAllowed("PROVIDER")
+
     @PostMapping({"providers/calendar/newTerm", "providers/calendar/newTerm.html"})
     public String addNewTerms(@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime termDateTime, String termsNumber, String termDuration, Model model){
         Long providerId = userAuthenticationService.getAuthenticatedProviderId();
