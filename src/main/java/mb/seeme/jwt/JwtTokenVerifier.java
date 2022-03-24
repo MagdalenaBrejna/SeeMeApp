@@ -4,13 +4,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import mb.seeme.security.JwtConfig;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -22,8 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-
 
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
@@ -37,23 +33,12 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.print("@@@@@");
-        //String authorizationHeader = request.getHeader(jwtConfig.getAuthorizationHeader());
         Cookie[] cookies = request.getCookies();
         String cookieToken = "";
-        for(Cookie cookie : cookies ) {
+        for(Cookie cookie : cookies )
             if(("token").equals(cookie.getName()))
                 cookieToken = cookie.getValue();
-                System.out.println(cookieToken);
 
-        }
-
-        //if (Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith(jwtConfig.getTokenPrefix())) {
-       //     filterChain.doFilter(request, response);
-        //    return;
-       // }
-      //  System.out.print("\n\nSUKCES\n\n");
-      //  String token = authorizationHeader.replace(jwtConfig.getTokenPrefix(), "");
         if(!cookieToken.equals("")) {
             try {
                 Jws<Claims> claimsJws = Jwts.parser()
@@ -79,10 +64,6 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
     }
 
     @Override protected boolean shouldNotFilter(HttpServletRequest request) {
-        return request.getServletPath().equals("/login"); }
-
-
-
-
-
+        return request.getServletPath().equals("/login");
+    }
 }

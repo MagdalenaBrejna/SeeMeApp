@@ -40,4 +40,5 @@ public class UserAuthenticationService implements UserDetailsService {
         Client client = clientRepository.selectClientByUsername(authentication.getName());
         return client.getId();
     }
+
 }

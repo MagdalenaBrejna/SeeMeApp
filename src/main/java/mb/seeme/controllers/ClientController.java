@@ -9,17 +9,13 @@ import mb.seeme.services.users.ClientService;
 import mb.seeme.services.users.ServiceProviderService;
 import mb.seeme.services.users.UserAuthenticationService;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
-
 
 @Controller
 public class ClientController {
@@ -39,7 +35,6 @@ public class ClientController {
 
     @GetMapping({"clients/account", "clients/account.html"})
     public String getClientAccountDetails(HttpServletRequest request, Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long clientId = userAuthenticationService.getAuthenticatedClientId();
         Client client = clientService.findById(clientId);
 

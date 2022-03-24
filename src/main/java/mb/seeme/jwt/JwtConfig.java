@@ -1,4 +1,4 @@
-package mb.seeme.security;
+package mb.seeme.jwt;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpHeaders;

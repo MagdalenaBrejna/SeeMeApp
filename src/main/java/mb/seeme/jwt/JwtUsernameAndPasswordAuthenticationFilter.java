@@ -1,14 +1,12 @@
 package mb.seeme.jwt;
 
 import io.jsonwebtoken.Jwts;
-import mb.seeme.security.JwtConfig;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -18,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
+
+import static mb.seeme.security.ApplicationUserRole.CLIENT;
 
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -33,7 +33,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        System.out.print("!!!!!!");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, password);
@@ -54,16 +53,16 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
                 .signWith(secretKey)
                 .compact();
-
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
-        response.addCookie(new Cookie( "token", token));
 
+        Cookie tokenCookie = new Cookie( "token", token);
+        tokenCookie.setHttpOnly(true);
+        response.addCookie(tokenCookie);
+
+        if(authResult.getAuthorities().contains(CLIENT.getUserRole()))
+            response.sendRedirect("/clients/account");
+        else
+            response.sendRedirect("/providers/account");
     }
-
-
-    protected boolean shouldNotFilter(HttpServletRequest request){
-        return !request.getServletPath().equals("/login");
-    }
-
 }
 

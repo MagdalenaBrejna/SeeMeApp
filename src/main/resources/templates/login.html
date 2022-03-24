@@ -22,22 +22,5 @@
     </div>
 </form>
 </div>
-<script>
-    function signin() {
-        axios.post('http://localhost:8080/login', {
-            username: this.username,
-            password: this.password,
-        })
-            .then((response) => {
-                console.log("response");
-                let token = response.data.access;
-                localStorage.setItem("SavedToken", 'Bearer ' + token);
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-                (this.$router.push({name: 'home'}));
-
-            })
-    }
-</script>
-
 </body>
 </html>
