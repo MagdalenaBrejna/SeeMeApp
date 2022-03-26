@@ -62,7 +62,7 @@ public class ServiceProviderController {
 
 
     @GetMapping({"providers/archive", "providers/archive.html"})
-    public String processFindForm(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate termDate, Client client, Model model){
+    public String getProviderArchive(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate termDate, Client client, Model model){
         if(termDate == null)
             termDate = LocalDate.now();
         if (client.getName() == null)

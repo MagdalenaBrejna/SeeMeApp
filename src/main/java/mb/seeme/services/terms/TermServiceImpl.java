@@ -89,7 +89,7 @@ public class TermServiceImpl implements TermService {
 
     private List<Term> findAllByClientName(String clientName) {
         return termRepository.findAllByClientName(clientName).stream()
-                .sorted((term1, term2) -> term1.getTermDate().compareTo(term2.getTermDate()))
+                .sorted((term1, term2) -> term1.compareToFuture(term2))
                 .collect(Collectors.toList());
     }
 
@@ -180,7 +180,7 @@ public class TermServiceImpl implements TermService {
     public List<Term> findAllPastAppointedByProviderId(Long providerId) {
         List<Term> terms = termRepository.findAllAppointedByProviderIdBeforeDate(providerId, LocalDate.now())
                 .stream()
-                .sorted((term1, term2) -> term2.getTermDate().compareTo(term1.getTermDate()))
+                .sorted((term1, term2) -> term1.compareToPast(term2))
                 .collect(Collectors.toList());
         return terms;
     }
@@ -191,7 +191,7 @@ public class TermServiceImpl implements TermService {
             selectedDate = LocalDate.now();
         List<Term> terms = termRepository.findAllAppointedByProviderIdAtDate(providerId, selectedDate)
                 .stream()
-                .sorted((term1, term2) -> term1.getTermTime().compareTo(term2.getTermTime()))
+                .sorted((term1, term2) -> term1.compareToPast(term2))
                 .collect(Collectors.toList());
         return terms;
     }
@@ -201,7 +201,7 @@ public class TermServiceImpl implements TermService {
         List<Term> terms = findAllPastByClientName(clientName)
                 .stream()
                 .filter(term -> term.getService().getServiceProvider().getId() == providerId)
-                .sorted((term1, term2) -> term2.getTermDate().compareTo(term1.getTermDate()))
+                .sorted((term1, term2) -> term1.compareToPast(term2))
                 .collect(Collectors.toList());
         return terms;
     }
@@ -211,7 +211,7 @@ public class TermServiceImpl implements TermService {
         List<Term> terms = findAllPastByClientName(clientName)
                 .stream()
                 .filter(term -> (term.getTermDate().isBefore(selectedDate) && term.getService().getServiceProvider().getId() == providerId))
-                .sorted((term1, term2) -> term1.getTermTime().compareTo(term2.getTermTime()))
+                .sorted((term1, term2) -> term1.compareToPast(term2))
                 .collect(Collectors.toList());
         return terms;
     }
