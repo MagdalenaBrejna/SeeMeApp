@@ -1,6 +1,8 @@
 package mb.seeme.controllers;
 
+import mb.seeme.security.ApplicationUserRole;
 import mb.seeme.services.terms.TermService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +20,10 @@ public class TermController {
     @GetMapping({"cancel/{id}", "cancel/{id}.html"})
     public String cancelTerm(@PathVariable("id") Long termId){
         termService.cancelById(termId);
-        return "redirect:/clients/terms";
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(ApplicationUserRole.CLIENT))
+            return "redirect:/clients/terms";
+        else
+            return "redirect:/providers/calendar";
     }
 
 

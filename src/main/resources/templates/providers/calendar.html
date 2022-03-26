@@ -123,6 +123,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
+                                    <a type="button" class="btn btn-outline" th:href="@{/cancel/{id}(id=${term.id})}" th:text="#{cancel}"><i class="fa fa-check"></i><span class="glyphicon glyphicon-remove-circle"></span></a>
                                     <a type="button" class="btn btn-outline" th:href="@{/delete/{id}(id=${term.id})}"><i class="fa fa-check"></i><span class="glyphicon glyphicon-trash"></span></a>
                                 </div>
                             </div>
