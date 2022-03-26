@@ -23,6 +23,7 @@ public class ServiceProviderTerm{
     private String city;
     private LocalDate termDate;
     private LocalTime termTime;
+    private String providerImage;
 
     @Override
     public boolean equals(Object o) {

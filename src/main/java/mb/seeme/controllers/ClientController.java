@@ -80,7 +80,6 @@ public class ClientController {
 
     @GetMapping({"clients/find", "clients/find.html"})
     public String findTerms(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate selectedTermDate, ServiceProviderTerm serviceProviderTerm, Model model) {
-        Long clientId = userAuthenticationService.getAuthenticatedClientId();
         if(selectedTermDate == null)
             selectedTermDate = LocalDate.now();
         if(serviceProviderTerm.getProviderName() == null)
