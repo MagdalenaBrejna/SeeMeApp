@@ -76,14 +76,14 @@ public class TermBootstrap implements ApplicationListener<ContextRefreshedEvent>
         availableServiceRepository.save(service1);
         availableServiceRepository.save(service2);
 
-        Term term1 = Term.builder().id(1l).termDate(LocalDate.parse("2021-11-19")).termTime(LocalTime.parse("12:32:22", DateTimeFormatter.ISO_TIME)).service(service1).client(clientB).termRealizedStatus(Status.FULL).termDescription("Naprawa Skoda Superb").build();
-        Term term2 = Term.builder().id(2l).termDate(LocalDate.parse("2021-11-19")).termTime(LocalTime.parse("13:32:22", DateTimeFormatter.ISO_TIME)).service(service2).client(clientA).termRealizedStatus(Status.FULL).termDescription("Strzyzenie meskie").build();
-        Term term3 = Term.builder().id(3l).termDate(LocalDate.parse("2021-11-20")).termTime(LocalTime.parse("14:32:22", DateTimeFormatter.ISO_TIME)).service(service1).client(clientA).termRealizedStatus(Status.FULL).termDescription("Wymiana opon").build();
-        Term term4 = Term.builder().id(4l).termDate(LocalDate.parse("2021-11-19")).termTime(LocalTime.parse("09:32:22", DateTimeFormatter.ISO_TIME)).service(service1).client(clientA).termRealizedStatus(Status.FULL).termDescription("Uzupelnienie filtrow").build();
-        Term term5 = Term.builder().id(5l).termDate(LocalDate.parse("2022-11-22")).termTime(LocalTime.parse("09:32:22", DateTimeFormatter.ISO_TIME)).service(service2).termRealizedStatus(Status.FREE).termDescription("Farbowanie wlosow").build();
-        Term term6 = Term.builder().id(6l).termDate(LocalDate.parse("2022-11-15")).termTime(LocalTime.parse("09:32:22", DateTimeFormatter.ISO_TIME)).service(service1).termRealizedStatus(Status.FREE).termDescription("Montaz kamery tylniej").build();
-        Term term7 = Term.builder().id(7l).termDate(LocalDate.parse("2022-11-23")).termTime(LocalTime.parse("09:32:22", DateTimeFormatter.ISO_TIME)).service(service1).termRealizedStatus(Status.FREE).termDescription("Naprawa szkody Fiat 500 z ubezpieczenia").build();
-        Term term8 = Term.builder().id(8l).termDate(LocalDate.parse("2022-11-14")).termTime(LocalTime.parse("09:32:22", DateTimeFormatter.ISO_TIME)).service(service1).termRealizedStatus(Status.FULL).client(clientA).termDescription("Lakierowanie maski").build();
+        Term term1 = Term.builder().id(1l).termDate(LocalDate.parse("2021-11-19")).termTime(LocalTime.parse("12:32", DateTimeFormatter.ISO_TIME)).service(service1).client(clientB).termRealizedStatus(Status.FULL).termDescription("Naprawa Skoda Superb").build();
+        Term term2 = Term.builder().id(2l).termDate(LocalDate.parse("2021-11-19")).termTime(LocalTime.parse("13:32", DateTimeFormatter.ISO_TIME)).service(service2).client(clientA).termRealizedStatus(Status.FULL).termDescription("Strzyzenie meskie").build();
+        Term term3 = Term.builder().id(3l).termDate(LocalDate.parse("2021-11-20")).termTime(LocalTime.parse("14:32", DateTimeFormatter.ISO_TIME)).service(service1).client(clientA).termRealizedStatus(Status.FULL).termDescription("Wymiana opon").build();
+        Term term4 = Term.builder().id(4l).termDate(LocalDate.parse("2021-11-19")).termTime(LocalTime.parse("09:32", DateTimeFormatter.ISO_TIME)).service(service1).client(clientA).termRealizedStatus(Status.FULL).termDescription("Uzupelnienie filtrow").build();
+        Term term5 = Term.builder().id(5l).termDate(LocalDate.parse("2022-11-22")).termTime(LocalTime.parse("09:32", DateTimeFormatter.ISO_TIME)).service(service2).termRealizedStatus(Status.FREE).termDescription("Farbowanie wlosow").build();
+        Term term6 = Term.builder().id(6l).termDate(LocalDate.parse("2022-11-15")).termTime(LocalTime.parse("09:32", DateTimeFormatter.ISO_TIME)).service(service1).termRealizedStatus(Status.FREE).termDescription("Montaz kamery tylniej").build();
+        Term term7 = Term.builder().id(7l).termDate(LocalDate.parse("2022-11-23")).termTime(LocalTime.parse("09:32", DateTimeFormatter.ISO_TIME)).service(service1).termRealizedStatus(Status.FREE).termDescription("Naprawa szkody Fiat 500 z ubezpieczenia").build();
+        Term term8 = Term.builder().id(8l).termDate(LocalDate.parse("2022-11-14")).termTime(LocalTime.parse("09:32", DateTimeFormatter.ISO_TIME)).service(service1).termRealizedStatus(Status.FULL).client(clientA).termDescription("Lakierowanie maski").build();
 
         List<Term> termList = new ArrayList<Term>();
         termList.add(term1);

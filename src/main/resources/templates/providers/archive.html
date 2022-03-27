@@ -8,7 +8,7 @@
 <body >
     <!--/*@thymesVar id="client" type="mb.seeme.model.users.Client"*/-->
     <!--/*@thymesVar id="term" type="mb.seeme.model.terms.Term"*/-->
-    <form name="clientQuery"  th:action="@{/providers/archive}" method="get" class="form-horizontal" id="search-client-form">
+    <form name="clientQuery"  th:action="@{/providers/archive}" method="get" class="form-horizontal" id="search-client-form" style="margin-top: 20px">
         <div class="form-group">
             <div class="control-group" id="nameGroup">
                 <div th:object="${client}" class="col-sm-4">
@@ -27,61 +27,61 @@
     </form>
 
     <br>
-    <table id="archive_terms" class="table table-striped">
+    <table id="archive_terms" class="table table-striped" style="margin-top: 20px">
         <thead>
         <tr>
-            <th style="width: 100px;" th:text="#{date}">Date</th>
-            <th style="width: 100px;" th:text="#{time}">Time</th>
-            <th style="width: 100px;" th:text="#{client}">Client</th>
-            <th style="width: 80px;" th:text="#{details}">Details</th>
+            <th style="width: 100px;text-align: center;vertical-align: middle" th:text="#{date}">Date</th>
+            <th style="width: 100px;text-align: center;vertical-align: middle" th:text="#{time}">Time</th>
+            <th style="width: 100px;text-align: center;vertical-align: middle" th:text="#{client}">Client</th>
+            <th style="width: 80px;text-align: center;vertical-align: middle" th:text="#{details}">Details</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="term : ${selections}">
-            <td th:text="${term.termDate}"/>
-            <td th:text="${term.termTime}"/>
-            <td th:text="${term.client}"/>
-            <td><a data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${term.id }">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-search"></span></a>
+            <td style="text-align: center;vertical-align: middle" th:text="${term.termDate}"/>
+            <td style="text-align: center;vertical-align: middle" th:text="${term.termTime}"/>
+            <td style="text-align: center;vertical-align: middle" th:text="${term.client}"/>
+            <td style="text-align: center;vertical-align: middle"><a data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${term.id }"><span class="glyphicon glyphicon-search"></span></a>
                 <!--  MODAL -->
                 <div class="modal modal-warning fade in" th:id="modal-warning+${term.id }" >
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-right: 15px;margin-top: 5px"><span aria-hidden="true">×</span></button>
                                 <div class="form-group row">
-                                    <label for="data" class="col-sm-2 col-form-label">Date</label>
-                                    <div class="col-sm-10">
-                                        <input size="30" type="text" readonly class="form-control-plaintext" id="data" th:value="${term.termDate}">
+                                    <label for="data" class="col-sm-3 col-form-label" style="text-align: left;margin-top: 30px;margin-left: 40px">Date</label>
+                                    <div class="col-sm-7">
+                                        <input size="30" type="text" readonly class="form-control-plaintext" id="data" th:value="${term.termDate}" style="margin-top: 30px">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="time" class="col-sm-2 col-form-label">Time</label>
-                                    <div class="col-sm-10">
+                                    <label for="time" class="col-sm-3 col-form-label" style="text-align: left;margin-left: 40px">Time</label>
+                                    <div class="col-sm-7">
                                         <input size="30" type="text" readonly class="form-control-plaintext" id="time" th:value="${term.termTime}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="service" class="col-sm-2 col-form-label">Service</label>
-                                    <div class="col-sm-10">
+                                    <label for="service" class="col-sm-3 col-form-label" style="text-align: left;margin-left: 40px">Service</label>
+                                    <div class="col-sm-7">
                                         <input size="30" type="text" readonly class="form-control-plaintext" id="service" th:value="${term.service.serviceName}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="client" class="col-sm-2 col-form-label">Client</label>
-                                    <div class="col-sm-10">
+                                    <label for="client" class="col-sm-3 col-form-label" style="text-align: left;margin-left: 40px">Client</label>
+                                    <div class="col-sm-7">
                                         <input size="30" type="text" readonly class="form-control-plaintext" id="client" th:value="${term.client.name}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="number" class="col-sm-2 col-form-label">Telephone</label>
-                                    <div class="col-sm-10">
+                                    <label for="number" class="col-sm-3 col-form-label" style="text-align: left;margin-left: 40px">Telephone</label>
+                                    <div class="col-sm-7">
                                         <input size="30" type="text" readonly class="form-control-plaintext" id="number" th:value="${term.client.telephone}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="description" class="col-sm-2 col-form-label">Description</label>
-                                    <div class="col-sm-10">
-                                        <input size="30" type="text" readonly class="form-control-plaintext" id="description" th:value="${term.termDescription}">
+                                    <label for="description" class="col-sm-3 col-form-label" style="text-align: left;margin-left: 40px;margin-bottom: 10px">Description</label>
+                                    <div class="col-sm-7">
+                                        <input size="30" type="text" readonly class="form-control-plaintext" id="description" th:value="${term.termDescription}" style="margin-bottom: 10px">
                                     </div>
                                 </div>
                             </div>

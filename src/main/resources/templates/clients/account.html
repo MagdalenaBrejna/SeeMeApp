@@ -6,21 +6,20 @@
 </head>
 <body>
 
-<h2 th:text="#{account}"></h2>
-</br>
-</br>
+<h2 th:text="#{account}" style="margin-top: 100px;margin-left: 180px"></h2>
+</br></br>
 <form>
     <div class="form-group row">
-        <label for="name" class="col-sm-2 col-form-label" th:text="#{name}"></label>
-        <div class="form-group col-md-9">
+        <label for="name" class="col-sm-2 col-form-label" th:text="#{name}" style="margin-left: 180px"></label>
+        <div class="form-group col-md-7">
             <input size="80" type="text" readonly class="form-control-plaintext" id="name" th:value="${client.name}">
         </div>
-        <label for="mail" class="col-sm-2 col-form-label" th:text="#{email}"></label>
-        <div class="form-group col-md-9">
+        <label for="mail" class="col-sm-2 col-form-label" th:text="#{email}" style="margin-left: 180px"></label>
+        <div class="form-group col-md-7">
             <input size="80" type="text" readonly class="form-control-plaintext" id="mail" th:value="${client.email}">
         </div>
-        <label for="telephone" class="col-sm-2 col-form-label" th:text="#{telephone}"></label>
-        <div class="form-group col-md-9">
+        <label for="telephone" class="col-sm-2 col-form-label" th:text="#{telephone}" style="margin-left: 180px"></label>
+        <div class="form-group col-md-7">
             <input size="80" type="text" readonly class="form-control-plaintext" id="telephone" th:value="${client.telephone}">
         </div>
     </div>
