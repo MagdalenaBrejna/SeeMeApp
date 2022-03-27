@@ -1,5 +1,6 @@
 package mb.seeme.services.users;
 
+import mb.seeme.emails.EmailServiceImpl;
 import mb.seeme.exceptions.UserAlreadyExistException;
 import mb.seeme.model.users.Client;
 import mb.seeme.model.users.Person;
@@ -21,11 +22,14 @@ public class UserAuthenticationService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final ClientRepository clientRepository;
     private final ServiceProviderRepository providerRepository;
+    private final EmailServiceImpl emailService;
 
-    public UserAuthenticationService(ClientRepository clientRepository, ServiceProviderRepository providerRepository, PasswordEncoder passwordEncoder) {
+    public UserAuthenticationService(ClientRepository clientRepository, ServiceProviderRepository providerRepository, PasswordEncoder passwordEncoder, EmailServiceImpl emailService) {
         this.clientRepository = clientRepository;
         this.providerRepository = providerRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
+
     }
 
     @Override
@@ -59,6 +63,7 @@ public class UserAuthenticationService implements UserDetailsService {
                        .password(passwordEncoder.encode(userDto.getPassword()))
                        .userRole(CLIENT.getUserRole()).build();
                clientRepository.save(newClient);
+               emailService.sendSimpleMessage(newClient.getEmail(), emailService.getWelcomeTitle(), emailService.getWelcomeMessage());
            }else {
                ServiceProvider newProvider = ServiceProvider.builder()
                        .name(userDto.getName())
@@ -66,6 +71,7 @@ public class UserAuthenticationService implements UserDetailsService {
                        .password(passwordEncoder.encode(userDto.getPassword()))
                        .userRole(PROVIDER.getUserRole()).build();
                providerRepository.save(newProvider);
+               emailService.sendSimpleMessage(newProvider.getEmail(), emailService.getWelcomeTitle(), emailService.getWelcomeMessage());
            }
         }else
             throw new UserAlreadyExistException("There is an account with that email address: " + userDto.getEmail());

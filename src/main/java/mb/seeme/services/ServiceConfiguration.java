@@ -1,5 +1,6 @@
 package mb.seeme.services;
 
+import mb.seeme.emails.EmailServiceImpl;
 import mb.seeme.repositories.AvailableServiceRepository;
 import mb.seeme.repositories.ClientRepository;
 import mb.seeme.repositories.ServiceProviderRepository;
@@ -16,8 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ServiceConfiguration {
 
     @Bean
-    UserAuthenticationService userAuthenticationService(final ClientRepository clientRepository, final ServiceProviderRepository providerRepository, PasswordEncoder passwordEncoder) {
-        return new UserAuthenticationService(clientRepository, providerRepository, passwordEncoder);
+    UserAuthenticationService userAuthenticationService(final ClientRepository clientRepository, final ServiceProviderRepository providerRepository, PasswordEncoder passwordEncoder, EmailServiceImpl emailService) {
+        return new UserAuthenticationService(clientRepository, providerRepository, passwordEncoder, emailService);
     }
 
     @Bean
