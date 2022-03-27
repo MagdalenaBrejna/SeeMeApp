@@ -45,6 +45,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         return providerRepository.save(provider);
     }
 
+
     @Override
     public void delete(ServiceProvider provider) {
         providerRepository.delete(provider);

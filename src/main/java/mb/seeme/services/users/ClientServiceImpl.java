@@ -42,4 +42,13 @@ public class ClientServiceImpl implements ClientService {
     public void deleteById(Long id) {
         clientRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public void updateClientDetails(Client authClient, Client modifiedClient) {
+        authClient.setName(modifiedClient.getName());
+        authClient.setEmail(modifiedClient.getEmail());
+        authClient.setTelephone(modifiedClient.getTelephone());
+        clientRepository.save(authClient);
+    }
 }

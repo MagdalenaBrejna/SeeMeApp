@@ -2,28 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/clientLayout :: layout (~{::body},'home')}">
 <head>
     <meta charset="UTF-8">
-    <title>My Account</title>
+    <title>Account details</title>
 </head>
 <body>
-
-<h2 th:text="#{account}" style="margin-top: 100px;margin-left: 180px"></h2>
+<h2 th:text="#{update.account.details}" style="margin-top: 100px;margin-left: 180px;margin-bottom: 40px"></h2>
 <!--/*@thymesVar id="client" type="mb.seeme.model.users.Client"*/-->
-<form th:object="${client}">
-    <a th:href="@{/clients/details}" style="margin-left: 1030px; margin-bottom: 15px; background-color: transparent;border-color:transparent;color:black"><i class="fa fa-check"></i><span class="glyphicon glyphicon-pencil"></span></a>
+<form name="clientDetailsQuery" th:object="${client}" th:action="@{/clients/details/save}" method="post" class="form-horizontal" id="client-details">
     <div class="form-group row" style="margin-top: 10px">
         <label for="name" class="col-sm-2 col-form-label" th:text="#{name}" style="margin-left: 180px"></label>
         <div class="form-group col-md-7">
-            <input size="80" type="text" readonly class="form-control" id="name" th:field="*{name}">
+            <input size="80" type="text" class="form-control" th:field="*{name}" id="name">
         </div>
         <label for="mail" class="col-sm-2 col-form-label" th:text="#{email}" style="margin-left: 180px"></label>
         <div class="form-group col-md-7">
-            <input size="80" type="text" readonly class="form-control" id="mail" th:field="*{email}">
+            <input size="80" type="text" class="form-control" id="mail" th:field="*{email}">
         </div>
         <label for="telephone" class="col-sm-2 col-form-label" th:text="#{telephone}" style="margin-left: 180px"></label>
         <div class="form-group col-md-7">
-            <input size="80" type="text" readonly class="form-control" id="telephone" th:field="*{telephone}">
+            <input size="80" type="text" class="form-control" id="telephone" th:field="*{telephone}">
         </div>
     </div>
+    <button type="submit" class="btn btn-default" style="margin-left: 570px; margin-top: 15px">Save</button>
 </form>
 
 </body>

@@ -8,4 +8,5 @@ public interface ClientRepository extends CrudRepository<Client, Long> {
 
     @Query(nativeQuery = true, value = "select * from clients where email = ?1")
     Client selectClientByUsername(String username);
+
 }

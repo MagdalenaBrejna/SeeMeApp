@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
@@ -95,5 +97,23 @@ public class ClientController {
             model.addAttribute("selections", results);
 
         return "clients/find";
+    }
+
+    @GetMapping({"clients/details", "clients/details.html"})
+    public String getUpdatingDetailsForm(Model model){
+        Long clientId = userAuthenticationService.getAuthenticatedClientId();
+        Client client = clientService.findById(clientId);
+
+        model.addAttribute("client", client);
+        return "clients/details";
+    }
+
+    @PostMapping({"/clients/details/save", "/clients/details/save.html"})
+    public String updateAccountDetails(Client client){
+        Long clientId = userAuthenticationService.getAuthenticatedClientId();
+        Client authClient = clientService.findById(clientId);
+
+        clientService.updateClientDetails(authClient, client);
+        return "redirect:/clients/account";
     }
 }
