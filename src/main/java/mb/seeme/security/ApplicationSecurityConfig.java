@@ -38,6 +38,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/providers/**").hasRole("PROVIDER")
                     .antMatchers("/fragments/**").hasAnyRole("CLIENT","PROVIDER")
                     .antMatchers("/home").permitAll()
+                    .antMatchers("/signup").permitAll()
 
                     .and().formLogin().loginPage("/login").permitAll().successHandler(appAuthenticationSuccessHandler())
                     .and().httpBasic()

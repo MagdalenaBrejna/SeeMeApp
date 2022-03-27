@@ -32,6 +32,7 @@
                 <span class="sr-only"><os-p>Toggle navigation</os-p></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
             </button>
         </div>
         <div class="navbar-collapse collapse" id="main-navbar">
@@ -49,9 +50,14 @@
                     <span>Home</span>
                 </li>
 
-                <li th:replace="::menuItem ('/login','login','login','log-in',' Log in')">
+                <li th:replace="::menuItem ('/login','login','login','log-in',' Sign In')">
                     <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                    <span>Log In</span>
+                    <span>Sign In</span>
+                </li>
+
+                <li th:replace="::menuItem ('/signup','signup','signup','heart-empty',' Sign Up')">
+                    <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+                    <span>Sign Up</span>
                 </li>
 
             </ul>

@@ -10,13 +10,14 @@ import mb.seeme.services.terms.TermServiceImpl;
 import mb.seeme.services.users.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ServiceConfiguration {
 
     @Bean
-    UserAuthenticationService userAuthenticationService(final ClientRepository clientRepository, final ServiceProviderRepository providerRepository) {
-        return new UserAuthenticationService(clientRepository, providerRepository);
+    UserAuthenticationService userAuthenticationService(final ClientRepository clientRepository, final ServiceProviderRepository providerRepository, PasswordEncoder passwordEncoder) {
+        return new UserAuthenticationService(clientRepository, providerRepository, passwordEncoder);
     }
 
     @Bean

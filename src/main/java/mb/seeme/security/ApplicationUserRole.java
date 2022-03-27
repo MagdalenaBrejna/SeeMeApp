@@ -15,4 +15,5 @@ public enum ApplicationUserRole {
     public SimpleGrantedAuthority getUserRole() {
         return new SimpleGrantedAuthority(userRole);
     }
+
 }

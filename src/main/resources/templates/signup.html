@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/mainLayout :: layout (~{::body},'home')}">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+<!--/*@thymesVar id="user" type="mb.seeme.model.users.UserDto"*/-->
+<form class="form-signup" th:action="@{/signup}" th:object="${user}" method="post" style="max-width: 550px; margin: 0 auto;">
+    <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+    <h2 th:if="${message != null}" th:text="${message}"></h2>
+    <div class="border border-secondary p-7 rounded">
+        <br>
+        <br>
+        <h2 class="form-signin-heading" style="margin-left: 230px" th:text="#{signup.message}"></h2>
+        <br>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" th:text="#{name}"></label>
+            <div class="col-sm-7">
+                <input th:field="*{name}" class="form-control" type="text"/>
+                <p th:each="error: ${#fields.errors('name')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" th:text="#{email}"></label>
+            <div class="col-sm-7">
+                <input type="email" class="form-control" th:field="*{email}"/>
+                <p th:each="error : ${#fields.errors('email')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" th:text="#{role}"></label>
+            <div class="col-sm-7">
+
+                <select class="form-control selectpicker" th:field="*{role}" id="role">
+                    <option value=""></option>
+                    <option th:each="role : ${T(mb.seeme.security.ApplicationUserRole).values()}" th:value="${role}" th:text="${role}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" th:text="#{password}"></label>
+            <div class="col-sm-7">
+                <input type="password" class="form-control" th:field="*{password}"/>
+                <p th:each="error : ${#fields.errors('password')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" th:text="#{password.confirm}"></label>
+            <div class="col-sm-7">
+                <input type="password" class="form-control" th:field="*{matchingPassword}"/>
+            </div>
+        </div>
+        <br>
+        <button type="submit" th:text="#{signup}" style="margin-left: 255px;border:1px solid black; background-color: #e3e7e6"></button>
+    </div>
+</form>
+
+</body>
+</html>
