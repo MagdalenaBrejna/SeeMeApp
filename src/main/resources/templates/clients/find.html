@@ -10,13 +10,13 @@
       <div class="form-group">
         <div class="control-group" id="nameGroup">
           <div class="col-sm-3">
-            <input class="form-control" th:field="*{providerName}" size="30" maxlength="30" placeholder="Provider Name"/>
+            <input class="form-control" th:field="*{providerName}" size="30" maxlength="30" th:placeholder="#{provider}"/>
           </div>
           <div class="col-sm-3">
-            <input class="form-control" th:field="*{providerField}" size="30" maxlength="30" placeholder="Provider Field"/>
+            <input class="form-control" th:field="*{providerField}" size="30" maxlength="30" th:placeholder="#{field}"/>
           </div>
           <div class="col-sm-2">
-            <input class="form-control" th:field="*{city}" size="30" maxlength="30" placeholder="City"/>
+            <input class="form-control" th:field="*{city}" size="30" maxlength="30" th:placeholder="#{city}"/>
           </div>
           <div class="col-sm-2">
             <input class="form-control" type="date" th:name="selectedTermDate" size="30" maxlength="30" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
