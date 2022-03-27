@@ -7,10 +7,7 @@ import mb.seeme.repositories.TermRepository;
 import mb.seeme.services.services.AvailableServiceService;
 import mb.seeme.services.services.AvailableServiceServiceImpl;
 import mb.seeme.services.terms.TermServiceImpl;
-import mb.seeme.services.users.ClientServiceImpl;
-import mb.seeme.services.users.ImageServiceImpl;
-import mb.seeme.services.users.ServiceProviderServiceImpl;
-import mb.seeme.services.users.UserAuthenticationService;
+import mb.seeme.services.users.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -10,4 +10,6 @@ public interface ServiceProviderService extends BaseService<ServiceProvider, Lon
 
     List<ServiceProviderTerm> findAllByNameAndCityAndFieldFromDateInTermOrder(ServiceProviderTerm selectedProvider, LocalDate date);
 
+    void updateProviderDetails(ServiceProvider authProvider, ServiceProvider modifiedProvider);
+
 }

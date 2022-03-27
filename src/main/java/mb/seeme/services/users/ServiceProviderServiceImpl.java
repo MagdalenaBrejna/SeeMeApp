@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ServiceProviderServiceImpl implements ServiceProviderService {
+public class ServiceProviderServiceImpl implements ServiceProviderService{
 
     private final ServiceProviderRepository providerRepository;
     private final TermRepository termRepository;
@@ -88,5 +88,18 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
             e.printStackTrace();
         }
         return providerPhoto;
+    }
+
+    @Override
+    @Transactional
+    public void updateProviderDetails(ServiceProvider authProvider, ServiceProvider modifiedProvider) {
+        authProvider.setName(modifiedProvider.getName());
+        authProvider.setProviderField(modifiedProvider.getProviderField());
+        authProvider.setAddress(modifiedProvider.getAddress());
+        authProvider.setCity(modifiedProvider.getCity());
+        authProvider.setEmail(modifiedProvider.getEmail());
+        authProvider.setTelephone(modifiedProvider.getTelephone());
+        authProvider.setProviderDescription(modifiedProvider.getProviderDescription());
+        providerRepository.save(authProvider);
     }
 }

@@ -82,7 +82,7 @@ public class ServiceProviderController {
         if(!file.isEmpty())
             imageService.saveProviderImage(providerId, file);
 
-        return "redirect:/providers/account";
+        return "redirect:/providers/details";
     }
 
 
@@ -116,6 +116,33 @@ public class ServiceProviderController {
             termService.addNewTerms(provider, termDateTime, termsToSave, termsToSaveDuration);
 
         return "redirect:/providers/calendar";
+    }
+
+    @GetMapping({"providers/details", "providers/details.html"})
+    public String getUpdatingDetailsForm(Model model) throws IOException {
+        Long providerId = userAuthenticationService.getAuthenticatedProviderId();
+        ServiceProvider provider = providerService.findById(providerId);
+
+        byte[] encodeBase64ProviderImage = null;
+        if (provider.getProviderImage() != null)
+            encodeBase64ProviderImage = Base64.encodeBase64(provider.getProviderImage());
+        else
+            encodeBase64ProviderImage = Base64.encodeBase64(Files.readAllBytes(Paths.get("src/main/resources/static/resources/images/user.jpg")));
+
+        String providerImage = new String(encodeBase64ProviderImage, "UTF-8");
+        model.addAttribute("providerImage", providerImage);
+        model.addAttribute("provider", provider);
+
+        return "providers/details";
+    }
+
+    @PostMapping({"/providers/details/save", "/providers/details/save.html"})
+    public String updateAccountDetails(ServiceProvider provider){
+        Long providerId = userAuthenticationService.getAuthenticatedProviderId();
+        ServiceProvider authProvider = providerService.findById(providerId);
+
+        providerService.updateProviderDetails(authProvider, provider);
+        return "redirect:/providers/account";
     }
 
 }
