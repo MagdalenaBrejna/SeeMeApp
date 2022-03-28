@@ -43,7 +43,6 @@ public class Term extends BaseEntity {
     @Column(name = "term_description")
     private String termDescription;
 
-   // @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id")
     private AvailableService service;

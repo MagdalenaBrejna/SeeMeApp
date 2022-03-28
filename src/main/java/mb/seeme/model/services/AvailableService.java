@@ -10,6 +10,7 @@ import mb.seeme.model.users.ServiceProvider;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,6 +29,7 @@ public class AvailableService extends BaseEntity {
     }
 
     @NotBlank
+    @NotEmpty
     @Column(name = "service_name")
     private String serviceName;
 

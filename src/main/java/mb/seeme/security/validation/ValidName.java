@@ -1,6 +1,5 @@
 package mb.seeme.security.validation;
 
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.Documented;
@@ -12,10 +11,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({TYPE, FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = EmailValidator.class)
+@Constraint(validatedBy = NameValidator.class)
 @Documented
-public @interface ValidEmail {
-    String message() default "Invalid email";
+public @interface ValidName {
+    String message() default "Invalid name";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

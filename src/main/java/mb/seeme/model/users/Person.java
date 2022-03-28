@@ -5,11 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mb.seeme.model.BaseEntity;
+import mb.seeme.security.validation.ValidEmail;
+import mb.seeme.security.validation.ValidName;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,21 +35,29 @@ public class Person extends BaseEntity implements UserDetails {
         this.userRole = userRole;
     }
 
+    @ValidName
+    @NotBlank
+    @NotEmpty
     @Column(name = "name")
     private String name;
 
     @Column(name = "telephone")
     private String telephone;
 
+    @ValidEmail
+    @NotEmpty
     @Column(name = "email")
     private String email;
 
+    @NotBlank
+    @NotEmpty
     @Column(name = "password")
     private String password;
 
     @Column(name = "locked")
     private boolean locked;
 
+    @NotNull
     @Column(name = "role")
     private SimpleGrantedAuthority userRole;
 
