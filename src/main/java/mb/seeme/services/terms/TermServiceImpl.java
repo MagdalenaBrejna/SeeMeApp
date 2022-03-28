@@ -217,12 +217,12 @@ public class TermServiceImpl implements TermService {
     }
 
     @Override
-    public void addNewTerms(ServiceProvider provider, LocalDateTime firstTermDateAndTime, int termsNumber, int termDuration){
+    public void addNewTerms(ServiceProvider provider, LocalDateTime firstTermDateAndTime, int termsNumber, int termDuration, String serviceName){
         LocalDate firstTermDate = firstTermDateAndTime.atZone(ZoneId.systemDefault()).toLocalDate();
         LocalTime firstTermTime = firstTermDateAndTime.atZone(ZoneId.systemDefault()).toLocalTime();
 
         for(int i = 0; i < termsNumber; i++) {
-            AvailableService service = AvailableService.builder().serviceProvider(provider).build();
+            AvailableService service = AvailableService.builder().serviceName(serviceName).serviceProvider(provider).build();
             availableService.save(service);
             save(Term.builder().termDate(firstTermDate).termTime(firstTermTime).service(service).termRealizedStatus(Status.FREE).build());
 

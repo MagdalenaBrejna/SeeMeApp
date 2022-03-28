@@ -1,6 +1,6 @@
 package mb.seeme.services.users;
 
-import mb.seeme.emails.EmailServiceImpl;
+import mb.seeme.emails.EMailService;
 import mb.seeme.exceptions.UserAlreadyExistException;
 import mb.seeme.model.users.Client;
 import mb.seeme.model.users.Person;
@@ -22,9 +22,9 @@ public class UserAuthenticationService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final ClientRepository clientRepository;
     private final ServiceProviderRepository providerRepository;
-    private final EmailServiceImpl emailService;
+    private final EMailService emailService;
 
-    public UserAuthenticationService(ClientRepository clientRepository, ServiceProviderRepository providerRepository, PasswordEncoder passwordEncoder, EmailServiceImpl emailService) {
+    public UserAuthenticationService(ClientRepository clientRepository, ServiceProviderRepository providerRepository, PasswordEncoder passwordEncoder, EMailService emailService) {
         this.clientRepository = clientRepository;
         this.providerRepository = providerRepository;
         this.passwordEncoder = passwordEncoder;

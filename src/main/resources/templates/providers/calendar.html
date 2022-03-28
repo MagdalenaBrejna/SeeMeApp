@@ -38,26 +38,33 @@
    <div class="modal fade" id="newTermModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
        <div class="modal-dialog modal-dialog-centered" role="document">
            <div class="modal-content">
-               <div class="modal-header">
-                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                       <span aria-hidden="true">&times;</span>
-                   </button>
-                   <h5 class="modal-title" th:text="#{add.new.terms}" style="margin-left: 15px"></h5>
-               </div>
-               <div class="modal-body">
-                   <form th:action="@{/providers/calendar/newTerm}" method="POST" id="newTermForm">
+               <form th:action="@{/providers/calendar/newTerm}" method="POST" id="newTermForm">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                       </button>
+                       <div class="col-sm-1">
+                           <button class="btn btn-primary" style="width: 10px;height: 10px;background-color: transparent;border-color:transparent;color:black" type="submit" ><span class="glyphicon glyphicon-plus"></span></button>
+                       </div>
                        <div class="col-sm-4">
-                           <input class="form-control" type="datetime-local" th:name="termDateTime" style="margin-top: 5px;margin-bottom: 5px" size="30" maxlength="30" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"/>
+                           <p th:text="#{add.new.terms}" style="margin-top: 10px"></p>
                        </div>
-                       <div class="col-sm-3">
-                           <input class="form-control" type="text" th:name="termsNumber" style="margin-top: 5px;margin-bottom: 5px" size="30" maxlength="30" th:placeholder="#{term.number}"/>
-                       </div>
-                       <div class="col-sm-3">
-                           <input class="form-control" type="text" th:name="termDuration" style="margin-top: 5px;margin-bottom: 5px" size="30" maxlength="30" th:placeholder="#{term.duration}"/>
-                       </div>
-                       <button class="btn btn-primary" style="margin-left: 15px;margin-top: 5px;margin-bottom: 5px;alignment:right" type="submit" th:text="#{add.terms}"></button>
-                   </form>
-               </div>
+                   </div>
+                   <div class="modal-body" style="height: 80px">
+                           <div class="col-sm-4">
+                               <input class="form-control" type="datetime-local" th:name="termDateTime" style="margin-top: 5px;margin-bottom: 5px" size="30" maxlength="30" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"/>
+                           </div>
+                           <div class="col-sm-3">
+                               <input class="form-control" type="text" th:name="termsNumber" style="margin-top: 5px;margin-bottom: 5px" size="30" maxlength="30" th:placeholder="#{term.number}"/>
+                           </div>
+                           <div class="col-sm-3">
+                               <input class="form-control" type="text" th:name="termDuration" style="margin-top: 5px;margin-bottom: 5px" size="30" maxlength="30" th:placeholder="#{term.duration}"/>
+                           </div>
+                           <div class="col-sm-2">
+                               <input class="form-control" type="text" th:name="serviceName" style="margin-top: 5px;margin-bottom: 5px" size="30" maxlength="30" th:placeholder="#{service.lowercase}"/>
+                           </div>
+                   </div>
+               </form>
            </div>
        </div>
    </div>

@@ -1,10 +1,15 @@
 package mb.seeme.model.terms;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import mb.seeme.model.BaseEntity;
 import mb.seeme.model.services.AvailableService;
 import mb.seeme.model.users.Client;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -26,9 +31,11 @@ public class Term extends BaseEntity {
         this.termRealizedStatus = termRealizedStatus;
     }
 
+    @NotNull
     @Column(name = "term_date")
     private LocalDate termDate;
 
+    @NotNull
     @Column(name = "term_time")
     private LocalTime termTime;
 
@@ -36,6 +43,7 @@ public class Term extends BaseEntity {
     @Column(name = "term_description")
     private String termDescription;
 
+   // @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id")
     private AvailableService service;
@@ -44,6 +52,7 @@ public class Term extends BaseEntity {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @NotNull
     @Column(name = "status")
     @Enumerated(value = EnumType.STRING)
     private Status termRealizedStatus;

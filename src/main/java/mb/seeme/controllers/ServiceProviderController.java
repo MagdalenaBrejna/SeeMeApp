@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -106,14 +105,14 @@ public class ServiceProviderController {
 
 
     @PostMapping({"providers/calendar/newTerm", "providers/calendar/newTerm.html"})
-    public String addNewTerms(@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime termDateTime, String termsNumber, String termDuration, Model model){
+    public String addNewTerms(@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime termDateTime, String termsNumber, String termDuration, String serviceName, Model model){
         Long providerId = userAuthenticationService.getAuthenticatedProviderId();
         ServiceProvider provider = providerService.findById(providerId);
         int termsToSave = Integer.valueOf(termsNumber);
         int termsToSaveDuration = Integer.valueOf(termDuration);
 
-        if(termDateTime.isAfter(LocalDateTime.now()) && termsToSave > 0 && termsToSaveDuration > 0)
-            termService.addNewTerms(provider, termDateTime, termsToSave, termsToSaveDuration);
+        if(termDateTime != null && termDateTime.isAfter(LocalDateTime.now()) && termsToSave > 0 && termsToSaveDuration > 0)
+            termService.addNewTerms(provider, termDateTime, termsToSave, termsToSaveDuration, serviceName);
 
         return "redirect:/providers/calendar";
     }

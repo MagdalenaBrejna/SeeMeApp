@@ -1,10 +1,15 @@
 package mb.seeme.model.services;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import mb.seeme.model.BaseEntity;
 import mb.seeme.model.terms.Term;
 import mb.seeme.model.users.ServiceProvider;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +27,7 @@ public class AvailableService extends BaseEntity {
         this.serviceProvider = serviceProvider;
     }
 
+    @NotBlank
     @Column(name = "service_name")
     private String serviceName;
 

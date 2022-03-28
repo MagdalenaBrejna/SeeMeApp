@@ -6,7 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EmailServiceImpl {
+public class EMailService {
 
     private final String WELCOME_MESSAGE = "Dear user!\n\nI'm very happy to see you as a part of our community. I hope it will be pleasure for you! Just log in and enjoy.\n\nMagda";
     private final String WELCOME_TITLE = "Welcome in the SeeMe community";

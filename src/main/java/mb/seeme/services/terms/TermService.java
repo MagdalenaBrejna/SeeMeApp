@@ -14,7 +14,7 @@ public interface TermService extends BaseService<Term, Long> {
 
     void bookTermByClientId(Long clientId, Long termId);
 
-    void addNewTerms(ServiceProvider provider, LocalDateTime firstTermDateAndTime, int termsNumber, int termDuration);
+    void addNewTerms(ServiceProvider provider, LocalDateTime firstTermDateAndTime, int termsNumber, int termDuration, String serviceName);
 
 
     List<Term> findAllFutureByClientName(String clientName);
