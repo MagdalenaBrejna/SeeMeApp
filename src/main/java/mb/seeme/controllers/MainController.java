@@ -5,11 +5,11 @@ import mb.seeme.model.users.UserDto;
 import mb.seeme.services.users.UserAuthenticationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import javax.servlet.http.HttpServletRequest;
+
 import javax.validation.Valid;
 
 @Controller
@@ -39,15 +39,13 @@ public class MainController {
     }
 
     @PostMapping("/signup")
-    public String registerUserAccount(@ModelAttribute("user") @Valid UserDto userDto, Model model, HttpServletRequest request, Errors errors) {
+    public String registerUserAccount(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors())
+            return "signup";
         try {
-            if(!userDto.getPassword().equals(userDto.getMatchingPassword())) {
-                model.addAttribute("message", "Wrong Password");
-                return "signup";
-            }
             userAuthService.registerNewUserAccount(userDto);
         } catch (UserAlreadyExistException e) {
-            model.addAttribute("message", "An account for that email already exists.");
+            model.addAttribute("message", "Takie konto juz istnieje!");
             return "signup";
         }
         return "login";

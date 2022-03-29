@@ -1,6 +1,5 @@
 package mb.seeme.security.validation;
 
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.Documented;
@@ -10,12 +9,12 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target({TYPE, FIELD, ANNOTATION_TYPE})
+@Target({TYPE,ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = EmailValidator.class)
+@Constraint(validatedBy = PasswordMatchesValidator.class)
 @Documented
-public @interface ValidEmail {
-    String message() default "Niepoprawny adres email";
+public @interface PasswordMatches {
+    String message() default "Bledne haslo";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
