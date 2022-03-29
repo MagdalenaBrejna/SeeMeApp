@@ -1,11 +1,14 @@
 package mb.seeme.services.terms;
 
+import mb.seeme.exceptions.NotFoundException;
 import mb.seeme.model.services.AvailableService;
 import mb.seeme.model.terms.Status;
 import mb.seeme.model.terms.Term;
 import mb.seeme.model.users.Client;
+import mb.seeme.model.users.Person;
 import mb.seeme.model.users.ServiceProvider;
 import mb.seeme.repositories.TermRepository;
+import mb.seeme.security.ApplicationUserRole;
 import mb.seeme.services.services.AvailableServiceService;
 
 import javax.transaction.Transactional;
@@ -28,6 +31,13 @@ public class TermServiceImpl implements TermService {
         this.availableService = availableService;
     }
 
+    private Term findIfTermExists(Long termId) throws NotFoundException {
+        Term selectedTerm = findById(termId);
+        if(selectedTerm == null)
+            throw new NotFoundException("There is no such a term");
+        return selectedTerm;
+    }
+
     @Override
     public Set<Term> findAll() {
         Set<Term> terms = new HashSet<>();
@@ -48,9 +58,12 @@ public class TermServiceImpl implements TermService {
 
     @Override
     @Transactional
-    public void bookTermByClientId(Long clientId, Long termId) {
-        termRepository.bookTerm(clientId, termId);
-        termRepository.makeTermStatusFull(termId);
+    public void bookTermByClientId(Long clientId, Long termId) throws NotFoundException {
+        Term term = findIfTermExists(termId);
+        if(term.getTermRealizedStatus().equals(Status.FREE)){
+            termRepository.bookTerm(clientId, termId);
+            termRepository.makeTermStatusFull(termId);
+        }
     }
 
     @Override
@@ -59,15 +72,25 @@ public class TermServiceImpl implements TermService {
     }
 
     @Override
-    public void deleteById(Long termId) {
+    public void deleteById(Long termId) throws NotFoundException {
+        findIfTermExists(termId);
         termRepository.deleteById(termId);
     }
 
     @Override
+    public void deleteByTermId(Long termId, Person person) throws NotFoundException {
+        Term term = findIfTermExists(termId);
+        if(term.getTermDate().isAfter(LocalDate.now()) && person.getUserRole().equals(ApplicationUserRole.PROVIDER.getUserRole()) && term.getService().getServiceProvider() != null && term.getService().getServiceProvider().equals((ServiceProvider)person))
+            termRepository.deleteById(termId);
+    }
+
+    @Override
     @Transactional
-    public void cancelById(Long termId) {
-        Term selectedTerm = findById(termId);
-        if(selectedTerm.getClient() != null)
+    public void cancelById(Long termId, Person person) throws NotFoundException {
+        Term term = findIfTermExists(termId);
+        if(term.getClient() != null && term.getTermDate().isAfter(LocalDate.now()) &&
+                ((person.getUserRole().equals(ApplicationUserRole.PROVIDER.getUserRole()) && term.getService().getServiceProvider() != null && term.getService().getServiceProvider().equals((ServiceProvider)person)) ||
+                 (person.getUserRole().equals(ApplicationUserRole.CLIENT.getUserRole()) && term.getClient() != null && term.getClient().equals((Client)person))))
             termRepository.makeTermStatusFree(termId);
     }
 
@@ -235,8 +258,8 @@ public class TermServiceImpl implements TermService {
 
     @Transactional
     @Override
-    public void addTermDescription(String termDescription, Long termId) {
-        Term term = findById(termId);
+    public void addTermDescription(String termDescription, Long termId) throws NotFoundException {
+        Term term = findIfTermExists(termId);
         term.setTermDescription(termDescription);
         save(term);
     }

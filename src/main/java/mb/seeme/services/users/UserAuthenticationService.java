@@ -1,6 +1,7 @@
 package mb.seeme.services.users;
 
 import mb.seeme.emails.EMailService;
+import mb.seeme.exceptions.AuthException;
 import mb.seeme.exceptions.UserAlreadyExistException;
 import mb.seeme.model.users.Client;
 import mb.seeme.model.users.Person;
@@ -41,20 +42,34 @@ public class UserAuthenticationService implements UserDetailsService {
             return clientRepository.selectClientByUsername(username);
     }
 
-    public Long getAuthenticatedProviderId() {
+    public Long getAuthenticatedProviderId() throws AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ServiceProvider provider = providerRepository.selectProviderByUsername(authentication.getName());
+        if(provider == null)
+            throw new AuthException("Nie masz dostepu do tych zasobow");
         return provider.getId();
     }
 
-    public Long getAuthenticatedClientId() {
+    public Long getAuthenticatedClientId() throws AuthException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Client client = clientRepository.selectClientByUsername(authentication.getName());
+        if(client == null)
+            throw new AuthException("Nie masz dostepu do tych zasobow");
         return client.getId();
     }
 
+    public Person getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ServiceProvider provider = providerRepository.selectProviderByUsername(authentication.getName());
+        Client client = clientRepository.selectClientByUsername(authentication.getName());
+        if(provider == null)
+            return client;
+        else
+            return provider;
+    }
 
-    public void registerNewUserAccount(UserDto userDto) throws UserAlreadyExistException{
+
+    public void registerNewUserAccount(UserDto userDto) throws UserAlreadyExistException {
         if (!emailExist(userDto.getEmail())) {
            if(userDto.getRole().equals("CLIENT")) {
                Client newClient = Client.builder()

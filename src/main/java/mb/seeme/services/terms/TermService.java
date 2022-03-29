@@ -1,6 +1,7 @@
 package mb.seeme.services.terms;
 
 import mb.seeme.model.terms.Term;
+import mb.seeme.model.users.Person;
 import mb.seeme.model.users.ServiceProvider;
 import mb.seeme.services.BaseService;
 
@@ -10,7 +11,9 @@ import java.util.List;
 
 public interface TermService extends BaseService<Term, Long> {
 
-    void cancelById(Long termId);
+    void cancelById(Long termId, Person person);
+
+    void deleteByTermId(Long termId, Person person);
 
     void bookTermByClientId(Long clientId, Long termId);
 

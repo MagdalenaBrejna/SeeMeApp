@@ -37,6 +37,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/client/**").hasRole("CLIENT")
                     .antMatchers("/providers/**").hasRole("PROVIDER")
                     .antMatchers("/fragments/**").hasAnyRole("CLIENT","PROVIDER")
+                    .antMatchers("/cancel/**").hasAnyRole("CLIENT","PROVIDER")
+                    .antMatchers("/delete/**").hasRole("PROVIDER")
                     .antMatchers("/home").permitAll()
                     .antMatchers("/signup").permitAll()
 

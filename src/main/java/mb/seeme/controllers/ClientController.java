@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class ClientController {
 
 
     @GetMapping({"clients/account", "clients/account.html"})
-    public String getClientAccountDetails(HttpServletRequest request, Model model) {
+    public String getClientAccountDetails(Model model) {
         Long clientId = userAuthenticationService.getAuthenticatedClientId();
         Client client = clientService.findById(clientId);
 

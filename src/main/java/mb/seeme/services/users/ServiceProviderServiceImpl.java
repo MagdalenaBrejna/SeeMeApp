@@ -1,5 +1,6 @@
 package mb.seeme.services.users;
 
+import mb.seeme.exceptions.NotFoundException;
 import mb.seeme.model.terms.Term;
 import mb.seeme.model.users.ServiceProvider;
 import mb.seeme.model.users.ServiceProviderTerm;
@@ -35,7 +36,10 @@ public class ServiceProviderServiceImpl implements ServiceProviderService{
     }
 
     @Override
-    public ServiceProvider findById(Long id) {
+    public ServiceProvider findById(Long id) throws NotFoundException {
+        ServiceProvider provider = providerRepository.findById(id).orElse(null);
+        if(provider == null)
+            throw new NotFoundException("There is no such service provider");
         return providerRepository.findById(id).orElse(null);
     }
 
