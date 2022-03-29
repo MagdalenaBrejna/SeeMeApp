@@ -20,7 +20,7 @@ public class TermController {
     @GetMapping({"cancel/{id}", "cancel/{id}.html"})
     public String cancelTerm(@PathVariable("id") Long termId){
         termService.cancelById(termId);
-        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(ApplicationUserRole.CLIENT))
+        if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(ApplicationUserRole.CLIENT.getUserRole()))
             return "redirect:/clients/terms";
         else
             return "redirect:/providers/calendar";

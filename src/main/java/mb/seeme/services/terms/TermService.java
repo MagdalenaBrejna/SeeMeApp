@@ -16,6 +16,8 @@ public interface TermService extends BaseService<Term, Long> {
 
     void addNewTerms(ServiceProvider provider, LocalDateTime firstTermDateAndTime, int termsNumber, int termDuration, String serviceName);
 
+    void addTermDescription(String termDescription, Long termId);
+
 
     List<Term> findAllFutureByClientName(String clientName);
 

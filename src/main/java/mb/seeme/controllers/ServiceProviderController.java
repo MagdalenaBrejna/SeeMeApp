@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -114,6 +115,13 @@ public class ServiceProviderController {
         if(termDateTime != null && termDateTime.isAfter(LocalDateTime.now()) && termsToSave > 0 && termsToSaveDuration > 0)
             termService.addNewTerms(provider, termDateTime, termsToSave, termsToSaveDuration, serviceName);
 
+        return "redirect:/providers/calendar";
+    }
+
+    @PostMapping({"/providers/calendar/addDescription/{id}", "/providers/calendar/addDescription/{id}.html"})
+    public String addTermDescription(@PathVariable("id") Long termId, @RequestParam("desc")String termDescription) {
+        if(!termDescription.equals(""))
+            termService.addTermDescription(termDescription, termId);
         return "redirect:/providers/calendar";
     }
 

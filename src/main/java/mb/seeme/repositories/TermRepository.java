@@ -22,7 +22,6 @@ public interface TermRepository extends CrudRepository<Term, Long> {
     @Query(nativeQuery = true, value = "UPDATE terms SET terms.client_id = ?1 WHERE terms.id = ?2")
     void bookTerm(Long clientId, Long termId);
 
-
     @Query(nativeQuery = true, value = "SELECT * FROM terms WHERE term_date >= ?1")
     List<Term> findAllFromDate(LocalDate selectedDate);
 

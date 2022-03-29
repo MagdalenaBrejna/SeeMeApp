@@ -216,6 +216,7 @@ public class TermServiceImpl implements TermService {
         return terms;
     }
 
+    @Transactional
     @Override
     public void addNewTerms(ServiceProvider provider, LocalDateTime firstTermDateAndTime, int termsNumber, int termDuration, String serviceName){
         LocalDate firstTermDate = firstTermDateAndTime.atZone(ZoneId.systemDefault()).toLocalDate();
@@ -230,5 +231,13 @@ public class TermServiceImpl implements TermService {
                 firstTermDate = firstTermDate.plusDays(1);
             firstTermTime = firstTermTime.plusMinutes(termDuration);
         }
+    }
+
+    @Transactional
+    @Override
+    public void addTermDescription(String termDescription, Long termId) {
+        Term term = findById(termId);
+        term.setTermDescription(termDescription);
+        save(term);
     }
 }
