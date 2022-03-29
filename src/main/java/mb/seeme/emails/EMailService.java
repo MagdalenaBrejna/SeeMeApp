@@ -10,6 +10,7 @@ public class EMailService {
 
     private final String WELCOME_MESSAGE = "Dear user!\n\nI'm very happy to see you as a part of our community. I hope it will be pleasure for you! Just log in and enjoy.\n\nMagda";
     private final String WELCOME_TITLE = "Welcome in the SeeMe community";
+    private final String CANCEL_TITLE = "Your term was cancelled";
 
     public String getWelcomeMessage() {
         return WELCOME_MESSAGE;
@@ -17,6 +18,10 @@ public class EMailService {
 
     public String getWelcomeTitle() {
         return WELCOME_TITLE;
+    }
+
+    public String getCancelTitle() {
+        return CANCEL_TITLE;
     }
 
     @Autowired

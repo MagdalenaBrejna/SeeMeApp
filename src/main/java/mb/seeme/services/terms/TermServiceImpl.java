@@ -1,5 +1,6 @@
 package mb.seeme.services.terms;
 
+import mb.seeme.emails.EMailService;
 import mb.seeme.exceptions.NotFoundException;
 import mb.seeme.model.services.AvailableService;
 import mb.seeme.model.terms.Status;
@@ -23,12 +24,14 @@ import java.util.stream.Collectors;
 
 public class TermServiceImpl implements TermService {
 
+    private final EMailService emailService;
     private final TermRepository termRepository;
     private final AvailableServiceService availableService;
 
-    public TermServiceImpl(TermRepository termRepository, AvailableServiceService availableService) {
+    public TermServiceImpl(TermRepository termRepository, AvailableServiceService availableService, EMailService emailService) {
         this.termRepository = termRepository;
         this.availableService = availableService;
+        this.emailService = emailService;
     }
 
     private Term findIfTermExists(Long termId) throws NotFoundException {
@@ -80,8 +83,12 @@ public class TermServiceImpl implements TermService {
     @Override
     public void deleteByTermId(Long termId, Person person) throws NotFoundException {
         Term term = findIfTermExists(termId);
-        if(term.getTermDate().isAfter(LocalDate.now()) && person.getUserRole().equals(ApplicationUserRole.PROVIDER.getUserRole()) && term.getService().getServiceProvider() != null && term.getService().getServiceProvider().equals((ServiceProvider)person))
+        if(term.getTermDate().isAfter(LocalDate.now()) && person.getUserRole().equals(ApplicationUserRole.PROVIDER.getUserRole()) && term.getService().getServiceProvider() != null && term.getService().getServiceProvider().equals((ServiceProvider)person)) {
+            if(term.getClient() != null)
+                emailService.sendSimpleMessage(term.getClient().getEmail(), emailService.getCancelTitle(), "We are sorry to inform you that your term on " + term.getTermDate().toString() + " was cancelled");
             termRepository.deleteById(termId);
+        }
+
     }
 
     @Override
@@ -90,8 +97,11 @@ public class TermServiceImpl implements TermService {
         Term term = findIfTermExists(termId);
         if(term.getClient() != null && term.getTermDate().isAfter(LocalDate.now()) &&
                 ((person.getUserRole().equals(ApplicationUserRole.PROVIDER.getUserRole()) && term.getService().getServiceProvider() != null && term.getService().getServiceProvider().equals((ServiceProvider)person)) ||
-                 (person.getUserRole().equals(ApplicationUserRole.CLIENT.getUserRole()) && term.getClient() != null && term.getClient().equals((Client)person))))
+                 (person.getUserRole().equals(ApplicationUserRole.CLIENT.getUserRole()) && term.getClient() != null && term.getClient().equals((Client)person)))) {
             termRepository.makeTermStatusFree(termId);
+            emailService.sendSimpleMessage(term.getService().getServiceProvider().getEmail(), emailService.getCancelTitle(), "You cancelled the term on " + term.getTermDate().toString());
+            emailService.sendSimpleMessage(term.getClient().getEmail(), emailService.getCancelTitle(), "We are sorry to inform you that your term on " + term.getTermDate().toString() + " was cancelled");
+        }
     }
 
     @Override

@@ -27,8 +27,8 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    TermServiceImpl termServiceImpl(final TermRepository termRepository, final AvailableServiceService availableService) {
-        return new TermServiceImpl(termRepository, availableService);
+    TermServiceImpl termServiceImpl(final TermRepository termRepository, final AvailableServiceService availableService, EMailService emailService) {
+        return new TermServiceImpl(termRepository, availableService, emailService);
     }
 
     @Bean
