@@ -10,11 +10,11 @@ import java.util.List;
 public interface TermRepository extends CrudRepository<Term, Long> {
 
     @Modifying
-    @Query(nativeQuery = true, value = "UPDATE terms SET terms.status='FREE', terms.client_id = NULL WHERE terms.id=?1")
+    @Query(nativeQuery = true, value = "UPDATE terms SET terms.status='FREE', terms.client_id = NULL WHERE terms.id = ?1")
     void makeTermStatusFree(Long termId);
 
     @Modifying
-    @Query(nativeQuery = true, value = "UPDATE terms SET terms.status='FULL' WHERE terms.id=?1")
+    @Query(nativeQuery = true, value = "UPDATE terms SET terms.status='FULL' WHERE terms.id = ?1")
     void makeTermStatusFull(Long termId);
 
     @Modifying
