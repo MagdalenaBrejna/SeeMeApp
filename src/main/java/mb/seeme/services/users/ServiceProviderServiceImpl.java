@@ -1,6 +1,8 @@
 package mb.seeme.services.users;
 
 import mb.seeme.exceptions.NotFoundException;
+import mb.seeme.messages.AppMessages;
+import mb.seeme.messages.UserMessages;
 import mb.seeme.model.terms.Term;
 import mb.seeme.model.users.ServiceProvider;
 import mb.seeme.model.users.ServiceProviderTerm;
@@ -39,7 +41,7 @@ public class ServiceProviderServiceImpl implements ServiceProviderService{
     public ServiceProvider findById(Long id) throws NotFoundException {
         ServiceProvider provider = providerRepository.findById(id).orElse(null);
         if(provider == null)
-            throw new NotFoundException("There is no such service provider");
+            throw new NotFoundException(UserMessages.NO_PROVIDER);
         return providerRepository.findById(id).orElse(null);
     }
 
@@ -74,20 +76,20 @@ public class ServiceProviderServiceImpl implements ServiceProviderService{
                    term.getService().getServiceProvider().getCity(),
                    term.getTermDate(),
                    term.getTermTime(),
-                   getProviderImage(term)))
+                   getTermProviderImage(term)))
                 .distinct()
                 .collect(Collectors.toList());
 
         return providersWithTerms;
     }
 
-    private String getProviderImage(Term term){
+    private String getTermProviderImage(Term term){
         String providerPhoto = "";
         try{
             if (term.getService().getServiceProvider().getProviderImage() != null)
                 providerPhoto = new String(Base64.encodeBase64(term.getService().getServiceProvider().getProviderImage()), "UTF-8");
             else
-                providerPhoto = new String(Base64.encodeBase64(Files.readAllBytes(Paths.get("src/main/resources/static/resources/images/user.jpg"))));
+                providerPhoto = new String(Base64.encodeBase64(Files.readAllBytes(Paths.get(AppMessages.DEFAULT_USER_IMAGE_PATH))));
         }catch(IOException e) {
             e.printStackTrace();
         }
@@ -105,5 +107,19 @@ public class ServiceProviderServiceImpl implements ServiceProviderService{
         authProvider.setTelephone(modifiedProvider.getTelephone());
         authProvider.setProviderDescription(modifiedProvider.getProviderDescription());
         providerRepository.save(authProvider);
+    }
+
+    @Override
+    public String getProviderImage(ServiceProvider provider) {
+        String providerPhoto = "";
+        try{
+            if (provider.getProviderImage() != null)
+                providerPhoto = new String(Base64.encodeBase64(provider.getProviderImage()), "UTF-8");
+            else
+                providerPhoto = new String(Base64.encodeBase64(Files.readAllBytes(Paths.get(AppMessages.DEFAULT_USER_IMAGE_PATH))));
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+        return providerPhoto;
     }
 }

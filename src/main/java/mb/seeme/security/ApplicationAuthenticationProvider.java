@@ -1,5 +1,6 @@
 package mb.seeme.security;
 
+import mb.seeme.messages.UserMessages;
 import mb.seeme.model.users.Person;
 import mb.seeme.services.users.UserAuthenticationService;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -29,7 +30,7 @@ public class ApplicationAuthenticationProvider implements AuthenticationProvider
         if (passwordEncoder.matches(password, user.getPassword()))
             return new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
         else
-            throw new BadCredentialsException("Invalid password");
+            throw new BadCredentialsException(UserMessages.INVALID_PASSWORD);
     }
 
     @Override

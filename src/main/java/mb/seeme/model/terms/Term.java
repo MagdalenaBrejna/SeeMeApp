@@ -7,7 +7,6 @@ import lombok.Setter;
 import mb.seeme.model.BaseEntity;
 import mb.seeme.model.services.AvailableService;
 import mb.seeme.model.users.Client;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;

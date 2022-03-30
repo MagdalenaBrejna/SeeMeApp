@@ -2,6 +2,7 @@ package mb.seeme.services.terms;
 
 import mb.seeme.emails.EMailService;
 import mb.seeme.exceptions.NotFoundException;
+import mb.seeme.messages.UserMessages;
 import mb.seeme.model.services.AvailableService;
 import mb.seeme.model.terms.Status;
 import mb.seeme.model.terms.Term;
@@ -11,7 +12,6 @@ import mb.seeme.model.users.ServiceProvider;
 import mb.seeme.repositories.TermRepository;
 import mb.seeme.security.ApplicationUserRole;
 import mb.seeme.services.services.AvailableServiceService;
-
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,15 +29,15 @@ public class TermServiceImpl implements TermService {
     private final AvailableServiceService availableService;
 
     public TermServiceImpl(TermRepository termRepository, AvailableServiceService availableService, EMailService emailService) {
+        this.emailService = emailService;
         this.termRepository = termRepository;
         this.availableService = availableService;
-        this.emailService = emailService;
     }
 
     private Term findIfTermExists(Long termId) throws NotFoundException {
         Term selectedTerm = findById(termId);
         if(selectedTerm == null)
-            throw new NotFoundException("There is no such a term");
+            throw new NotFoundException(UserMessages.NO_TERM);
         return selectedTerm;
     }
 
@@ -85,10 +85,9 @@ public class TermServiceImpl implements TermService {
         Term term = findIfTermExists(termId);
         if(term.getTermDate().isAfter(LocalDate.now()) && person.getUserRole().equals(ApplicationUserRole.PROVIDER.getUserRole()) && term.getService().getServiceProvider() != null && term.getService().getServiceProvider().equals((ServiceProvider)person)) {
             if(term.getClient() != null)
-                emailService.sendSimpleMessage(term.getClient().getEmail(), emailService.getCancelTitle(), "We are sorry to inform you that your term on " + term.getTermDate().toString() + " was cancelled");
+                emailService.sendSimpleMessage(term.getClient().getEmail(), UserMessages.MAIL_CANCEL_TITLE, "We are sorry to inform you that your term on " + term.getTermDate().toString() + " was cancelled");
             termRepository.deleteById(termId);
         }
-
     }
 
     @Override
@@ -99,17 +98,9 @@ public class TermServiceImpl implements TermService {
                 ((person.getUserRole().equals(ApplicationUserRole.PROVIDER.getUserRole()) && term.getService().getServiceProvider() != null && term.getService().getServiceProvider().equals((ServiceProvider)person)) ||
                  (person.getUserRole().equals(ApplicationUserRole.CLIENT.getUserRole()) && term.getClient() != null && term.getClient().equals((Client)person)))) {
             termRepository.makeTermStatusFree(termId);
-            emailService.sendSimpleMessage(term.getService().getServiceProvider().getEmail(), emailService.getCancelTitle(), "You cancelled the term on " + term.getTermDate().toString());
-            emailService.sendSimpleMessage(term.getClient().getEmail(), emailService.getCancelTitle(), "We are sorry to inform you that your term on " + term.getTermDate().toString() + " was cancelled");
+            emailService.sendSimpleMessage(term.getService().getServiceProvider().getEmail(), UserMessages.MAIL_CANCEL_TITLE, "You cancelled the term on " + term.getTermDate().toString());
+            emailService.sendSimpleMessage(term.getClient().getEmail(), UserMessages.MAIL_CANCEL_TITLE, "We are sorry to inform you that your term on " + term.getTermDate().toString() + " was cancelled");
         }
-    }
-
-    @Override
-    public List<Term> findAllFutureByClientName(String clientName) {
-        List<Term> terms = findAllByClientName(clientName).stream()
-                .filter(term -> term.getTermDate().isAfter(LocalDate.now()) || term.getTermDate().isEqual(LocalDate.now()))
-                .collect(Collectors.toList());
-        return terms;
     }
 
     @Override
@@ -142,11 +133,6 @@ public class TermServiceImpl implements TermService {
                 .sorted((term1, term2) -> term1.compareToPast(term2))
                 .collect(Collectors.toList());
         return terms;
-    }
-
-    @Override
-    public List<Term> findAllFutureByProviderId(Long providerId) {
-        return termRepository.findAllByProviderIdFromDate(providerId, LocalDate.now());
     }
 
     @Override
@@ -184,12 +170,6 @@ public class TermServiceImpl implements TermService {
                 .collect(Collectors.toList());
     }
 
-
-    @Override
-    public List<Term> findAllFutureAppointedByProviderId(Long providerId) {
-        return findAppointedTermsByProviderIdFromDate(providerId, LocalDate.now());
-    }
-
     @Override
     public List<Term> findAllFutureAppointedByProviderIdFromDate(Long providerId, LocalDate selectedDate) {
         if(selectedDate.isBefore(LocalDate.now()))
@@ -206,37 +186,6 @@ public class TermServiceImpl implements TermService {
                 })
                 .sorted((term1, term2) -> term1.compareToFuture(term2))
                 .collect(Collectors.toList());
-    }
-
-
-    @Override
-    public List<Term> findAllPastAppointedByProviderId(Long providerId) {
-        List<Term> terms = termRepository.findAllAppointedByProviderIdBeforeDate(providerId, LocalDate.now())
-                .stream()
-                .sorted((term1, term2) -> term1.compareToPast(term2))
-                .collect(Collectors.toList());
-        return terms;
-    }
-
-    @Override
-    public List<Term> findAllPastAppointedByDateAndProviderId(Long providerId, LocalDate selectedDate) {
-        if(selectedDate.isAfter(LocalDate.now()))
-            selectedDate = LocalDate.now();
-        List<Term> terms = termRepository.findAllAppointedByProviderIdAtDate(providerId, selectedDate)
-                .stream()
-                .sorted((term1, term2) -> term1.compareToPast(term2))
-                .collect(Collectors.toList());
-        return terms;
-    }
-
-    @Override
-    public List<Term> findAllPastAppointedByProviderIdAndClientName(Long providerId, String clientName) {
-        List<Term> terms = findAllPastByClientName(clientName)
-                .stream()
-                .filter(term -> term.getService().getServiceProvider().getId() == providerId)
-                .sorted((term1, term2) -> term1.compareToPast(term2))
-                .collect(Collectors.toList());
-        return terms;
     }
 
     @Override

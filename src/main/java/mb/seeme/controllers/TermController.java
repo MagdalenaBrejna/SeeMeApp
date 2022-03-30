@@ -19,9 +19,8 @@ public class TermController {
         this.userAuthenticationService = userAuthenticationService;
     }
 
-
     @GetMapping({"cancel/{id}", "cancel/{id}.html"})
-    public String cancelTerm(@PathVariable("id") Long termId){
+    public String cancelTerm(@PathVariable("id") Long termId) {
         termService.cancelById(termId, userAuthenticationService.getAuthenticatedUser());
         if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(ApplicationUserRole.CLIENT.getUserRole()))
             return "redirect:/clients/terms";
@@ -29,11 +28,9 @@ public class TermController {
             return "redirect:/providers/calendar";
     }
 
-
     @GetMapping({"delete/{id}", "delete/{id}.html"})
     public String deleteTerm(@PathVariable("id") Long termId) {
         termService.deleteByTermId(termId, userAuthenticationService.getAuthenticatedUser());
         return "redirect:/providers/calendar";
     }
-
 }

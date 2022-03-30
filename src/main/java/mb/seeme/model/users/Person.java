@@ -5,11 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import mb.seeme.model.BaseEntity;
-import mb.seeme.security.validation.ValidEmail;
-import mb.seeme.security.validation.ValidName;
+import mb.seeme.validators.ValidEmail;
+import mb.seeme.validators.ValidName;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;

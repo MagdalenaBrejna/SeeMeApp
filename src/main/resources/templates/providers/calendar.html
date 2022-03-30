@@ -11,7 +11,7 @@
             <div class="control-group" id="nameGroup">
                 <div class="col-sm-4">
                     <select class="form-control selectpicker" th:field="*{termRealizedStatus}" id="pizza">
-                        <option value="" th:text="#{term.status}"></option>
+                        <option value="" ></option>
                         <option th:each="status : ${T(mb.seeme.model.terms.Status).values()}"
                                 th:value="${status}"
                                 th:text="${status}">status

@@ -3,7 +3,6 @@ package mb.seeme.model.users;
 import lombok.*;
 import mb.seeme.model.terms.Term;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

@@ -2,11 +2,10 @@ package mb.seeme.model.users;
 
 import lombok.Getter;
 import lombok.Setter;
-import mb.seeme.security.validation.PasswordMatches;
-import mb.seeme.security.validation.ValidEmail;
-import mb.seeme.security.validation.ValidName;
+import mb.seeme.validators.PasswordMatches;
+import mb.seeme.validators.ValidEmail;
+import mb.seeme.validators.ValidName;
 import org.hibernate.validator.constraints.Length;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 

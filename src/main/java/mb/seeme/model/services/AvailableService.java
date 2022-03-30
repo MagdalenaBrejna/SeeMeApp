@@ -7,7 +7,6 @@ import lombok.Setter;
 import mb.seeme.model.BaseEntity;
 import mb.seeme.model.terms.Term;
 import mb.seeme.model.users.ServiceProvider;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;

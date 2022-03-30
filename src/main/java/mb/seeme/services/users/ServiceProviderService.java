@@ -12,4 +12,6 @@ public interface ServiceProviderService extends BaseService<ServiceProvider, Lon
 
     void updateProviderDetails(ServiceProvider authProvider, ServiceProvider modifiedProvider);
 
+    String getProviderImage(ServiceProvider provider);
+
 }

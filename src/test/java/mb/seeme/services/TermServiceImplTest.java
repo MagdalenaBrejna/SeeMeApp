@@ -1,32 +1,11 @@
 package mb.seeme.services;
 
-import mb.seeme.model.services.AvailableService;
-import mb.seeme.model.terms.Term;
-import mb.seeme.model.users.Client;
-import mb.seeme.model.users.ServiceProvider;
-import mb.seeme.repositories.TermRepository;
-import mb.seeme.services.terms.TermServiceImpl;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TermServiceImplTest {
-
+/*
     @Mock
     TermRepository termRepository;
 

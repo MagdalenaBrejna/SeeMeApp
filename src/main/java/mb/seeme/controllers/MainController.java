@@ -1,6 +1,7 @@
 package mb.seeme.controllers;
 
 import mb.seeme.exceptions.UserAlreadyExistException;
+import mb.seeme.messages.UserMessages;
 import mb.seeme.model.users.UserDto;
 import mb.seeme.services.users.UserAuthenticationService;
 import org.springframework.stereotype.Controller;
@@ -9,19 +10,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import javax.validation.Valid;
 
 @Controller
 public class MainController {
 
-    private final UserAuthenticationService userAuthService;
+   private final UserAuthenticationService userAuthService;
 
-    public MainController(UserAuthenticationService userAuthService) {
+   public MainController(UserAuthenticationService userAuthService) {
         this.userAuthService = userAuthService;
     }
 
-    @GetMapping("/")
+   @GetMapping("/")
    public String getHomePage(){
         return "home";
     }
@@ -45,10 +45,9 @@ public class MainController {
         try {
             userAuthService.registerNewUserAccount(userDto);
         } catch (UserAlreadyExistException e) {
-            model.addAttribute("message", "Takie konto juz istnieje!");
+            model.addAttribute("message", UserMessages.USER_EXISTS);
             return "signup";
         }
         return "login";
     }
-
 }

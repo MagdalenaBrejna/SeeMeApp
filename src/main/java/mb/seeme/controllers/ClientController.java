@@ -14,27 +14,27 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.LocalDate;
 import java.util.List;
 
 @Controller
+@RequestMapping("clients")
 public class ClientController {
 
     private final UserAuthenticationService userAuthenticationService;
-    private final ClientService clientService;
     private final ServiceProviderService providerService;
+    private final ClientService clientService;
     private final TermService termService;
 
     public ClientController(UserAuthenticationService userAuthenticationService, ClientService clientService, ServiceProviderService providerService, TermService termService) {
         this.userAuthenticationService = userAuthenticationService;
-        this.clientService = clientService;
         this.providerService = providerService;
+        this.clientService = clientService;
         this.termService = termService;
     }
 
-
-    @GetMapping({"clients/account", "clients/account.html"})
+    @GetMapping({"account", "account.html"})
     public String getClientAccountDetails(Model model) {
         Long clientId = userAuthenticationService.getAuthenticatedClientId();
         Client client = clientService.findById(clientId);
@@ -44,9 +44,8 @@ public class ClientController {
 
     }
 
-
-    @GetMapping({"clients/terms", "clients/terms.html"})
-    public String findClientTerms(Model model){
+    @GetMapping({"terms", "terms.html"})
+    public String findClientTerms(Model model) {
         Long clientId = userAuthenticationService.getAuthenticatedClientId();
 
         List<Term> futureTerms = termService.findAllFutureByClientId(clientId);
@@ -58,9 +57,8 @@ public class ClientController {
         return "clients/terms";
     }
 
-
-    @GetMapping({"clients/provider/{id}", "clients/provider/{id}.html"})
-    public String findProviderFreeTerms(@PathVariable("id") Long providerId, Model model){
+    @GetMapping({"provider/{id}", "provider/{id}.html"})
+    public String findProviderFreeTerms(@PathVariable("id") Long providerId, Model model) {
         ServiceProvider provider = providerService.findById(providerId);
         model.addAttribute("providerSelections", provider);
 
@@ -70,16 +68,14 @@ public class ClientController {
         return "clients/provider";
     }
 
-
-    @GetMapping({"clients/provider/book/{termId}", "clients/provider/book/{termId}.html"})
-    public String bookTerm(@PathVariable("termId") Long termId, Model model){
+    @GetMapping({"provider/book/{termId}", "provider/book/{termId}.html"})
+    public String bookTerm(@PathVariable("termId") Long termId) {
         Long clientId = userAuthenticationService.getAuthenticatedClientId();
         termService.bookTermByClientId(clientId, termId);
         return "redirect:/clients/terms";
     }
 
-
-    @GetMapping({"clients/find", "clients/find.html"})
+    @GetMapping({"find", "find.html"})
     public String findTerms(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate selectedTermDate, ServiceProviderTerm serviceProviderTerm, Model model) {
         if(selectedTermDate == null)
             selectedTermDate = LocalDate.now();
@@ -91,15 +87,14 @@ public class ClientController {
             serviceProviderTerm.setProviderField("");
 
         List<ServiceProviderTerm> results = providerService.findAllByNameAndCityAndFieldFromDateInTermOrder(serviceProviderTerm, selectedTermDate);
-
         if (!results.isEmpty())
             model.addAttribute("selections", results);
 
         return "clients/find";
     }
 
-    @GetMapping({"clients/details", "clients/details.html"})
-    public String getUpdatingDetailsForm(Model model){
+    @GetMapping({"details", "details.html"})
+    public String getUpdatingDetailsForm(Model model) {
         Long clientId = userAuthenticationService.getAuthenticatedClientId();
         Client client = clientService.findById(clientId);
 
@@ -107,8 +102,8 @@ public class ClientController {
         return "clients/details";
     }
 
-    @PostMapping({"/clients/details/save", "/clients/details/save.html"})
-    public String updateAccountDetails(Client client){
+    @PostMapping({"details/save", "details/save.html"})
+    public String updateAccountDetails(Client client) {
         Long clientId = userAuthenticationService.getAuthenticatedClientId();
         Client authClient = clientService.findById(clientId);
 

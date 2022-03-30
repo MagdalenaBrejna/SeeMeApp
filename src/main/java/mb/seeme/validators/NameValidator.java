@@ -1,4 +1,4 @@
-package mb.seeme.security.validation;
+package mb.seeme.validators;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

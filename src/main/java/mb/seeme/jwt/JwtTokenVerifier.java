@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import mb.seeme.messages.AppMessages;
+import mb.seeme.messages.UserMessages;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,11 +26,9 @@ import java.util.stream.Collectors;
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
     private final SecretKey secretKey;
-    private final JwtConfig jwtConfig;
 
-    public JwtTokenVerifier( SecretKey secretKey, JwtConfig jwtConfig) {
+    public JwtTokenVerifier( SecretKey secretKey) {
         this.secretKey = secretKey;
-        this.jwtConfig = jwtConfig;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
         Cookie[] cookies = request.getCookies();
         String cookieToken = "";
         for(Cookie cookie : cookies )
-            if(("token").equals(cookie.getName()))
+            if((AppMessages.JWT_TOKEN_NAME).equals(cookie.getName()))
                 cookieToken = cookie.getValue();
 
         if(!cookieToken.equals("")) {
@@ -57,7 +57,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
             } catch (JwtException exception) {
-                throw new IllegalStateException(String.format("Token %s cannot be trusted", cookieToken));
+                throw new IllegalStateException(String.format(UserMessages.INVALID_TOKEN, cookieToken));
             }
         }
         filterChain.doFilter(request, response);

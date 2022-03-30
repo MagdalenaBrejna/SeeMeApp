@@ -3,6 +3,7 @@ package mb.seeme.security;
 import mb.seeme.jwt.JwtConfig;
 import mb.seeme.jwt.JwtTokenVerifier;
 import mb.seeme.jwt.JwtUsernameAndPasswordAuthenticationFilter;
+import mb.seeme.messages.AppMessages;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,7 +32,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and().csrf().disable()
                     .addFilterBefore(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey), UsernamePasswordAuthenticationFilter.class)
-                    .addFilterBefore(new JwtTokenVerifier(secretKey, jwtConfig), BasicAuthenticationFilter.class)
+                    .addFilterBefore(new JwtTokenVerifier(secretKey), BasicAuthenticationFilter.class)
 
                     .authorizeRequests()
                     .antMatchers("/client/**").hasRole("CLIENT")
@@ -49,7 +50,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                             .addLogoutHandler((request, response, auth) -> {
                                 for (Cookie cookie : request.getCookies()) {
                                     String cookieName = cookie.getName();
-                                    if(cookieName.equals("token")) {
+                                    if(cookieName.equals(AppMessages.JWT_TOKEN_NAME)) {
                                         Cookie cookieToDelete = new Cookie(cookieName, null);
                                         cookieToDelete.setMaxAge(0);
                                         response.addCookie(cookieToDelete);
@@ -60,7 +61,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationSuccessHandler appAuthenticationSuccessHandler(){
+    public AuthenticationSuccessHandler appAuthenticationSuccessHandler() {
         return new ApplicationAuthenticationSuccessHandler();
     }
 }

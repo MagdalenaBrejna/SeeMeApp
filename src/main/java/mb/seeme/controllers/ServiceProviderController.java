@@ -7,40 +7,33 @@ import mb.seeme.services.terms.TermService;
 import mb.seeme.services.users.ImageService;
 import mb.seeme.services.users.ServiceProviderService;
 import mb.seeme.services.users.UserAuthenticationService;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 @Controller
+@RequestMapping("providers")
 public class ServiceProviderController {
 
-    private final ServiceProviderService providerService;
     private final UserAuthenticationService userAuthenticationService;
-    private final TermService termService;
+    private final ServiceProviderService providerService;
     private final ImageService imageService;
+    private final TermService termService;
 
     public ServiceProviderController(ServiceProviderService providerService, UserAuthenticationService userAuthenticationService, TermService termService, ImageService imageService) {
-        this.providerService = providerService;
         this.userAuthenticationService = userAuthenticationService;
-        this.termService = termService;
+        this.providerService = providerService;
         this.imageService = imageService;
+        this.termService = termService;
     }
 
-
-    @GetMapping({"providers/calendar", "providers/calendar.html"})
+    @GetMapping({"/calendar", "/calendar.html"})
     public String getProviderCalendar(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate selectedTermDate, Term term, Model model) {
         Long providerId = userAuthenticationService.getAuthenticatedProviderId();
         if(selectedTermDate == null)
@@ -56,13 +49,11 @@ public class ServiceProviderController {
 
         if (!results.isEmpty())
             model.addAttribute("selections", results);
-
         return "providers/calendar";
     }
 
-
-    @GetMapping({"providers/archive", "providers/archive.html"})
-    public String getProviderArchive(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate termDate, Client client, Model model){
+    @GetMapping({"/archive", "/archive.html"})
+    public String getProviderArchive(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate termDate, Client client, Model model) {
         if(termDate == null)
             termDate = LocalDate.now();
         if (client.getName() == null)
@@ -70,14 +61,13 @@ public class ServiceProviderController {
 
         Long providerId = userAuthenticationService.getAuthenticatedProviderId();
         List<Term> results = termService.findAllPastAppointedBeforeDateAndProviderIdAndClientName(providerId, "%" + client.getName() + "%", termDate);
-        model.addAttribute("selections", results);
 
+        model.addAttribute("selections", results);
         return "providers/archive";
     }
 
-
-    @PostMapping({"providers/account/image", "providers/account/image.html"})
-    public String addProviderImage(@RequestParam("file") MultipartFile file){
+    @PostMapping({"/account/image", "/account/image.html"})
+    public String addProviderImage(@RequestParam("file") MultipartFile file) {
         Long providerId = userAuthenticationService.getAuthenticatedProviderId();
         if(!file.isEmpty())
             imageService.saveProviderImage(providerId, file);
@@ -85,28 +75,29 @@ public class ServiceProviderController {
         return "redirect:/providers/details";
     }
 
-
-    @GetMapping({"providers/account", "providers/account.html"})
-    public String getAccountDetails(Model model) throws IOException {
+    @GetMapping({"/account", "/account.html"})
+    public String getAccountDetails(Model model) {
         Long providerId = userAuthenticationService.getAuthenticatedProviderId();
         ServiceProvider provider = providerService.findById(providerId);
 
-        byte[] encodeBase64ProviderImage = null;
-        if (provider.getProviderImage() != null)
-            encodeBase64ProviderImage = Base64.encodeBase64(provider.getProviderImage());
-        else
-            encodeBase64ProviderImage = Base64.encodeBase64(Files.readAllBytes(Paths.get("src/main/resources/static/resources/images/user.jpg")));
-
-        String providerImage = new String(encodeBase64ProviderImage, "UTF-8");
-        model.addAttribute("providerImage", providerImage);
+        model.addAttribute("providerImage", providerService.getProviderImage(provider));
         model.addAttribute("provider", provider);
-
         return "providers/account";
     }
 
+    @GetMapping({"/details", "/details.html"})
+    public String getUpdatingDetailsForm(Model model) {
+        Long providerId = userAuthenticationService.getAuthenticatedProviderId();
+        ServiceProvider provider = providerService.findById(providerId);
 
-    @PostMapping({"providers/calendar/newTerm", "providers/calendar/newTerm.html"})
-    public String addNewTerms(@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime termDateTime, String termsNumber, String termDuration, String serviceName, Model model){
+        model.addAttribute("providerImage", providerService.getProviderImage(provider));
+        model.addAttribute("provider", provider);
+
+        return "providers/details";
+    }
+
+    @PostMapping({"/calendar/newTerm", "/calendar/newTerm.html"})
+    public String addNewTerms(@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime termDateTime, String termsNumber, String termDuration, String serviceName) {
         Long providerId = userAuthenticationService.getAuthenticatedProviderId();
         ServiceProvider provider = providerService.findById(providerId);
         int termsToSave = Integer.valueOf(termsNumber);
@@ -118,38 +109,19 @@ public class ServiceProviderController {
         return "redirect:/providers/calendar";
     }
 
-    @PostMapping({"/providers/calendar/addDescription/{id}", "/providers/calendar/addDescription/{id}.html"})
-    public String addTermDescription(@PathVariable("id") Long termId, @RequestParam("desc")String termDescription) {
+    @PostMapping({"/calendar/addDescription/{id}", "/calendar/addDescription/{id}.html"})
+    public String addTermDescription(@PathVariable("id") Long termId, @RequestParam("desc") String termDescription) {
         if(!termDescription.equals(""))
             termService.addTermDescription(termDescription, termId);
         return "redirect:/providers/calendar";
     }
 
-    @GetMapping({"providers/details", "providers/details.html"})
-    public String getUpdatingDetailsForm(Model model) throws IOException {
-        Long providerId = userAuthenticationService.getAuthenticatedProviderId();
-        ServiceProvider provider = providerService.findById(providerId);
-
-        byte[] encodeBase64ProviderImage = null;
-        if (provider.getProviderImage() != null)
-            encodeBase64ProviderImage = Base64.encodeBase64(provider.getProviderImage());
-        else
-            encodeBase64ProviderImage = Base64.encodeBase64(Files.readAllBytes(Paths.get("src/main/resources/static/resources/images/user.jpg")));
-
-        String providerImage = new String(encodeBase64ProviderImage, "UTF-8");
-        model.addAttribute("providerImage", providerImage);
-        model.addAttribute("provider", provider);
-
-        return "providers/details";
-    }
-
-    @PostMapping({"/providers/details/save", "/providers/details/save.html"})
-    public String updateAccountDetails(ServiceProvider provider){
+    @PostMapping({"/details/save", "/details/save.html"})
+    public String updateAccountDetails(ServiceProvider provider) {
         Long providerId = userAuthenticationService.getAuthenticatedProviderId();
         ServiceProvider authProvider = providerService.findById(providerId);
 
         providerService.updateProviderDetails(authProvider, provider);
         return "redirect:/providers/account";
     }
-
 }

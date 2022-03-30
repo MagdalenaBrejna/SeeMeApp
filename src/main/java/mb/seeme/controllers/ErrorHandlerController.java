@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-@ControllerAdvice
 @Slf4j
+@ControllerAdvice
 public class ErrorHandlerController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public ModelAndView handleNotFoundException(Exception exception) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("404error");
+        modelAndView.setViewName("errors/404error");
         modelAndView.addObject("exception", exception);
         return modelAndView;
     }
@@ -26,7 +26,7 @@ public class ErrorHandlerController {
     @ExceptionHandler(AuthException.class)
     public ModelAndView handleAuthException(Exception exception) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("401error");
+        modelAndView.setViewName("errors/401error");
         modelAndView.addObject("exception", exception);
         return modelAndView;
     }
@@ -35,9 +35,8 @@ public class ErrorHandlerController {
     @ExceptionHandler(NumberFormatException.class)
     public ModelAndView handleNumberFormatException(Exception exception) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("400error");
+        modelAndView.setViewName("errors/400error");
         modelAndView.addObject("exception", exception);
         return modelAndView;
     }
-
 }

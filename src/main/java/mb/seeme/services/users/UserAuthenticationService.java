@@ -3,6 +3,7 @@ package mb.seeme.services.users;
 import mb.seeme.emails.EMailService;
 import mb.seeme.exceptions.AuthException;
 import mb.seeme.exceptions.UserAlreadyExistException;
+import mb.seeme.messages.UserMessages;
 import mb.seeme.model.users.Client;
 import mb.seeme.model.users.Person;
 import mb.seeme.model.users.ServiceProvider;
@@ -46,7 +47,7 @@ public class UserAuthenticationService implements UserDetailsService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         ServiceProvider provider = providerRepository.selectProviderByUsername(authentication.getName());
         if(provider == null)
-            throw new AuthException("Nie masz dostepu do tych zasobow");
+            throw new AuthException(UserMessages.BANNED_RESOURCES);
         return provider.getId();
     }
 
@@ -54,7 +55,7 @@ public class UserAuthenticationService implements UserDetailsService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Client client = clientRepository.selectClientByUsername(authentication.getName());
         if(client == null)
-            throw new AuthException("Nie masz dostepu do tych zasobow");
+            throw new AuthException(UserMessages.BANNED_RESOURCES);
         return client.getId();
     }
 
@@ -78,7 +79,7 @@ public class UserAuthenticationService implements UserDetailsService {
                        .password(passwordEncoder.encode(userDto.getPassword()))
                        .userRole(CLIENT.getUserRole()).build();
                clientRepository.save(newClient);
-               emailService.sendSimpleMessage(newClient.getEmail(), emailService.getWelcomeTitle(), emailService.getWelcomeMessage());
+               emailService.sendSimpleMessage(newClient.getEmail(), UserMessages.MAIL_WELCOME_TITLE, UserMessages.MAIL_WELCOME_MESSAGE);
            }else {
                ServiceProvider newProvider = ServiceProvider.builder()
                        .name(userDto.getName())
@@ -86,10 +87,10 @@ public class UserAuthenticationService implements UserDetailsService {
                        .password(passwordEncoder.encode(userDto.getPassword()))
                        .userRole(PROVIDER.getUserRole()).build();
                providerRepository.save(newProvider);
-               emailService.sendSimpleMessage(newProvider.getEmail(), emailService.getWelcomeTitle(), emailService.getWelcomeMessage());
+               emailService.sendSimpleMessage(newProvider.getEmail(), UserMessages.MAIL_WELCOME_TITLE, UserMessages.MAIL_WELCOME_MESSAGE);
            }
         }else
-            throw new UserAlreadyExistException("There is an account with that email address: " + userDto.getEmail());
+            throw new UserAlreadyExistException(UserMessages.ACCOUNT_FOR_EMAIL_EXISTS + userDto.getEmail());
     }
 
     private boolean emailExist(String email) {

@@ -1,4 +1,4 @@
-package mb.seeme.security.validation;
+package mb.seeme.validators;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -9,12 +9,12 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target({TYPE, FIELD, ANNOTATION_TYPE})
+@Target({TYPE,ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = NameValidator.class)
+@Constraint(validatedBy = PasswordMatchesValidator.class)
 @Documented
-public @interface ValidName {
-    String message() default "Nazwa niedozwolona";
+public @interface PasswordMatches {
+    String message() default "Bledne haslo";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
