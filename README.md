@@ -2,7 +2,7 @@
 <br>
 <br>
 <p align="center">
-    <img alt="logo" title="logo" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/logo.png" width="250">
+    <img alt="logo" title="logo" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/logo.png" width="250">
 </p>
 <br>
 <br>
@@ -38,17 +38,17 @@ The application is available in polish and english. To gain access to all app fu
 
 </br>
 <div align="center">  
-<img alt="signup" title="signup" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/2022-03-30_22h19_53.png" width="800">  
+<img alt="signup" title="signup" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/s1.png" width="800">  
 </div>
 <br/>
 
 <h3 align="center"> Your account </h3>
-Sign in page will redirect you to your account after succesfull authentication .
+Sign in page will redirect you to your account after succesfull authentication.
 <br/><br/>
 
 <br/>
 <div align="center">  
-<img alt="account" title="account" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/2022-03-30_22h20_56.png" width="800">
+<img alt="start" title="start" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/s2.png" width="800">
 </div>
 <br/>
 <br/>
@@ -57,17 +57,26 @@ If you are a service provider you can enter all neccessary personal data to stay
 <br/>
 <br/>
 <div align="center">  
-<img alt="account2" title="account2" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/2022-03-30_22h21_30.png" width="800">
+<img alt="account2" title="account2" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/s3.png" width="800">
 </div>
+<br/>
+<br/>
+<div align="center">  
+<img alt="account3" title="account3" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/s4.png" width="800">
+</div>    
 <br/>
 
 <h3 align="center"> Service provider functionalities </h3>
 
-Application let you manage your calendar. You have all your terms in one place sorted by term time. It gives you a possibility to filter them, see details, cancel and delete or add many new at once.
+Application let you manage your calendar. You have all your terms in the one place sorted by the term time. It gives you a possibility to filter them, see details, cancel and delete or add many new at once.
 
 <br/>
 <div align="center">  
-<img alt="calendar" title="calendar" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/2022-03-30_22h22_43.png" width="800">
+<img alt="calendar" title="calendar" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/s5.png" width="800">
+</div>
+<br/>
+<div align="center">  
+<img alt="calendar" title="calendar" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/s6.png" width="800">
 </div>
 <br/>
 
@@ -75,7 +84,7 @@ Past terms are stored in your archive to let you see their details whenever you 
 
 <br/>
 <div align="center">  
-<img alt="archive" title="archive" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/2022-03-30_22h22_15.png" width="800">
+<img alt="archive" title="archive" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/s7.png" width="800">
 </div>
 <br/>
 
@@ -85,7 +94,7 @@ You can search for needed specialist whenever you want and filter them by city o
 
 <br/>
 <div align="center">  
-<img alt="find" title="find" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/2022-03-30_22h24_08.png" width="800">
+<img alt="find" title="find" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/s8.png" width="800">
 </div>
 <br/>
 
@@ -93,7 +102,7 @@ You can see all provider's terms by opening provider details.
 
 <br/>
 <div align="center">  
-<img alt="provider" title="provider" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/2022-03-30_22h24_24.png" width="800">
+<img alt="provider" title="provider" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/s9.png" width="800">
 </div>
 <br/>
 All your future and past appointments are stored in your terms.
@@ -101,7 +110,7 @@ All your future and past appointments are stored in your terms.
 <br>
 <br/>
 <div align="center">  
-<img alt="terms" title="terms" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/2022-03-30_22h23_28.png" width="800">
+<img alt="terms" title="terms" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/s10.png" width="800">
 </div>
 <br/>
 
@@ -115,18 +124,15 @@ Some methods presented below are the small part of code that creates the SeeMeAp
 <br><br>
 
 <div align="center">  
-<img alt="code4" title="code4" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/signup.png" width="800"><br/><br/>
-<img alt="code6" title="code6" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/logout.png" width="800"><br/><br/>
-<img alt="code8" title="code8" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/password_matches.png" width="800"><br/><br/>
-<img alt="code10" title="code10" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/load_user.png" width="800"><br/><br/>
-<img alt="code11" title="code11" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/authentication.png" width="800"><br/><br/>
-<img alt="code13" title="code13" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/add_image.png" width="800"><br/><br/>
-<img alt="code14" title="code14" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/find.png" width="800"><br/><br/>
-<img alt="code15" title="code15" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/repository.png" width="800"><br/><br/>
-<img alt="code16" title="code16" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/lombok.png" width="800"><br/><br/>
-<img alt="code17" title="code17" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/exception.png" width="800"><br/><br/>
-<img alt="code18" title="code18" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/exception_handler.png" width="800"><br/><br/>
-<img alt="code19" title="code19" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/9fb83c8219fbdfab993819b19f328cf61a1ff67f/src/main/resources/static/resources/images/readmeScreenshots/email.png" width="800"><br/><br/>
+<img alt="code4" title="code4" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/c1.png" width="800"><br/><br/>
+<img alt="code6" title="code6" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/c2.png" width="800"><br/><br/>
+<img alt="code8" title="code8" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/c3.png" width="800"><br/><br/>
+<img alt="code10" title="code10" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/c4.png" width="800"><br/><br/>
+<img alt="code11" title="code11" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/c5.png" width="800"><br/><br/>
+<img alt="code13" title="code13" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/c6.png" width="800"><br/><br/>
+<img alt="code14" title="code14" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/c7.png" width="800"><br/><br/>
+<img alt="code15" title="code15" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/c8.png" width="800"><br/><br/>
+<img alt="code16" title="code16" src="https://github.com/MagdalenaBrejna/SeeMeApp/blob/64358d0c4d1f690fe873f8d6920e4ffcfaae5ba1/src/main/resources/static/resources/images/readmeScreenshots/c9.png" width="800"><br/><br/>
 </div>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -134,12 +140,12 @@ Some methods presented below are the small part of code that creates the SeeMeAp
 <!-- Technology -->
 ## Technology
 
-* Java 8
-* SpringBoot
-* Hibernate
+* Java 11
+* SpringBoot 5
+* Hibernate 5
 * HTML 5 + Thymeleaf
 * Less CSS
-* MySQL
+* MySQL 8
 * Maven
 * Lombok
 * JWT
