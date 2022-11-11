@@ -1,12 +1,7 @@
 package mb.seeme.emails;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import java.util.Properties;
-
 public class EMailConfig {
-
+/*
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -24,4 +19,5 @@ public class EMailConfig {
 
         return mailSender;
     }
+ */
 }

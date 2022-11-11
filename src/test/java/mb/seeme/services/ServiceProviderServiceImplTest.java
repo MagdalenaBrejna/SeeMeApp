@@ -82,7 +82,7 @@ class ServiceProviderServiceImplTest {
         assertNotNull(providerSet);
         assertEquals(2, providerSet.size());
     }
-
+/*
     @DisplayName("Test getting service provider by id")
     @Test
     void findById() {
@@ -108,6 +108,8 @@ class ServiceProviderServiceImplTest {
         verify(providerRepository, never()).findAll();
         assertNull(testProvider);
     }
+
+ */
 
     @DisplayName("Test saving service provider")
     @Test

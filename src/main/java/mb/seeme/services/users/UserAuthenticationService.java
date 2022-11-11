@@ -79,7 +79,7 @@ public class UserAuthenticationService implements UserDetailsService {
                        .password(passwordEncoder.encode(userDto.getPassword()))
                        .userRole(CLIENT.getUserRole()).build();
                clientRepository.save(newClient);
-               emailService.sendSimpleMessage(newClient.getEmail(), UserMessages.MAIL_WELCOME_TITLE, UserMessages.MAIL_WELCOME_MESSAGE);
+               //emailService.sendSimpleMessage(newClient.getEmail(), UserMessages.MAIL_WELCOME_TITLE, UserMessages.MAIL_WELCOME_MESSAGE);
            }else {
                ServiceProvider newProvider = ServiceProvider.builder()
                        .name(userDto.getName())
@@ -87,7 +87,7 @@ public class UserAuthenticationService implements UserDetailsService {
                        .password(passwordEncoder.encode(userDto.getPassword()))
                        .userRole(PROVIDER.getUserRole()).build();
                providerRepository.save(newProvider);
-               emailService.sendSimpleMessage(newProvider.getEmail(), UserMessages.MAIL_WELCOME_TITLE, UserMessages.MAIL_WELCOME_MESSAGE);
+               //emailService.sendSimpleMessage(newProvider.getEmail(), UserMessages.MAIL_WELCOME_TITLE, UserMessages.MAIL_WELCOME_MESSAGE);
            }
         }else
             throw new UserAlreadyExistException(UserMessages.ACCOUNT_FOR_EMAIL_EXISTS + userDto.getEmail());

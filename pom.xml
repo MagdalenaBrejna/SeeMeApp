@@ -13,7 +13,7 @@
 	<artifactId>seeme</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>SeeMe</name>
-	<description>Application that let users book appointments shered by specialists.</description>
+	<description>Application that let users book appointments shared by specialists.</description>
 
 	<properties>
 		<java.version>11</java.version>

@@ -84,8 +84,8 @@ public class TermServiceImpl implements TermService {
     public void deleteByTermId(Long termId, Person person) throws NotFoundException {
         Term term = findIfTermExists(termId);
         if(term.getTermDate().isAfter(LocalDate.now()) && person.getUserRole().equals(ApplicationUserRole.PROVIDER.getUserRole()) && term.getService().getServiceProvider() != null && term.getService().getServiceProvider().equals((ServiceProvider)person)) {
-            if(term.getClient() != null)
-                emailService.sendSimpleMessage(term.getClient().getEmail(), UserMessages.MAIL_CANCEL_TITLE, "We are sorry to inform you that your term on " + term.getTermDate().toString() + " was cancelled");
+            //if(term.getClient() != null)
+            //    emailService.sendSimpleMessage(term.getClient().getEmail(), UserMessages.MAIL_CANCEL_TITLE, "We are sorry to inform you that your term on " + term.getTermDate().toString() + " was cancelled");
             termRepository.deleteById(termId);
         }
     }
@@ -98,8 +98,8 @@ public class TermServiceImpl implements TermService {
                 ((person.getUserRole().equals(ApplicationUserRole.PROVIDER.getUserRole()) && term.getService().getServiceProvider() != null && term.getService().getServiceProvider().equals((ServiceProvider)person)) ||
                  (person.getUserRole().equals(ApplicationUserRole.CLIENT.getUserRole()) && term.getClient() != null && term.getClient().equals((Client)person)))) {
             termRepository.makeTermStatusFree(termId);
-            emailService.sendSimpleMessage(term.getService().getServiceProvider().getEmail(), UserMessages.MAIL_CANCEL_TITLE, "You cancelled the term on " + term.getTermDate().toString());
-            emailService.sendSimpleMessage(term.getClient().getEmail(), UserMessages.MAIL_CANCEL_TITLE, "We are sorry to inform you that your term on " + term.getTermDate().toString() + " was cancelled");
+            //emailService.sendSimpleMessage(term.getService().getServiceProvider().getEmail(), UserMessages.MAIL_CANCEL_TITLE, "You cancelled the term on " + term.getTermDate().toString());
+            //emailService.sendSimpleMessage(term.getClient().getEmail(), UserMessages.MAIL_CANCEL_TITLE, "We are sorry to inform you that your term on " + term.getTermDate().toString() + " was cancelled");
         }
     }
 
