@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/MagdalenaBrejna/SeeMeApp.svg?style=shield)](https://circleci.com/gh/MagdalenaBrejna/SeeMeApp)
+
 <div id="top"></div>
 <br>
 <br>
