@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/MagdalenaBrejna/SeeMeApp.svg?style=shield)](https://circleci.com/gh/MagdalenaBrejna/SeeMeApp)
+[![codecov](https://codecov.io/gh/MagdalenaBrejna/SeeMeApp/branch/master/graph/badge.svg?token=8TBTASR35C)](https://codecov.io/gh/MagdalenaBrejna/SeeMeApp)
 
 <div id="top"></div>
 <br>
